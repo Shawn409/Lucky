@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SihatAI Sarawak — NCD Buddy</title>
+<title>CareU &mdash; NCD Buddy</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,500&family=Public+Sans:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
@@ -56,14 +56,14 @@ button{font-family:inherit;}
 header.app-header{
   background: linear-gradient(135deg, var(--teal) 0%, var(--teal-dark) 100%);
   color:#fff;
-  padding:22px 24px 34px;
+  padding:22px 24px 26px;
   position:relative;
 }
 .header-row{
   max-width:1040px; margin:0 auto;
-  display:flex; align-items:flex-start; justify-content:space-between; gap:16px; flex-wrap:wrap;
+  display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap;
 }
-.brand{display:flex; align-items:center; gap:12px;}
+.brand{display:flex; align-items:center; gap:12px; min-width:0;}
 .brand-mark{
   width:44px;height:44px;border-radius:12px;
   background:var(--gold);
@@ -72,9 +72,10 @@ header.app-header{
   box-shadow: inset 0 0 0 1px rgba(255,255,255,0.25);
 }
 .brand-mark svg{width:24px;height:24px;}
+.brand-text{min-width:0;}
 .brand-text h1{color:#fff; font-size:22px; margin:0; line-height:1.1;}
-.brand-text p{margin:2px 0 0; font-size:12.5px; color:#CFE3DE; letter-spacing:.02em;}
-.header-controls{display:flex; align-items:center; gap:10px; flex-wrap:wrap;}
+.brand-text p{margin:2px 0 0; font-size:12.5px; color:#CFE3DE; letter-spacing:.02em; line-height:1.35;}
+.header-controls{display:flex; align-items:center; justify-content:flex-end; gap:10px; flex-wrap:wrap;}
 .lang-switch{display:flex; background:rgba(255,255,255,0.12); border-radius:999px; padding:3px; gap:2px;}
 .lang-switch button{
   border:none; background:transparent; color:#DCEAE6; padding:6px 12px; border-radius:999px;
@@ -90,21 +91,44 @@ header.app-header{
 
 /* ---------- Nav tabs ---------- */
 nav.tabs{
-  max-width:1040px; margin:-14px auto 0; padding:0 24px;
+  max-width:1040px; margin:18px auto 0; padding:0;
   display:flex; gap:8px; flex-wrap:wrap; position:relative; z-index:2;
 }
 nav.tabs button{
   border:1px solid var(--border); background:var(--surface); color:var(--ink-soft);
   padding:10px 16px; border-radius:12px; font-size:13.5px; font-weight:600; cursor:pointer;
-  box-shadow:var(--shadow); transition:.15s; display:flex; align-items:center; gap:7px;
+  box-shadow:var(--shadow); transition:.15s; display:flex; align-items:center; gap:7px; white-space:nowrap;
 }
 nav.tabs button svg{width:16px;height:16px; opacity:.7;}
 nav.tabs button.active{background:var(--teal); border-color:var(--teal); color:#fff;}
 nav.tabs button.active svg{opacity:1;}
 nav.tabs button:hover:not(.active){border-color:var(--teal); color:var(--teal-dark);}
+@media(max-width:760px){
+  header.app-header{padding:18px 16px 20px;}
+  .header-row{align-items:flex-start;}
+  .brand{width:100%;}
+  .header-controls{width:100%; justify-content:space-between;}
+  nav.tabs{
+    margin-top:16px;
+    overflow-x:auto;
+    flex-wrap:nowrap;
+    padding-bottom:4px;
+    -webkit-overflow-scrolling:touch;
+    scrollbar-width:none;
+  }
+  nav.tabs::-webkit-scrollbar{display:none;}
+  nav.tabs button{flex:0 0 auto;}
+}
+@media(max-width:420px){
+  .brand-text h1{font-size:20px;}
+  .header-controls{justify-content:flex-start;}
+  .sync-badge{font-size:11.5px; padding:6px 10px;}
+  .lang-switch button{padding:6px 10px;}
+}
 
 /* ---------- Main ---------- */
 main{max-width:1040px; margin:0 auto; padding:28px 24px 80px;}
+@media(max-width:760px){main{padding-left:16px; padding-right:16px;}}
 .view{display:none; animation:fadeIn .25s ease;}
 .view.active{display:block;}
 @keyframes fadeIn{from{opacity:0; transform:translateY(4px);} to{opacity:1; transform:translateY(0);}}
@@ -198,7 +222,50 @@ input[type=number]:focus{border-color:var(--teal); outline:none; background:#fff
 .btn-primary:disabled{opacity:.6; cursor:default;}
 .btn-secondary{
   background:#fff; color:var(--teal-dark); border:1.5px solid var(--border); padding:12px 18px; border-radius:12px;
-  font-weight:700; font-size:13.5px; cursor:pointer;
+  font-weight:700; font-size:13.5px; cursor:pointer; display:inline-flex; align-items:center; justify-content:center; gap:7px;
+}
+.btn-secondary:hover{border-color:var(--teal); color:var(--teal);}
+.btn-secondary:disabled{opacity:.55; cursor:default;}
+.btn-secondary svg{width:15px; height:15px;}
+.section-actions{display:flex; align-items:center; gap:10px; flex-wrap:wrap;}
+.reminder-card{display:grid; gap:16px;}
+.reminder-head{display:flex; align-items:flex-start; justify-content:space-between; gap:12px; flex-wrap:wrap;}
+.reminder-head h3{margin:0 0 4px; font-size:15px;}
+.reminder-status{font-size:12.5px; color:var(--ink-soft); line-height:1.45;}
+.reminder-control{display:grid; grid-template-columns:180px 1fr; gap:14px; align-items:end;}
+.time-input{
+  width:100%; padding:12px 14px; border-radius:10px; border:1.5px solid var(--border);
+  font-family:'IBM Plex Mono', monospace; font-size:15px; font-weight:600; color:var(--teal-dark);
+  background:#FBFCFA;
+}
+.time-input:focus{border-color:var(--teal); outline:none; background:#fff;}
+.reminder-actions{display:flex; gap:10px; flex-wrap:wrap;}
+.filter-bar{
+  display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;
+  margin-bottom:14px;
+}
+.segmented-filter{display:flex; gap:6px; flex-wrap:wrap;}
+.filter-btn{
+  border:1.5px solid var(--border); background:#fff; color:var(--ink-soft); padding:9px 13px;
+  border-radius:999px; font-size:13px; font-weight:700; cursor:pointer;
+}
+.filter-btn.active{background:var(--teal); border-color:var(--teal); color:#fff;}
+.sort-control{display:flex; align-items:center; gap:8px; color:var(--ink-soft); font-size:12.5px; font-weight:700;}
+.sort-control select{
+  border:1.5px solid var(--border); border-radius:10px; padding:9px 12px; background:#fff;
+  color:var(--teal-dark); font-weight:700; font-family:inherit;
+}
+.empty-state{
+  border:1px dashed var(--border); border-radius:14px; padding:24px; text-align:center;
+  color:var(--ink-soft); background:#FBFCFA; font-size:13.5px;
+}
+@media(max-width:640px){
+  .reminder-control{grid-template-columns:1fr;}
+  .section-actions,.reminder-actions{width:100%;}
+  .section-actions .btn-secondary,.reminder-actions .btn-secondary{flex:1;}
+  .filter-bar{align-items:stretch;}
+  .segmented-filter,.sort-control{width:100%;}
+  .sort-control select{flex:1;}
 }
 
 .toast{
@@ -253,6 +320,23 @@ input[type=number]:focus{border-color:var(--teal); outline:none; background:#fff
 .patient-meta{font-size:12px; color:var(--ink-soft); margin-top:2px;}
 
 .footer-note{max-width:1040px; margin:0 auto; padding:0 24px 40px; color:var(--ink-soft); font-size:12px; text-align:center;}
+.print-report{display:none;}
+@media print{
+  body{background:#fff; color:#111; font-family:Arial, sans-serif;}
+  header.app-header,.river-divider,main,.footer-note,.toast{display:none !important;}
+  .print-report{display:block; padding:28px;}
+  .print-report h1{font-family:Georgia, serif; font-size:28px; margin:0 0 6px; color:#111;}
+  .print-report h2{font-family:Arial, sans-serif; font-size:15px; margin:22px 0 8px; color:#111;}
+  .print-report p{margin:3px 0; font-size:12px; line-height:1.45;}
+  .report-kicker{font-size:11px; text-transform:uppercase; letter-spacing:.08em; font-weight:700; color:#555;}
+  .print-summary-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin:18px 0;}
+  .print-summary-grid div{border:1px solid #ccc; border-radius:8px; padding:10px;}
+  .print-summary-grid strong{display:block; font-size:15px; margin-bottom:3px;}
+  .print-report table{width:100%; border-collapse:collapse; font-size:11px;}
+  .print-report th,.print-report td{border:1px solid #bbb; padding:7px; text-align:left; vertical-align:top;}
+  .print-report th{background:#eee;}
+  .print-note{margin-top:18px !important; color:#555;}
+}
 </style>
 </head>
 <body>
@@ -264,7 +348,7 @@ input[type=number]:focus{border-color:var(--teal); outline:none; background:#fff
         <svg viewBox="0 0 24 24" fill="none"><path d="M12 21s-7.5-4.6-10-9.3C.3 8 2 4 6 4c2.4 0 3.9 1.3 6 3.6C14.1 5.3 15.6 4 18 4c4 0 5.7 4 4 7.7C19.5 16.4 12 21 12 21z" fill="#123A35"/></svg>
       </div>
       <div class="brand-text">
-        <h1 data-i18n="appName">SihatAI Sarawak</h1>
+        <h1 data-i18n="appName">CareU</h1>
         <p data-i18n="appTag">AI-assisted hypertension &amp; diabetes monitoring for rural communities</p>
       </div>
     </div>
@@ -323,6 +407,27 @@ input[type=number]:focus{border-color:var(--teal); outline:none; background:#fff
       <div class="med-row">
         <div class="med-status" id="medStatusToday"></div>
         <button class="btn-secondary" data-tab-jump="entry" data-i18n="editEntry">Edit today's entry</button>
+      </div>
+    </div>
+
+    <div class="card reminder-card" style="margin-top:16px;">
+      <div class="reminder-head">
+        <div>
+          <h3 data-i18n="medReminderTitle">Medication reminder</h3>
+          <div class="reminder-status" id="reminderStatus"></div>
+        </div>
+        <span class="risk-pill attention" id="reminderPill"><span class="dot"></span><span data-i18n="reminderOff">Off</span></span>
+      </div>
+      <div class="reminder-control">
+        <div>
+          <label class="field-label" for="reminderTime" data-i18n="reminderTimeLabel">Reminder time</label>
+          <input class="time-input" type="time" id="reminderTime" value="08:00">
+        </div>
+        <div class="reminder-actions">
+          <button class="btn-secondary" id="enableReminderBtn" data-i18n="enableReminder">Turn on</button>
+          <button class="btn-secondary" id="disableReminderBtn" data-i18n="disableReminder">Turn off</button>
+          <button class="btn-secondary" id="testReminderBtn" data-i18n="testReminder">Test reminder</button>
+        </div>
       </div>
     </div>
   </section>
@@ -414,6 +519,16 @@ input[type=number]:focus{border-color:var(--teal); outline:none; background:#fff
         <h2 data-i18n="trendTitle">Weekly Trend</h2>
         <div class="sub" data-i18n="trendSub">Last 7 days</div>
       </div>
+      <div class="section-actions">
+        <button class="btn-secondary" id="exportCsvBtn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12"/><path d="M7 10l5 5 5-5"/><path d="M5 21h14"/></svg>
+          <span data-i18n="exportCsv">Export CSV</span>
+        </button>
+        <button class="btn-secondary" id="printReportBtn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9V3h12v6"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><path d="M6 14h12v7H6z"/></svg>
+          <span data-i18n="printReport">Print / PDF</span>
+        </button>
+      </div>
     </div>
 
     <div class="grid grid-2">
@@ -447,10 +562,27 @@ input[type=number]:focus{border-color:var(--teal); outline:none; background:#fff
         <div class="sub" data-i18n="communitySub">Overview for family members or village health volunteers</div>
       </div>
     </div>
+    <div class="filter-bar">
+      <div class="segmented-filter" role="group" aria-label="Community risk filter">
+        <button class="filter-btn active" data-community-filter="all" data-i18n="filterAll">All</button>
+        <button class="filter-btn" data-community-filter="high" data-i18n="riskHigh">High Risk</button>
+        <button class="filter-btn" data-community-filter="attention" data-i18n="riskAttention">Needs Attention</button>
+        <button class="filter-btn" data-community-filter="normal" data-i18n="riskNormal">Normal</button>
+      </div>
+      <label class="sort-control">
+        <span data-i18n="sortBy">Sort</span>
+        <select id="communitySort">
+          <option value="risk" data-i18n="sortRisk">Risk first</option>
+          <option value="recent" data-i18n="sortRecent">Recently updated</option>
+        </select>
+      </label>
+    </div>
     <div id="communityList"></div>
   </section>
 
 </main>
+
+<section class="print-report" id="printReport" aria-hidden="true"></section>
 
 <div class="footer-note" data-i18n="footerNote">Prototype for demonstration only. Uses simulated data — not connected to real medical devices or hospital systems.</div>
 
@@ -460,7 +592,7 @@ input[type=number]:focus{border-color:var(--teal); outline:none; background:#fff
 /* ================= I18N ================= */
 const I18N = {
 en:{
-  appName:"SihatAI Sarawak", appTag:"AI-assisted hypertension & diabetes monitoring for rural communities",
+  appName:"CareU", appTag:"AI-assisted hypertension & diabetes monitoring for rural communities",
   online:"Online · synced", offline:"Offline · will sync later",
   tabDashboard:"Dashboard", tabEntry:"Daily Entry", tabSummary:"AI Summary", tabTrend:"Weekly Trend", tabCommunity:"Community",
   dashTitle:"Patient Dashboard",
@@ -489,6 +621,18 @@ en:{
   riskHighMsg:"Readings today are significantly outside the safe range. The system recommends seeking professional medical advice soon.",
   symDizziness:"Dizziness", symFatigue:"Fatigue", symHeadache:"Headache", symNone:"None",
   medYes:"Medication taken", medNo:"Medication missed",
+  medReminderTitle:"Medication reminder", reminderTimeLabel:"Reminder time", reminderOn:"On", reminderOff:"Off",
+  enableReminder:"Turn on", disableReminder:"Turn off", testReminder:"Test reminder",
+  reminderReady:"Reminder off", reminderActive:"On - next reminder at", reminderTakenToday:"Today's medication is marked as taken.",
+  reminderSavedToast:"Medication reminder is on.", reminderDisabledToast:"Medication reminder is off.", reminderUpdatedToast:"Reminder time updated.",
+  reminderDueToast:"Medication time. Mark today's dose after taking it.", reminderTestToast:"Test reminder sent.",
+  reminderPermissionToast:"Reminder is on. Browser notifications are unavailable, so CareU will use in-page reminders.",
+  exportCsv:"Export CSV", printReport:"Print / PDF", csvToast:"Clinic CSV downloaded.", printToast:"Clinic report is ready for PDF or printing.",
+  filterAll:"All", sortBy:"Sort", sortRisk:"Risk first", sortRecent:"Recently updated", communityEmpty:"No patients match this filter.",
+  reportTitle:"Clinic report", reportRange:"Report range", reportGenerated:"Generated", reportPatient:"Patient", reportLatestRisk:"Latest risk",
+  reportAbnormal:"Abnormal days", reportAdherence:"Medication adherence", reportBpDirection:"BP direction", reportDate:"Date",
+  reportSystolic:"Systolic", reportDiastolic:"Diastolic", reportGlucose:"Glucose", reportHeartRate:"Heart rate",
+  reportMedication:"Medication", reportSymptoms:"Symptoms", reportRisk:"Risk",
   loadingSummary:"Generating summary with Claude…",
   savedToast:"Saved — today's entry updated",
   offlineEntryNote:"You're offline. This entry will sync once you're back online.",
@@ -496,7 +640,7 @@ en:{
   langName:"English"
 },
 bm:{
-  appName:"SihatAI Sarawak", appTag:"Pemantauan tekanan darah tinggi & diabetes berbantukan AI untuk komuniti luar bandar",
+  appName:"CareU", appTag:"Pemantauan tekanan darah tinggi & diabetes berbantukan AI untuk komuniti luar bandar",
   online:"Dalam talian · disegerak", offline:"Luar talian · akan disegerak kemudian",
   tabDashboard:"Papan Pemuka", tabEntry:"Catatan Harian", tabSummary:"Ringkasan AI", tabTrend:"Trend Mingguan", tabCommunity:"Komuniti",
   dashTitle:"Papan Pemuka Pesakit",
@@ -525,6 +669,18 @@ bm:{
   riskHighMsg:"Bacaan hari ini jauh di luar julat selamat. Sistem mengesyorkan mendapatkan nasihat perubatan profesional segera.",
   symDizziness:"Pening", symFatigue:"Keletihan", symHeadache:"Sakit kepala", symNone:"Tiada",
   medYes:"Ubat diambil", medNo:"Ubat tidak diambil",
+  medReminderTitle:"Peringatan ubat", reminderTimeLabel:"Masa peringatan", reminderOn:"Aktif", reminderOff:"Mati",
+  enableReminder:"Hidupkan", disableReminder:"Matikan", testReminder:"Uji peringatan",
+  reminderReady:"Peringatan dimatikan", reminderActive:"Aktif - peringatan seterusnya pada", reminderTakenToday:"Ubat hari ini ditanda sudah diambil.",
+  reminderSavedToast:"Peringatan ubat dihidupkan.", reminderDisabledToast:"Peringatan ubat dimatikan.", reminderUpdatedToast:"Masa peringatan dikemas kini.",
+  reminderDueToast:"Masa mengambil ubat. Tandakan dos hari ini selepas mengambilnya.", reminderTestToast:"Peringatan ujian dihantar.",
+  reminderPermissionToast:"Peringatan dihidupkan. Notifikasi pelayar tidak tersedia, jadi CareU akan guna peringatan dalam halaman.",
+  exportCsv:"Eksport CSV", printReport:"Cetak / PDF", csvToast:"CSV klinik dimuat turun.", printToast:"Laporan klinik sedia untuk PDF atau cetakan.",
+  filterAll:"Semua", sortBy:"Susun", sortRisk:"Risiko dahulu", sortRecent:"Terkini dikemas kini", communityEmpty:"Tiada pesakit sepadan dengan penapis ini.",
+  reportTitle:"Laporan klinik", reportRange:"Julat laporan", reportGenerated:"Dijana", reportPatient:"Pesakit", reportLatestRisk:"Risiko terkini",
+  reportAbnormal:"Hari luar biasa", reportAdherence:"Pematuhan ubat", reportBpDirection:"Arah tekanan darah", reportDate:"Tarikh",
+  reportSystolic:"Sistolik", reportDiastolic:"Diastolik", reportGlucose:"Gula darah", reportHeartRate:"Kadar nadi",
+  reportMedication:"Ubat", reportSymptoms:"Simptom", reportRisk:"Risiko",
   loadingSummary:"Menjana ringkasan dengan Claude…",
   savedToast:"Disimpan — catatan hari ini dikemas kini",
   offlineEntryNote:"Anda luar talian. Catatan ini akan disegerak apabila anda kembali dalam talian.",
@@ -532,7 +688,7 @@ bm:{
   langName:"Bahasa Melayu"
 },
 zh:{
-  appName:"SihatAI 砂拉越", appTag:"AI 辅助高血压与糖尿病健康监测 · 服务乡区社区",
+  appName:"CareU", appTag:"AI 辅助高血压与糖尿病健康监测 · 服务乡区社区",
   online:"在线 · 已同步", offline:"离线 · 恢复网络后同步",
   tabDashboard:"健康仪表板", tabEntry:"每日记录", tabSummary:"AI 健康摘要", tabTrend:"每周趋势", tabCommunity:"社区视图",
   dashTitle:"患者仪表板",
@@ -561,6 +717,18 @@ zh:{
   riskHighMsg:"今日数据明显超出安全范围，系统建议尽快寻求医护专业人员的意见。",
   symDizziness:"头晕", symFatigue:"疲倦", symHeadache:"头痛", symNone:"无",
   medYes:"已服药", medNo:"未服药",
+  medReminderTitle:"服药提醒", reminderTimeLabel:"提醒时间", reminderOn:"开启", reminderOff:"关闭",
+  enableReminder:"开启提醒", disableReminder:"关闭提醒", testReminder:"测试提醒",
+  reminderReady:"提醒已关闭", reminderActive:"已开启 - 下次提醒时间", reminderTakenToday:"今日服药已标记完成。",
+  reminderSavedToast:"服药提醒已开启。", reminderDisabledToast:"服药提醒已关闭。", reminderUpdatedToast:"提醒时间已更新。",
+  reminderDueToast:"到服药时间了。服药后请标记今日剂量。", reminderTestToast:"测试提醒已发送。",
+  reminderPermissionToast:"提醒已开启。浏览器通知不可用，因此 CareU 会使用页面内提醒。",
+  exportCsv:"导出 CSV", printReport:"打印 / PDF", csvToast:"诊所 CSV 已下载。", printToast:"诊所报告已准备好打印或保存 PDF。",
+  filterAll:"全部", sortBy:"排序", sortRisk:"风险优先", sortRecent:"最近更新", communityEmpty:"没有符合此筛选的病人。",
+  reportTitle:"诊所报告", reportRange:"报告范围", reportGenerated:"生成时间", reportPatient:"病人", reportLatestRisk:"最新风险",
+  reportAbnormal:"异常天数", reportAdherence:"服药依从率", reportBpDirection:"血压方向", reportDate:"日期",
+  reportSystolic:"收缩压", reportDiastolic:"舒张压", reportGlucose:"血糖", reportHeartRate:"心率",
+  reportMedication:"服药", reportSymptoms:"症状", reportRisk:"风险",
   loadingSummary:"正在使用 Claude 生成摘要…",
   savedToast:"已保存 — 今日记录已更新",
   offlineEntryNote:"您目前处于离线状态，恢复网络后本记录将自动同步。",
@@ -578,6 +746,12 @@ function fmtDate(d){
   return d.toLocaleDateString(currentLang==='zh'?'zh-CN':(currentLang==='bm'?'ms-MY':'en-GB'), {month:'short', day:'numeric'});
 }
 function isoDate(d){ return d.toISOString().slice(0,10); }
+function localDateKey(d){
+  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+}
+function clockTime(d){
+  return `${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`;
+}
 
 function makeDateSeries(n){
   const arr = [];
@@ -609,6 +783,9 @@ let history = dateSeries.map((d,i)=>({
 }));
 
 let draftEntry = null; // holds in-progress form state for today
+let medicationReminder = {enabled:false, time:'08:00', lastFiredDate:null};
+let communityFilter = 'all';
+let communitySort = 'risk';
 
 /* ================= RISK ENGINE ================= */
 function assessBP(sys,dia){
@@ -701,9 +878,84 @@ function renderDashboard(){
 
   const medHost = document.getElementById('medStatusToday');
   medHost.className = 'med-status ' + (today.med ? 'yes' : 'no');
+  renderMedicationReminder();
   medHost.innerHTML = `${today.med ? '💊' : '⛔'} ${today.med ? t('medYes') : t('medNo')}`;
 }
 function cap(s){ return s.charAt(0).toUpperCase()+s.slice(1); }
+
+/* ================= MEDICATION REMINDER ================= */
+function renderMedicationReminder(){
+  const timeInput = document.getElementById('reminderTime');
+  const status = document.getElementById('reminderStatus');
+  const pill = document.getElementById('reminderPill');
+  if(!timeInput || !status || !pill) return;
+
+  timeInput.value = medicationReminder.time;
+  const today = history[history.length-1];
+  if(medicationReminder.enabled){
+    status.textContent = `${t('reminderActive')} ${medicationReminder.time}${today.med ? `. ${t('reminderTakenToday')}` : '.'}`;
+    pill.className = 'risk-pill normal';
+    pill.innerHTML = `<span class="dot"></span>${t('reminderOn')}`;
+  } else {
+    status.textContent = t('reminderReady');
+    pill.className = 'risk-pill attention';
+    pill.innerHTML = `<span class="dot"></span>${t('reminderOff')}`;
+  }
+  document.getElementById('disableReminderBtn').disabled = !medicationReminder.enabled;
+}
+
+async function requestNotificationPermission(){
+  if(!('Notification' in window)) return false;
+  if(Notification.permission === 'granted') return true;
+  if(Notification.permission === 'default'){
+    try{
+      const permission = await Notification.requestPermission();
+      return permission === 'granted';
+    } catch(err){
+      return false;
+    }
+  }
+  return false;
+}
+
+function sendMedicationReminder(isTest=false){
+  const message = isTest ? t('reminderTestToast') : t('reminderDueToast');
+  showToast(message);
+  if('Notification' in window && Notification.permission === 'granted'){
+    try{ new Notification('CareU', {body:message}); } catch(err){}
+  }
+  if(!isTest) medicationReminder.lastFiredDate = localDateKey(new Date());
+}
+
+function checkMedicationReminder(){
+  if(!medicationReminder.enabled) return;
+  const now = new Date();
+  const todayKey = localDateKey(now);
+  if(clockTime(now) === medicationReminder.time && medicationReminder.lastFiredDate !== todayKey){
+    sendMedicationReminder(false);
+  }
+}
+
+document.getElementById('enableReminderBtn').onclick = async ()=>{
+  const value = document.getElementById('reminderTime').value || '08:00';
+  medicationReminder = {enabled:true, time:value, lastFiredDate:null};
+  renderMedicationReminder();
+  const canNotify = await requestNotificationPermission();
+  showToast(canNotify ? t('reminderSavedToast') : t('reminderPermissionToast'));
+};
+document.getElementById('disableReminderBtn').onclick = ()=>{
+  medicationReminder.enabled = false;
+  renderMedicationReminder();
+  showToast(t('reminderDisabledToast'));
+};
+document.getElementById('testReminderBtn').onclick = ()=> sendMedicationReminder(true);
+document.getElementById('reminderTime').onchange = e=>{
+  medicationReminder.time = e.target.value || '08:00';
+  medicationReminder.lastFiredDate = null;
+  renderMedicationReminder();
+  if(medicationReminder.enabled) showToast(t('reminderUpdatedToast'));
+};
+setInterval(checkMedicationReminder, 15000);
 
 /* ================= RENDER: ENTRY FORM ================= */
 function initDraft(){
@@ -801,6 +1053,117 @@ function renderTrend(){
   }).join('');
 }
 
+/* ================= CLINIC REPORT EXPORT ================= */
+function escapeHtml(value){
+  return String(value ?? '').replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+}
+function symptomLabels(symptoms){
+  return symptoms.map(s=>t('sym'+cap(s))).join(', ');
+}
+function medicationLabel(med){
+  return med ? t('yes') : t('no');
+}
+function bpDirectionText(dir){
+  if(currentLang==='zh') return dir==='up' ? '上升' : dir==='down' ? '下降' : '稳定';
+  if(currentLang==='bm') return dir==='up' ? 'Menaik' : dir==='down' ? 'Menurun' : 'Stabil';
+  return dir==='up' ? 'Up' : dir==='down' ? 'Down' : 'Stable';
+}
+function clinicMetrics(){
+  const latest = history[history.length-1];
+  const abnormal = history.filter(e=>overallRisk(e)!=='normal').length;
+  const adherence = Math.round(100*history.filter(e=>e.med).length/history.length);
+  const direction = bpDirection(history);
+  return {latest, abnormal, adherence, direction};
+}
+function buildClinicReport(){
+  const metrics = clinicMetrics();
+  const reportRange = `${fmtDate(history[0].dateObj)} - ${fmtDate(history[history.length-1].dateObj)}`;
+  const generated = new Date().toLocaleString(currentLang==='zh'?'zh-CN':(currentLang==='bm'?'ms-MY':'en-GB'));
+  const patient = document.getElementById('patientLine').textContent || 'Mr. Bakar anak Jalong';
+  const rows = history.map(e=>{
+    const risk = overallRisk(e);
+    return `<tr>
+      <td>${escapeHtml(fmtDate(e.dateObj))}</td>
+      <td>${escapeHtml(e.systolic)}</td>
+      <td>${escapeHtml(e.diastolic)}</td>
+      <td>${escapeHtml(e.glucose)} mg/dL</td>
+      <td>${escapeHtml(e.hr)} bpm</td>
+      <td>${escapeHtml(medicationLabel(e.med))}</td>
+      <td>${escapeHtml(symptomLabels(e.symptoms))}</td>
+      <td>${escapeHtml(t('risk'+cap(risk)))}</td>
+    </tr>`;
+  }).join('');
+
+  return `
+    <p class="report-kicker">${escapeHtml(t('reportTitle'))}</p>
+    <h1>CareU</h1>
+    <p><strong>${escapeHtml(t('reportPatient'))}:</strong> ${escapeHtml(patient)}</p>
+    <p><strong>${escapeHtml(t('reportRange'))}:</strong> ${escapeHtml(reportRange)}</p>
+    <p><strong>${escapeHtml(t('reportGenerated'))}:</strong> ${escapeHtml(generated)}</p>
+
+    <div class="print-summary-grid">
+      <div><strong>${escapeHtml(t('risk'+cap(overallRisk(metrics.latest))))}</strong><span>${escapeHtml(t('reportLatestRisk'))}</span></div>
+      <div><strong>${escapeHtml(metrics.abnormal)}</strong><span>${escapeHtml(t('reportAbnormal'))}</span></div>
+      <div><strong>${escapeHtml(metrics.adherence)}%</strong><span>${escapeHtml(t('reportAdherence'))}</span></div>
+      <div><strong>${escapeHtml(bpDirectionText(metrics.direction))}</strong><span>${escapeHtml(t('reportBpDirection'))}</span></div>
+    </div>
+
+    <h2>${escapeHtml(t('dailyLogTitle'))}</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>${escapeHtml(t('reportDate'))}</th>
+          <th>${escapeHtml(t('reportSystolic'))}</th>
+          <th>${escapeHtml(t('reportDiastolic'))}</th>
+          <th>${escapeHtml(t('reportGlucose'))}</th>
+          <th>${escapeHtml(t('reportHeartRate'))}</th>
+          <th>${escapeHtml(t('reportMedication'))}</th>
+          <th>${escapeHtml(t('reportSymptoms'))}</th>
+          <th>${escapeHtml(t('reportRisk'))}</th>
+        </tr>
+      </thead>
+      <tbody>${rows}</tbody>
+    </table>
+    <p class="print-note">${escapeHtml(t('footerNote'))}</p>
+  `;
+}
+function csvCell(value){
+  const text = String(value ?? '');
+  const safe = /^[=+\-@]/.test(text) ? `'${text}` : text;
+  return `"${safe.replace(/"/g,'""')}"`;
+}
+function exportClinicCsv(){
+  const headers = [t('reportDate'), t('reportSystolic'), t('reportDiastolic'), t('reportGlucose'), t('reportHeartRate'), t('reportMedication'), t('reportSymptoms'), t('reportRisk')];
+  const rows = history.map(e=>[
+    e.date,
+    e.systolic,
+    e.diastolic,
+    e.glucose,
+    e.hr,
+    medicationLabel(e.med),
+    symptomLabels(e.symptoms),
+    t('risk'+cap(overallRisk(e)))
+  ]);
+  const csv = [headers, ...rows].map(row=>row.map(csvCell).join(',')).join('\r\n');
+  const blob = new Blob(['\uFEFF'+csv], {type:'text/csv;charset=utf-8;'});
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = `careu-clinic-report-${localDateKey(new Date())}.csv`;
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+  setTimeout(()=>URL.revokeObjectURL(url), 1000);
+  showToast(t('csvToast'));
+}
+function printClinicReport(){
+  document.getElementById('printReport').innerHTML = buildClinicReport();
+  showToast(t('printToast'));
+  window.print();
+}
+document.getElementById('exportCsvBtn').onclick = exportClinicCsv;
+document.getElementById('printReportBtn').onclick = printClinicReport;
+
 /* ================= RENDER: AI SUMMARY ================= */
 function ruleBasedSummary(){
   const persistent = persistentElevatedTrend(history);
@@ -885,6 +1248,56 @@ function renderCommunity(){
     </div>`;
   }).join('');
 }
+
+function communityRecentRank(patient){
+  return {'Chai Mei Ling':4, 'Bakar anak Jalong':3, 'Siti Aminah':2, 'Ranggong anak Igoh':1}[patient.name.en] || 0;
+}
+renderCommunity = function(){
+  const riskOrder = {high:3, attention:2, normal:1};
+  const host = document.getElementById('communityList');
+  const filtered = communityPatients
+    .filter(p=>communityFilter==='all' || p.risk===communityFilter)
+    .sort((a,b)=>{
+      if(communitySort === 'recent') return communityRecentRank(b) - communityRecentRank(a);
+      return (riskOrder[b.risk]-riskOrder[a.risk]) || (communityRecentRank(b)-communityRecentRank(a));
+    });
+
+  document.querySelectorAll('[data-community-filter]').forEach(btn=>{
+    btn.classList.toggle('active', btn.dataset.communityFilter===communityFilter);
+  });
+  const sortSelect = document.getElementById('communitySort');
+  if(sortSelect) sortSelect.value = communitySort;
+
+  if(!filtered.length){
+    host.innerHTML = `<div class="empty-state">${t('communityEmpty')}</div>`;
+    return;
+  }
+
+  host.innerHTML = filtered.map(p=>{
+    const initials = p.name.en.split(' ').map(w=>w[0]).slice(0,2).join('');
+    return `
+    <div class="patient-card">
+      <div class="patient-left">
+        <div class="avatar">${escapeHtml(initials)}</div>
+        <div>
+          <div class="patient-name">${escapeHtml(p.name[currentLang])}</div>
+          <div class="patient-meta">${escapeHtml(p.village[currentLang])} · ${escapeHtml(p.updated[currentLang])}</div>
+        </div>
+      </div>
+      <span class="risk-pill ${p.risk}"><span class="dot"></span>${escapeHtml(t('risk'+cap(p.risk)))}</span>
+    </div>`;
+  }).join('');
+};
+document.querySelectorAll('[data-community-filter]').forEach(btn=>{
+  btn.onclick = ()=>{
+    communityFilter = btn.dataset.communityFilter;
+    renderCommunity();
+  };
+});
+document.getElementById('communitySort').onchange = e=>{
+  communitySort = e.target.value;
+  renderCommunity();
+};
 
 /* ================= NAV / TABS ================= */
 function showTab(name){
