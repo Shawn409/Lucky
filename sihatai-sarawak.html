@@ -551,12 +551,49 @@ input.is-invalid{border-color:var(--risk-high) !important; background:#FFF8F7 !i
 .spinner{width:16px;height:16px;border-radius:50%; border:2.5px solid var(--border); border-top-color:var(--teal); animation:spin .7s linear infinite;}
 @keyframes spin{to{transform:rotate(360deg);}}
 
-.weekly-list{list-style:none; padding:0; margin:0;}
+.weekly-list{list-style:none; padding:0; margin:0; display:grid; gap:0;}
 .weekly-list li{
-  display:flex; align-items:center; justify-content:space-between; padding:9px 0; border-bottom:1px dashed var(--border);
+  display:grid;
+  grid-template-columns:104px minmax(0,1fr) auto;
+  gap:12px;
+  align-items:center;
+  padding:12px 0 12px 18px;
+  border-bottom:1px dashed var(--border);
   font-size:13.5px;
+  position:relative;
+}
+.weekly-list li::before{
+  content:"";
+  position:absolute;
+  left:0;
+  top:18px;
+  width:9px;
+  height:9px;
+  border-radius:50%;
+  background:var(--teal);
+  box-shadow:0 0 0 4px #E7F3EB;
+}
+.weekly-list li::after{
+  content:"";
+  position:absolute;
+  left:4px;
+  top:31px;
+  bottom:-8px;
+  width:1px;
+  background:var(--border);
 }
 .weekly-list li:last-child{border-bottom:none;}
+.weekly-list li:last-child::after{display:none;}
+.timeline-time{display:grid; gap:2px;}
+.timeline-time strong{font-family:'IBM Plex Mono', monospace; font-size:13px; color:var(--teal-dark);}
+.timeline-time small{font-size:11.5px; color:var(--ink-soft);}
+.timeline-values{display:grid; gap:4px; min-width:0;}
+.timeline-values .mono{font-size:13px;}
+.timeline-meta{font-size:12px; color:var(--ink-soft);}
+@media(max-width:640px){
+  .weekly-list li{grid-template-columns:1fr; align-items:start;}
+  .weekly-list .risk-pill{justify-self:start;}
+}
 
 /* Trend page */
 .chart-card canvas{max-height:260px;}
@@ -1089,7 +1126,7 @@ input[type=range]{width:100%; accent-color:var(--teal);}
     </div>
 
     <div class="card" style="margin-top:16px;">
-      <h3 style="margin:0 0 10px; font-size:14.5px;" data-i18n="dailyLogTitle">Daily log</h3>
+      <h3 style="margin:0 0 10px; font-size:14.5px;" data-i18n="dailyLogTitle">Submission timeline</h3>
       <ul class="weekly-list" id="weeklyList"></ul>
     </div>
   </section>
@@ -1231,10 +1268,10 @@ en:{
   mentalScoresTitle:"Official test score log", mentalScoresSub:"After completing a MENTARI test, enter the score here so CareU can keep a simple trend.",
   mentalScoreReady:"Ready", saveMentalScore:"Save score", mentalScoreEmpty:"No official test scores saved yet.",
   mentalScoreSavedToast:"Mental health score saved on this device.", mentalScoreValidationEmpty:"Enter at least one official test score before saving.", mentalScoreValidationRange:"Scores must stay within the range shown in each field.",
-  trendTitle:"Weekly Trend", trendSub:"Last 7 days",
+  trendTitle:"Weekly Trend", trendSub:"Last 7 days", trendPrevious:"vs previous", submittedAt:"Submitted",
   bpChartTitle:"Blood Pressure (mmHg)", glucoseChartTitle:"Blood Glucose (mg/dL)",
   abnormalLabel:"Abnormal readings this week", adherenceLabel:"Medication adherence", directionLabel:"Overall BP direction", avgSleepLabel:"Average sleep",
-  dailyLogTitle:"Daily log",
+  dailyLogTitle:"Submission timeline",
   footerNote:"Prototype for demonstration only. Starts with demo data and saves changes locally — not connected to real medical devices or hospital systems.",
   riskNormal:"Normal", riskAttention:"Needs Attention", riskHigh:"High Risk",
   riskNormalMsg:"Today's readings are within the patient's usual healthy range. Keep up the daily logging.",
@@ -1248,7 +1285,7 @@ en:{
   futureRiskLowMsg:"Current patterns look relatively stable. Keep daily monitoring.",
   futureRiskModerateMsg:"CareU sees a moderate watch pattern if the current readings continue over the next 7 days.",
   futureRiskHighMsg:"CareU sees a high watch pattern if elevated readings continue. Consider contacting a healthcare professional if this persists.",
-  factorRisingBP:"rising BP", factorPersistentBP:"3-day elevated BP", factorMissedMed:"missed medication", factorShortSleep:"short sleep", factorHighGlucose:"glucose spike", factorSymptoms:"symptoms reported", factorStable:"stable pattern",
+  factorRisingBP:"rising BP", factorPersistentBP:"3-submission elevated BP", factorMissedMed:"missed medication", factorShortSleep:"short sleep", factorHighGlucose:"glucose spike", factorSymptoms:"symptoms reported", factorStable:"stable pattern",
   symDizziness:"Dizziness", symFatigue:"Fatigue", symHeadache:"Headache", symNone:"None",
   medYes:"Medication taken", medNo:"Medication missed",
   medReminderTitle:"Medication reminder", reminderTimeLabel:"Reminder time", reminderOn:"On", reminderOff:"Off",
@@ -1260,12 +1297,12 @@ en:{
   exportCsv:"Export CSV", printReport:"Print / PDF", csvToast:"Clinic CSV downloaded.", printToast:"Clinic report is ready for PDF or printing.",
   filterAll:"All", sortBy:"Sort", sortRisk:"Risk first", sortRecent:"Recently updated", communityEmpty:"No patients match this filter.",
   reportTitle:"Clinic report", reportRange:"Report range", reportGenerated:"Generated", reportPatient:"Patient", reportLatestRisk:"Latest risk",
-  reportAbnormal:"Abnormal days", reportAdherence:"Medication adherence", reportBpDirection:"BP direction", reportDate:"Date",
+  reportAbnormal:"Abnormal submissions", reportAdherence:"Medication adherence", reportBpDirection:"BP direction", reportDate:"Date", reportSubmitTime:"Submit time",
   reportSystolic:"Systolic", reportDiastolic:"Diastolic", reportGlucose:"Glucose", reportHeartRate:"Heart rate",
   reportMedication:"Medication", reportSymptoms:"Symptoms", reportSleep:"Sleep", reportRisk:"Risk", reportPersonalReview:"Personal review", reportMentalWatch:"Mental watch",
   futureWatchLabel:"Future watch", followupToday:"Check in today", followupThisWeek:"Review this week", noFollowup:"Routine monitoring",
   loadingSummary:"Generating local summary…",
-  savedToast:"Saved — today's entry updated",
+  savedToast:"Saved — submission recorded",
   savedLocalToast:"Saved on this device.",
   offlineEntryNote:"You're offline. Entries are saved on this device.",
   generatingErr:"CareU is using the free rule-based summary mode.",
@@ -1333,10 +1370,10 @@ bm:{
   mentalScoresTitle:"Log skor ujian rasmi", mentalScoresSub:"Selepas melengkapkan ujian MENTARI, masukkan skor di sini supaya CareU boleh menyimpan trend ringkas.",
   mentalScoreReady:"Sedia", saveMentalScore:"Simpan skor", mentalScoreEmpty:"Belum ada skor ujian rasmi disimpan.",
   mentalScoreSavedToast:"Skor kesihatan mental disimpan pada peranti ini.", mentalScoreValidationEmpty:"Masukkan sekurang-kurangnya satu skor ujian rasmi sebelum menyimpan.", mentalScoreValidationRange:"Skor mesti berada dalam julat yang ditunjukkan pada setiap medan.",
-  trendTitle:"Trend Mingguan", trendSub:"7 hari terakhir",
+  trendTitle:"Trend Mingguan", trendSub:"7 hari terakhir", trendPrevious:"berbanding sebelum", submittedAt:"Dihantar",
   bpChartTitle:"Tekanan Darah (mmHg)", glucoseChartTitle:"Gula Darah (mg/dL)",
   abnormalLabel:"Bacaan luar biasa minggu ini", adherenceLabel:"Pematuhan ubat", directionLabel:"Arah tekanan darah keseluruhan", avgSleepLabel:"Purata tidur",
-  dailyLogTitle:"Log harian",
+  dailyLogTitle:"Garis masa rekod",
   footerNote:"Prototaip untuk tujuan demonstrasi sahaja. Bermula dengan data demo dan menyimpan perubahan setempat — tidak disambungkan kepada peranti perubatan atau sistem hospital sebenar.",
   riskNormal:"Normal", riskAttention:"Perlu Perhatian", riskHigh:"Risiko Tinggi",
   riskNormalMsg:"Bacaan hari ini berada dalam julat sihat biasa pesakit. Teruskan catatan harian.",
@@ -1350,7 +1387,7 @@ bm:{
   futureRiskLowMsg:"Corak semasa kelihatan agak stabil. Teruskan pemantauan harian.",
   futureRiskModerateMsg:"CareU melihat corak pemantauan sederhana jika bacaan semasa berterusan dalam 7 hari seterusnya.",
   futureRiskHighMsg:"CareU melihat corak pemantauan tinggi jika bacaan tinggi berterusan. Pertimbangkan untuk menghubungi profesional kesihatan jika ia berterusan.",
-  factorRisingBP:"tekanan darah menaik", factorPersistentBP:"3 hari tekanan darah tinggi", factorMissedMed:"ubat tertinggal", factorShortSleep:"tidur pendek", factorHighGlucose:"gula darah melonjak", factorSymptoms:"simptom direkodkan", factorStable:"corak stabil",
+  factorRisingBP:"tekanan darah menaik", factorPersistentBP:"3 rekod tekanan darah tinggi", factorMissedMed:"ubat tertinggal", factorShortSleep:"tidur pendek", factorHighGlucose:"gula darah melonjak", factorSymptoms:"simptom direkodkan", factorStable:"corak stabil",
   symDizziness:"Pening", symFatigue:"Keletihan", symHeadache:"Sakit kepala", symNone:"Tiada",
   medYes:"Ubat diambil", medNo:"Ubat tidak diambil",
   medReminderTitle:"Peringatan ubat", reminderTimeLabel:"Masa peringatan", reminderOn:"Aktif", reminderOff:"Mati",
@@ -1362,12 +1399,12 @@ bm:{
   exportCsv:"Eksport CSV", printReport:"Cetak / PDF", csvToast:"CSV klinik dimuat turun.", printToast:"Laporan klinik sedia untuk PDF atau cetakan.",
   filterAll:"Semua", sortBy:"Susun", sortRisk:"Risiko dahulu", sortRecent:"Terkini dikemas kini", communityEmpty:"Tiada pesakit sepadan dengan penapis ini.",
   reportTitle:"Laporan klinik", reportRange:"Julat laporan", reportGenerated:"Dijana", reportPatient:"Pesakit", reportLatestRisk:"Risiko terkini",
-  reportAbnormal:"Hari luar biasa", reportAdherence:"Pematuhan ubat", reportBpDirection:"Arah tekanan darah", reportDate:"Tarikh",
+  reportAbnormal:"Rekod luar biasa", reportAdherence:"Pematuhan ubat", reportBpDirection:"Arah tekanan darah", reportDate:"Tarikh", reportSubmitTime:"Masa hantar",
   reportSystolic:"Sistolik", reportDiastolic:"Diastolik", reportGlucose:"Gula darah", reportHeartRate:"Kadar nadi",
   reportMedication:"Ubat", reportSymptoms:"Simptom", reportSleep:"Tidur", reportRisk:"Risiko", reportPersonalReview:"Semakan peribadi", reportMentalWatch:"Pemantauan mental",
   futureWatchLabel:"Pemantauan masa depan", followupToday:"Semak hari ini", followupThisWeek:"Semak minggu ini", noFollowup:"Pemantauan rutin",
   loadingSummary:"Menjana ringkasan setempat…",
-  savedToast:"Disimpan — catatan hari ini dikemas kini",
+  savedToast:"Disimpan — rekod dihantar",
   savedLocalToast:"Disimpan pada peranti ini.",
   offlineEntryNote:"Anda luar talian. Catatan disimpan pada peranti ini.",
   generatingErr:"CareU menggunakan mod ringkasan percuma berasaskan peraturan.",
@@ -1435,10 +1472,10 @@ zh:{
   mentalScoresTitle:"官方测试分数记录", mentalScoresSub:"完成 MENTARI 测试后，可在这里输入分数，让 CareU 保存简单趋势。",
   mentalScoreReady:"可记录", saveMentalScore:"保存分数", mentalScoreEmpty:"尚未保存官方测试分数。",
   mentalScoreSavedToast:"心理健康分数已保存在本设备。", mentalScoreValidationEmpty:"保存前请至少输入一个官方测试分数。", mentalScoreValidationRange:"分数必须在每个栏位显示的范围内。",
-  trendTitle:"每周趋势", trendSub:"最近 7 天",
+  trendTitle:"每周趋势", trendSub:"最近 7 天", trendPrevious:"较上次", submittedAt:"提交时间",
   bpChartTitle:"血压 (mmHg)", glucoseChartTitle:"血糖 (mg/dL)",
   abnormalLabel:"本周异常记录次数", adherenceLabel:"服药依从率", directionLabel:"整体血压走势", avgSleepLabel:"平均睡眠",
-  dailyLogTitle:"每日记录",
+  dailyLogTitle:"提交时间线",
   footerNote:"此为演示原型，初始使用 demo 数据，并会把修改保存在本设备，未连接真实医疗设备或医院系统。",
   riskNormal:"正常", riskAttention:"需要注意", riskHigh:"高风险",
   riskNormalMsg:"今日数据处于患者平常的健康范围内，请继续每日记录。",
@@ -1452,7 +1489,7 @@ zh:{
   futureRiskLowMsg:"目前趋势相对稳定，请继续每日监测。",
   futureRiskModerateMsg:"如果目前数据持续，CareU 认为未来 7 天需要中等程度观察。",
   futureRiskHighMsg:"如果偏高数据持续，CareU 认为未来观察风险较高；若情况持续，请考虑联系医护人员。",
-  factorRisingBP:"血压上升", factorPersistentBP:"连续 3 天血压偏高", factorMissedMed:"漏服药", factorShortSleep:"睡眠不足", factorHighGlucose:"血糖升高", factorSymptoms:"有症状记录", factorStable:"趋势稳定",
+  factorRisingBP:"血压上升", factorPersistentBP:"连续 3 笔血压偏高", factorMissedMed:"漏服药", factorShortSleep:"睡眠不足", factorHighGlucose:"血糖升高", factorSymptoms:"有症状记录", factorStable:"趋势稳定",
   symDizziness:"头晕", symFatigue:"疲倦", symHeadache:"头痛", symNone:"无",
   medYes:"已服药", medNo:"未服药",
   medReminderTitle:"服药提醒", reminderTimeLabel:"提醒时间", reminderOn:"开启", reminderOff:"关闭",
@@ -1464,12 +1501,12 @@ zh:{
   exportCsv:"导出 CSV", printReport:"打印 / PDF", csvToast:"诊所 CSV 已下载。", printToast:"诊所报告已准备好打印或保存 PDF。",
   filterAll:"全部", sortBy:"排序", sortRisk:"风险优先", sortRecent:"最近更新", communityEmpty:"没有符合此筛选的病人。",
   reportTitle:"诊所报告", reportRange:"报告范围", reportGenerated:"生成时间", reportPatient:"病人", reportLatestRisk:"最新风险",
-  reportAbnormal:"异常天数", reportAdherence:"服药依从率", reportBpDirection:"血压方向", reportDate:"日期",
+  reportAbnormal:"异常提交次数", reportAdherence:"服药依从率", reportBpDirection:"血压方向", reportDate:"日期", reportSubmitTime:"提交时间",
   reportSystolic:"收缩压", reportDiastolic:"舒张压", reportGlucose:"血糖", reportHeartRate:"心率",
   reportMedication:"服药", reportSymptoms:"症状", reportSleep:"睡眠", reportRisk:"风险", reportPersonalReview:"个人审查", reportMentalWatch:"心理观察",
   futureWatchLabel:"未来观察", followupToday:"今日跟进", followupThisWeek:"本周复查", noFollowup:"常规监测",
   loadingSummary:"正在生成本地摘要…",
-  savedToast:"已保存 — 今日记录已更新",
+  savedToast:"已保存 — 本次提交已记录",
   savedLocalToast:"已保存在本设备。",
   offlineEntryNote:"您目前处于离线状态，记录会保存在本设备。",
   generatingErr:"CareU 正在使用免费的规则式摘要模式。",
@@ -1488,12 +1525,71 @@ const SYMPTOM_KEYS = ['dizziness','fatigue','headache','none'];
 function fmtDate(d){
   return d.toLocaleDateString(currentLang==='zh'?'zh-CN':(currentLang==='bm'?'ms-MY':'en-GB'), {month:'short', day:'numeric'});
 }
-function isoDate(d){ return d.toISOString().slice(0,10); }
+function isoDate(d){ return localDateKey(d); }
 function localDateKey(d){
   return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
 }
 function clockTime(d){
   return `${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`;
+}
+function dateWithClock(dateKey, time='08:00'){
+  const [hour='08', minute='00'] = String(time).split(':');
+  const d = new Date(`${dateKey}T00:00:00`);
+  d.setHours(Number(hour)||0, Number(minute)||0, 0, 0);
+  return d;
+}
+function entryTimestamp(entry){
+  if(entry && entry.dateObj instanceof Date && !Number.isNaN(entry.dateObj.getTime())) return entry.dateObj.getTime();
+  const parsed = new Date(entry && entry.submittedAt ? entry.submittedAt : Date.now());
+  return Number.isNaN(parsed.getTime()) ? Date.now() : parsed.getTime();
+}
+function compareEntries(a,b){
+  return entryTimestamp(a) - entryTimestamp(b);
+}
+const DEFAULT_SUBMIT_TIMES = ['08:10','09:25','14:40','18:05','20:30','07:55','21:15'];
+function normaliseHistoryEntry(entry, index=0){
+  const rawSubmitted = entry.submittedAt || entry.createdAt || entry.savedAt || '';
+  let dateObj = rawSubmitted ? new Date(rawSubmitted) : null;
+  if(!dateObj || Number.isNaN(dateObj.getTime())){
+    if(entry.dateObj instanceof Date && !Number.isNaN(entry.dateObj.getTime())) dateObj = new Date(entry.dateObj);
+    else dateObj = dateWithClock(entry.date || localDateKey(new Date()), entry.submitTime || DEFAULT_SUBMIT_TIMES[index % DEFAULT_SUBMIT_TIMES.length]);
+  }
+  if(Number.isNaN(dateObj.getTime())) dateObj = new Date();
+  return {
+    date: localDateKey(dateObj),
+    dateObj,
+    submittedAt: dateObj.toISOString(),
+    systolic: Number(entry.systolic) || 0,
+    diastolic: Number(entry.diastolic) || 0,
+    glucose: Number(entry.glucose) || 0,
+    hr: Number(entry.hr) || 0,
+    sleep: Number(entry.sleep) || 0,
+    med: Boolean(entry.med),
+    symptoms: Array.isArray(entry.symptoms) && entry.symptoms.length ? entry.symptoms : ['none']
+  };
+}
+function trimAndSortHistory(){
+  history = history.map(normaliseHistoryEntry).sort(compareEntries).slice(-120);
+}
+function trendHistory(){
+  const cutoff = new Date();
+  cutoff.setDate(cutoff.getDate() - 7);
+  cutoff.setHours(0,0,0,0);
+  const entries = history.filter(entry => entryTimestamp(entry) >= cutoff.getTime()).sort(compareEntries);
+  return entries.length ? entries : history.slice(-7).sort(compareEntries);
+}
+function latestEntry(){
+  trimAndSortHistory();
+  return history[history.length-1];
+}
+function formatTimelineDate(entry){
+  return fmtDate(entry.dateObj || new Date(entry.submittedAt));
+}
+function formatTimelineTime(entry){
+  return clockTime(entry.dateObj || new Date(entry.submittedAt));
+}
+function formatChartLabel(entry){
+  return `${formatTimelineDate(entry)} ${formatTimelineTime(entry)}`;
 }
 
 function makeDateSeries(n){
@@ -1518,7 +1614,7 @@ let patientProfile = {
   email:''
 };
 
-// Simulated week: BP trending upward the last 3 days, one glucose spike, two missed meds.
+// Simulated week: BP trending upward in the last 3 submissions, one glucose spike, two missed meds.
 const rawWeek = [
   {systolic:128, diastolic:82, glucose:118, hr:76, sleep:7.2, med:true,  symptoms:['none']},
   {systolic:131, diastolic:84, glucose:126, hr:78, sleep:6.8, med:true,  symptoms:['none']},
@@ -1529,11 +1625,11 @@ const rawWeek = [
   {systolic:161, diastolic:99, glucose:155, hr:90, sleep:4.7, med:true,  symptoms:['headache']},
 ];
 
-let history = dateSeries.map((d,i)=>({
+let history = dateSeries.map((d,i)=>normaliseHistoryEntry({
   date: isoDate(d),
-  dateObj: d,
+  submitTime: DEFAULT_SUBMIT_TIMES[i],
   ...rawWeek[i]
-}));
+}, i));
 
 let draftEntry = null; // holds in-progress form state for today
 let medicationReminder = {enabled:false, time:'08:00', lastFiredDate:null};
@@ -1547,6 +1643,7 @@ const API_BASE = '';
 function serialiseEntry(entry){
   return {
     date: entry.date,
+    submittedAt: entry.submittedAt,
     systolic: entry.systolic,
     diastolic: entry.diastolic,
     glucose: entry.glucose,
@@ -1571,17 +1668,8 @@ function applySavedState(saved){
     patientProfile = {...patientProfile, ...saved.patientProfile};
   }
   if(Array.isArray(saved.history)){
-    const savedByDate = new Map(saved.history.map(entry => [entry.date, entry]));
-    history = history.map(entry => {
-      const savedEntry = savedByDate.get(entry.date);
-      if(!savedEntry) return entry;
-      return {
-        ...entry,
-        ...savedEntry,
-        dateObj: entry.dateObj,
-        symptoms: Array.isArray(savedEntry.symptoms) && savedEntry.symptoms.length ? savedEntry.symptoms : ['none']
-      };
-    });
+    const savedEntries = saved.history.map(normaliseHistoryEntry).sort(compareEntries);
+    if(savedEntries.length) history = savedEntries.slice(-120);
   }
   if(saved.medicationReminder && typeof saved.medicationReminder === 'object'){
     medicationReminder = {...medicationReminder, ...saved.medicationReminder};
@@ -1852,9 +1940,10 @@ function riskReasons(entry){
 }
 function persistentElevatedTrend(hist){
   const last3 = hist.slice(-3);
-  return last3.every(e => assessBP(e.systolic,e.diastolic) !== 'normal');
+  return last3.length >= 3 && last3.every(e => assessBP(e.systolic,e.diastolic) !== 'normal');
 }
 function bpDirection(hist){
+  if(!hist.length) return 'flat';
   const first = hist[0], last = hist[hist.length-1];
   const diff = last.systolic - first.systolic;
   if(diff >= 8) return 'up';
@@ -1862,6 +1951,7 @@ function bpDirection(hist){
   return 'flat';
 }
 function averageSleep(hist=history){
+  if(!hist.length) return 0;
   return hist.reduce((sum,e)=>sum+(Number(e.sleep)||0),0)/hist.length;
 }
 function genderLabel(gender=patientProfile.gender){
@@ -1874,11 +1964,12 @@ function patientLine(){
   return `${patientProfile.name[currentLang] || patientProfile.name.en} · ${patientProfile.age} ${currentLang==='zh'?'岁':(currentLang==='bm'?'tahun':'y/o')} · ${genderLabel()} · ${patientProfile.village}, ${city}`;
 }
 function futureRiskWatch(){
-  const today = history[history.length-1];
-  const bpUp = bpDirection(history)==='up';
-  const persistent = persistentElevatedTrend(history);
-  const missed = history.filter(e=>!e.med).length;
-  const avgSleep = averageSleep(history);
+  const week = trendHistory();
+  const today = latestEntry();
+  const bpUp = bpDirection(week)==='up';
+  const persistent = persistentElevatedTrend(week);
+  const missed = week.filter(e=>!e.med).length;
+  const avgSleep = averageSleep(week);
   const hasSymptoms = today.symptoms.some(s=>s!=='none');
   const highGlucose = assessGlucose(today.glucose) !== 'normal';
   const factors = [];
@@ -1917,12 +2008,13 @@ function addUnique(list, item){
   if(item && !list.includes(item)) list.push(item);
 }
 function mentalHealthWatch(){
-  const today = history[history.length-1];
+  const week = trendHistory();
+  const today = latestEntry();
   const scoreWatch = mentalScoreLevel(latestMentalScore());
   const bpLevel = assessBP(today.systolic,today.diastolic);
   const glucoseLevel = assessGlucose(today.glucose);
   const hrLevel = assessHR(today.hr);
-  const missedThisWeek = history.filter(e=>!e.med).length;
+  const missedThisWeek = week.filter(e=>!e.med).length;
   const factors = [];
   let score = 0;
 
@@ -1955,7 +2047,8 @@ function reviewMessage(level){
   return t('healthReview'+cap(level)+'Msg');
 }
 function personalHealthReview(){
-  const today = history[history.length-1];
+  const week = trendHistory();
+  const today = latestEntry();
   const bpLevel = assessBP(today.systolic,today.diastolic);
   const glucoseLevel = assessGlucose(today.glucose);
   const hrLevel = assessHR(today.hr);
@@ -1975,7 +2068,7 @@ function personalHealthReview(){
     addUnique(factors, `${t('statBP')}: ${t('risk'+cap(bpLevel))}`);
     addUnique(actions, bpLevel === 'high' ? t('actionClinic') : t('actionRecheckBp'));
   }
-  if(persistentElevatedTrend(history)){
+  if(persistentElevatedTrend(week)){
     physicalScore += 2;
     addUnique(factors, t('factorPersistentBP'));
     addUnique(actions, t('actionClinic'));
@@ -2041,10 +2134,10 @@ function personalHealthReview(){
 
 /* ================= RENDER: DASHBOARD ================= */
 function renderDashboard(){
-  const today = history[history.length-1];
-  const yesterday = history[history.length-2];
+  const today = latestEntry();
+  const previous = history[history.length-2] || today;
   const risk = overallRisk(today);
-  const persistent = persistentElevatedTrend(history);
+  const persistent = persistentElevatedTrend(trendHistory());
 
   document.getElementById('patientLine').textContent = patientLine();
   document.getElementById('todayDateLabel').textContent = fmtDate(today.dateObj);
@@ -2054,9 +2147,9 @@ function renderDashboard(){
   const reasons = riskReasons(today);
   let extra = '';
   if(persistent && risk!=='normal'){
-    extra = currentLang==='zh' ? ' 血压已连续三天高于平常水平，建议持续监测。'
-      : currentLang==='bm' ? ' Tekanan darah kekal lebih tinggi daripada biasa selama tiga hari berturut-turut — sila terus pantau.'
-      : ' Blood pressure has remained higher than usual for three consecutive days — please continue monitoring.';
+    extra = currentLang==='zh' ? ' 血压已连续三笔记录高于平常水平，建议持续监测。'
+      : currentLang==='bm' ? ' Tekanan darah kekal lebih tinggi daripada biasa untuk tiga rekod berturut-turut — sila terus pantau.'
+      : ' Blood pressure has remained higher than usual for three consecutive submissions — please continue monitoring.';
   }
   const icon = risk==='high' ? '⚠️' : risk==='attention' ? '🔶' : '✅';
   bannerHost.innerHTML = `
@@ -2074,8 +2167,8 @@ function renderDashboard(){
     if(curr<prev) return {cls:'down', glyph:'↓'};
     return {cls:'', glyph:'→'};
   };
-  const bpTrend = trendArrow(today.systolic, yesterday.systolic);
-  const gTrend = trendArrow(today.glucose, yesterday.glucose);
+  const bpTrend = trendArrow(today.systolic, previous.systolic);
+  const gTrend = trendArrow(today.glucose, previous.glucose);
 
   const cards = [
     {label:t('statBP'), value:`${today.systolic}/${today.diastolic}`, unit:'mmHg', trend:bpTrend, risk:assessBP(today.systolic,today.diastolic)},
@@ -2088,7 +2181,7 @@ function renderDashboard(){
     <div class="card stat-card">
       <div class="label">${c.label}</div>
       <div class="value" style="${c.isRiskCard?`font-size:19px;`:''}">${c.value}<span class="unit">${c.unit}</span></div>
-      ${c.trend ? `<div class="trend ${c.trend.cls}">${c.trend.glyph} ${currentLang==='zh'?'较昨日':(currentLang==='bm'?'berbanding semalam':'vs yesterday')}</div>${c.risk !== 'normal' ? `<div class="trend"><span class="risk-pill ${c.risk}"><span class="dot"></span>${t('risk'+cap(c.risk))}</span></div>` : ''}` : `<div class="trend"><span class="risk-pill ${c.risk}"><span class="dot"></span>${t('risk'+cap(c.risk))}</span></div>`}
+      ${c.trend ? `<div class="trend ${c.trend.cls}">${c.trend.glyph} ${t('trendPrevious')}</div>${c.risk !== 'normal' ? `<div class="trend"><span class="risk-pill ${c.risk}"><span class="dot"></span>${t('risk'+cap(c.risk))}</span></div>` : ''}` : `<div class="trend"><span class="risk-pill ${c.risk}"><span class="dot"></span>${t('risk'+cap(c.risk))}</span></div>`}
     </div>
   `).join('');
 
@@ -2365,7 +2458,7 @@ function renderMedicationReminder(){
   if(!timeInput || !status || !pill) return;
 
   timeInput.value = medicationReminder.time;
-  const today = history[history.length-1];
+  const today = latestEntry();
   if(medicationReminder.enabled){
     status.textContent = `${t('reminderActive')} ${medicationReminder.time}${today.med ? `. ${t('reminderTakenToday')}` : '.'}`;
     pill.className = 'risk-pill normal';
@@ -2476,7 +2569,7 @@ function validateEntry(){
   return {ok:errors.length===0, errors, invalidIds};
 }
 function initDraft(){
-  const today = history[history.length-1];
+  const today = latestEntry();
   draftEntry = {systolic:today.systolic, diastolic:today.diastolic, glucose:today.glucose, hr:today.hr, sleep:today.sleep, med:today.med, symptoms:[...today.symptoms]};
 }
 function renderEntryForm(){
@@ -2526,8 +2619,15 @@ document.getElementById('saveEntryBtn').onclick = ()=>{
     showToast(validation.errors[0]);
     return;
   }
-  const today = history[history.length-1];
-  Object.assign(today, draftEntry);
+  const now = new Date();
+  history.push(normaliseHistoryEntry({
+    date: localDateKey(now),
+    submittedAt: now.toISOString(),
+    ...draftEntry,
+    symptoms: [...draftEntry.symptoms]
+  }, history.length));
+  trimAndSortHistory();
+  draftEntry = null;
   showEntryValidation([]);
   saveState();
   showToast(`${t('savedToast')}. ${t('savedLocalToast')}`);
@@ -2610,7 +2710,8 @@ function drawFallbackLineChart(canvas, labels, datasets){
   });
 }
 function renderTrend(){
-  const labels = history.map(e=>fmtDate(e.dateObj));
+  const entries = trendHistory();
+  const labels = entries.map(formatChartLabel);
 
   const bpCtx = document.getElementById('bpChart').getContext('2d');
   const gCtx = document.getElementById('glucoseChart').getContext('2d');
@@ -2620,8 +2721,8 @@ function renderTrend(){
     bpChartInstance = new Chart(bpCtx, {
       type:'line',
       data:{ labels, datasets:[
-        {label:'Systolic', data:history.map(e=>e.systolic), borderColor:'#1E5C55', backgroundColor:'rgba(30,92,85,0.08)', tension:0.4, fill:true, pointRadius:3, borderWidth:2.5},
-        {label:'Diastolic', data:history.map(e=>e.diastolic), borderColor:'#E0A94A', backgroundColor:'rgba(224,169,74,0.08)', tension:0.4, fill:true, pointRadius:3, borderWidth:2.5},
+        {label:'Systolic', data:entries.map(e=>e.systolic), borderColor:'#1E5C55', backgroundColor:'rgba(30,92,85,0.08)', tension:0.4, fill:true, pointRadius:3, borderWidth:2.5},
+        {label:'Diastolic', data:entries.map(e=>e.diastolic), borderColor:'#E0A94A', backgroundColor:'rgba(224,169,74,0.08)', tension:0.4, fill:true, pointRadius:3, borderWidth:2.5},
       ]},
       options:{ responsive:true, plugins:{legend:{position:'bottom', labels:{boxWidth:10,font:{size:11}}}}, scales:{y:{grid:{color:'#EEF1EB'}}, x:{grid:{display:false}}} }
     });
@@ -2630,35 +2731,38 @@ function renderTrend(){
     glucoseChartInstance = new Chart(gCtx, {
       type:'line',
       data:{ labels, datasets:[
-        {label:'Glucose', data:history.map(e=>e.glucose), borderColor:'#4FA8A0', backgroundColor:'rgba(79,168,160,0.12)', tension:0.4, fill:true, pointRadius:3, borderWidth:2.5},
+        {label:'Glucose', data:entries.map(e=>e.glucose), borderColor:'#4FA8A0', backgroundColor:'rgba(79,168,160,0.12)', tension:0.4, fill:true, pointRadius:3, borderWidth:2.5},
       ]},
       options:{ responsive:true, plugins:{legend:{display:false}}, scales:{y:{grid:{color:'#EEF1EB'}}, x:{grid:{display:false}}} }
     });
   } else {
     ensureChartFallbackNote(true);
     drawFallbackLineChart(document.getElementById('bpChart'), labels, [
-      {label:'Systolic', data:history.map(e=>e.systolic), color:'#1E5C55'},
-      {label:'Diastolic', data:history.map(e=>e.diastolic), color:'#E0A94A'}
+      {label:'Systolic', data:entries.map(e=>e.systolic), color:'#1E5C55'},
+      {label:'Diastolic', data:entries.map(e=>e.diastolic), color:'#E0A94A'}
     ]);
     drawFallbackLineChart(document.getElementById('glucoseChart'), labels, [
-      {label:'Glucose', data:history.map(e=>e.glucose), color:'#4FA8A0'}
+      {label:'Glucose', data:entries.map(e=>e.glucose), color:'#4FA8A0'}
     ]);
   }
 
-  const abnormal = history.filter(e=>overallRisk(e)!=='normal').length;
+  const abnormal = entries.filter(e=>overallRisk(e)!=='normal').length;
   document.getElementById('abnormalCount').textContent = abnormal;
-  const adherence = Math.round(100*history.filter(e=>e.med).length/history.length);
+  const adherence = entries.length ? Math.round(100*entries.filter(e=>e.med).length/entries.length) : 0;
   document.getElementById('adherencePct').textContent = adherence+'%';
-  const dir = bpDirection(history);
+  const dir = bpDirection(entries);
   const dirGlyph = dir==='up' ? '↑' : dir==='down' ? '↓' : '→';
   document.getElementById('trendDirection').textContent = dirGlyph;
-  document.getElementById('avgSleep').textContent = `${averageSleep(history).toFixed(1)}h`;
+  document.getElementById('avgSleep').textContent = `${averageSleep(entries).toFixed(1)}h`;
 
-  document.getElementById('weeklyList').innerHTML = history.map(e=>{
+  document.getElementById('weeklyList').innerHTML = entries.slice().reverse().map(e=>{
     const r = overallRisk(e);
     return `<li>
-      <span>${fmtDate(e.dateObj)}</span>
-      <span class="mono">${e.systolic}/${e.diastolic} · ${e.glucose} mg/dL · ${e.sleep}h</span>
+      <span class="timeline-time"><strong>${escapeHtml(formatTimelineTime(e))}</strong><small>${escapeHtml(formatTimelineDate(e))}</small></span>
+      <span class="timeline-values">
+        <span class="mono">${escapeHtml(e.systolic)}/${escapeHtml(e.diastolic)} · ${escapeHtml(e.glucose)} mg/dL · ${escapeHtml(e.hr)} bpm · ${escapeHtml(e.sleep)}h</span>
+        <span class="timeline-meta">${escapeHtml(t('submittedAt'))} · ${escapeHtml(medicationLabel(e.med))} · ${escapeHtml(symptomLabels(e.symptoms))}</span>
+      </span>
       <span class="risk-pill ${r}"><span class="dot"></span>${t('risk'+cap(r))}</span>
     </li>`;
   }).join('');
@@ -2680,23 +2784,26 @@ function bpDirectionText(dir){
   return dir==='up' ? 'Up' : dir==='down' ? 'Down' : 'Stable';
 }
 function clinicMetrics(){
-  const latest = history[history.length-1];
-  const abnormal = history.filter(e=>overallRisk(e)!=='normal').length;
-  const adherence = Math.round(100*history.filter(e=>e.med).length/history.length);
-  const direction = bpDirection(history);
+  const entries = trendHistory();
+  const latest = latestEntry();
+  const abnormal = entries.filter(e=>overallRisk(e)!=='normal').length;
+  const adherence = entries.length ? Math.round(100*entries.filter(e=>e.med).length/entries.length) : 0;
+  const direction = bpDirection(entries);
   const review = personalHealthReview();
   const mental = mentalHealthWatch();
-  return {latest, abnormal, adherence, direction, review, mental};
+  return {latest, abnormal, adherence, direction, review, mental, entries};
 }
 function buildClinicReport(){
   const metrics = clinicMetrics();
-  const reportRange = `${fmtDate(history[0].dateObj)} - ${fmtDate(history[history.length-1].dateObj)}`;
+  const entries = metrics.entries;
+  const reportRange = entries.length ? `${fmtDate(entries[0].dateObj)} - ${fmtDate(entries[entries.length-1].dateObj)}` : '';
   const generated = new Date().toLocaleString(currentLang==='zh'?'zh-CN':(currentLang==='bm'?'ms-MY':'en-GB'));
   const patient = document.getElementById('patientLine').textContent || 'Mr. Bakar anak Jalong';
-  const rows = history.map(e=>{
+  const rows = entries.map(e=>{
     const risk = overallRisk(e);
     return `<tr>
       <td>${escapeHtml(fmtDate(e.dateObj))}</td>
+      <td>${escapeHtml(formatTimelineTime(e))}</td>
       <td>${escapeHtml(e.systolic)}</td>
       <td>${escapeHtml(e.diastolic)}</td>
       <td>${escapeHtml(e.glucose)} mg/dL</td>
@@ -2729,6 +2836,7 @@ function buildClinicReport(){
       <thead>
         <tr>
           <th>${escapeHtml(t('reportDate'))}</th>
+          <th>${escapeHtml(t('reportSubmitTime'))}</th>
           <th>${escapeHtml(t('reportSystolic'))}</th>
           <th>${escapeHtml(t('reportDiastolic'))}</th>
           <th>${escapeHtml(t('reportGlucose'))}</th>
@@ -2752,9 +2860,11 @@ function csvCell(value){
 function exportClinicCsv(){
   const review = personalHealthReview();
   const mental = mentalHealthWatch();
-  const headers = [t('reportDate'), t('reportSystolic'), t('reportDiastolic'), t('reportGlucose'), t('reportHeartRate'), t('reportSleep'), t('reportMedication'), t('reportSymptoms'), t('reportRisk'), t('reportPersonalReview'), t('reportMentalWatch')];
-  const rows = history.map(e=>[
+  const entries = trendHistory();
+  const headers = [t('reportDate'), t('reportSubmitTime'), t('reportSystolic'), t('reportDiastolic'), t('reportGlucose'), t('reportHeartRate'), t('reportSleep'), t('reportMedication'), t('reportSymptoms'), t('reportRisk'), t('reportPersonalReview'), t('reportMentalWatch')];
+  const rows = entries.map(e=>[
     e.date,
+    formatTimelineTime(e),
     e.systolic,
     e.diastolic,
     e.glucose,
@@ -2788,19 +2898,20 @@ document.getElementById('printReportBtn').onclick = printClinicReport;
 
 /* ================= RENDER: AI SUMMARY ================= */
 function ruleBasedSummary(){
-  const persistent = persistentElevatedTrend(history);
-  const abnormalDays = history.filter(e=>overallRisk(e)!=='normal').length;
-  const missed = history.filter(e=>!e.med).length;
-  const dir = bpDirection(history);
-  const sleepAvg = averageSleep(history).toFixed(1);
+  const entries = trendHistory();
+  const persistent = persistentElevatedTrend(entries);
+  const abnormalDays = entries.filter(e=>overallRisk(e)!=='normal').length;
+  const missed = entries.filter(e=>!e.med).length;
+  const dir = bpDirection(entries);
+  const sleepAvg = averageSleep(entries).toFixed(1);
   const latestScore = latestMentalScore();
   const latestScoreLevel = mentalScoreLevel(latestScore).level;
   const review = personalHealthReview();
 
   if(currentLang==='zh'){
-    let s = `本周共有 ${abnormalDays} 天记录到血压、血糖或心率超出平常范围。`;
-    if(persistent) s += ' 血压已连续三天高于平常水平，建议继续密切监测，并考虑咨询医护人员。';
-    s += ` 本周服药依从性为 ${history.length-missed}/${history.length} 天。`;
+    let s = `本周共有 ${abnormalDays} 笔记录显示血压、血糖或心率超出平常范围。`;
+    if(persistent) s += ' 血压已连续三笔记录高于平常水平，建议继续密切监测，并考虑咨询医护人员。';
+    s += ` 本周服药依从性为 ${entries.length-missed}/${entries.length} 笔记录。`;
     s += dir==='up' ? ' 整体血压呈上升趋势。' : dir==='down' ? ' 整体血压呈下降趋势。' : ' 整体血压保持相对稳定。';
     s += ` ${t('avgSleepLabel')}: ${sleepAvg}h.`;
     if(latestScore) s += ` 最新官方心理测试记录显示：${t('risk'+cap(latestScoreLevel))}。`;
@@ -2808,18 +2919,18 @@ function ruleBasedSummary(){
     return s;
   }
   if(currentLang==='bm'){
-    let s = `Sebanyak ${abnormalDays} hari minggu ini mencatatkan tekanan darah, gula darah atau kadar nadi di luar julat biasa.`;
-    if(persistent) s += ' Tekanan darah kekal tinggi selama tiga hari berturut-turut — teruskan pemantauan rapi dan pertimbangkan untuk berjumpa profesional kesihatan.';
-    s += ` Pematuhan ubat minggu ini ialah ${history.length-missed}/${history.length} hari.`;
+    let s = `Sebanyak ${abnormalDays} rekod minggu ini mencatatkan tekanan darah, gula darah atau kadar nadi di luar julat biasa.`;
+    if(persistent) s += ' Tekanan darah kekal tinggi untuk tiga rekod berturut-turut — teruskan pemantauan rapi dan pertimbangkan untuk berjumpa profesional kesihatan.';
+    s += ` Pematuhan ubat minggu ini ialah ${entries.length-missed}/${entries.length} rekod.`;
     s += dir==='up' ? ' Tekanan darah keseluruhan menunjukkan trend menaik.' : dir==='down' ? ' Tekanan darah keseluruhan menunjukkan trend menurun.' : ' Tekanan darah keseluruhan agak stabil.';
     s += ` ${t('avgSleepLabel')}: ${sleepAvg}h.`;
     if(latestScore) s += ` Skor ujian mental rasmi terkini: ${t('risk'+cap(latestScoreLevel))}.`;
     s += ` Tahap semakan kesihatan peribadi hari ini: ${riskLabel(review.level)}. ${review.message}`;
     return s;
   }
-  let s = `The patient recorded elevated blood pressure, glucose, or heart rate on ${abnormalDays} of the last 7 days.`;
-  if(persistent) s += ' Blood pressure has remained higher than usual for three consecutive days. Please continue monitoring and consider contacting a healthcare professional.';
-  s += ` Medication adherence this week was ${history.length-missed}/${history.length} days.`;
+  let s = `The patient recorded elevated blood pressure, glucose, or heart rate in ${abnormalDays} submissions from the last 7 days.`;
+  if(persistent) s += ' Blood pressure has remained higher than usual for three consecutive submissions. Please continue monitoring and consider contacting a healthcare professional.';
+  s += ` Medication adherence this week was ${entries.length-missed}/${entries.length} submissions.`;
   s += dir==='up' ? ' Overall blood pressure shows an upward trend.' : dir==='down' ? ' Overall blood pressure shows a downward trend.' : ' Overall blood pressure has remained fairly stable.';
   s += ` ${t('avgSleepLabel')}: ${sleepAvg}h.`;
   if(latestScore) s += ` Latest official mental health score watch: ${t('risk'+cap(latestScoreLevel))}.`;
