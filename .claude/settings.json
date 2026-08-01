@@ -7,6 +7,10 @@
           {
             "type": "command",
             "command": "C:\\Tools\\entire-ish\\entire-ish.exe hooks claude-code post-task"
+          },
+          {
+            "type": "command",
+            "command": "C:/Tools/entire-ish/entire-ish.exe hooks claude-code post-task"
           }
         ]
       },
@@ -16,6 +20,10 @@
           {
             "type": "command",
             "command": "C:\\Tools\\entire-ish\\entire-ish.exe hooks claude-code post-todo"
+          },
+          {
+            "type": "command",
+            "command": "C:/Tools/entire-ish/entire-ish.exe hooks claude-code post-todo"
           }
         ]
       }
@@ -27,6 +35,10 @@
           {
             "type": "command",
             "command": "C:\\Tools\\entire-ish\\entire-ish.exe hooks claude-code pre-task"
+          },
+          {
+            "type": "command",
+            "command": "C:/Tools/entire-ish/entire-ish.exe hooks claude-code pre-task"
           }
         ]
       }
@@ -38,6 +50,10 @@
           {
             "type": "command",
             "command": "C:\\Tools\\entire-ish\\entire-ish.exe hooks claude-code session-end"
+          },
+          {
+            "type": "command",
+            "command": "C:/Tools/entire-ish/entire-ish.exe hooks claude-code session-end"
           }
         ]
       }
@@ -49,6 +65,10 @@
           {
             "type": "command",
             "command": "C:\\Tools\\entire-ish\\entire-ish.exe hooks claude-code session-start"
+          },
+          {
+            "type": "command",
+            "command": "C:/Tools/entire-ish/entire-ish.exe hooks claude-code session-start"
           }
         ]
       }
@@ -60,6 +80,10 @@
           {
             "type": "command",
             "command": "C:\\Tools\\entire-ish\\entire-ish.exe hooks claude-code stop"
+          },
+          {
+            "type": "command",
+            "command": "C:/Tools/entire-ish/entire-ish.exe hooks claude-code stop"
           }
         ]
       }
@@ -71,6 +95,10 @@
           {
             "type": "command",
             "command": "C:\\Tools\\entire-ish\\entire-ish.exe hooks claude-code user-prompt-submit"
+          },
+          {
+            "type": "command",
+            "command": "C:/Tools/entire-ish/entire-ish.exe hooks claude-code user-prompt-submit"
           }
         ]
       }
