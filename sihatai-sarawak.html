@@ -351,6 +351,29 @@ input[type=number]:focus{border-color:var(--teal); outline:none; background:#fff
 .clinic-disclaimer{margin-top:14px; font-size:12px; line-height:1.5; color:var(--ink-soft);}
 @media(max-width:760px){.clinic-finder{grid-template-columns:1fr;}.clinic-map-wrap,.clinic-map{min-height:320px;height:320px;}}
 
+/* Mental health */
+.mental-layout{display:grid; grid-template-columns:minmax(0,1fr) minmax(280px,.8fr); gap:16px; align-items:start;}
+.mental-card-title{margin:0 0 6px; font-size:17px;}
+.mental-card-sub{margin:0 0 18px; color:var(--ink-soft); font-size:13.5px; line-height:1.5;}
+.range-field{display:grid; gap:8px; margin-bottom:16px;}
+.range-row{display:flex; align-items:center; justify-content:space-between; gap:12px;}
+.range-row label{font-size:12.5px; font-weight:800; text-transform:uppercase; letter-spacing:.04em; color:var(--ink-soft);}
+.range-value{font-family:'IBM Plex Mono', monospace; font-size:14px; font-weight:700; color:var(--teal-dark);}
+input[type=range]{width:100%; accent-color:var(--teal);}
+.range-scale{display:flex; justify-content:space-between; color:var(--ink-soft); font-size:11.5px;}
+.mental-segment{display:flex; flex-wrap:wrap; gap:8px; margin:6px 0 16px;}
+.mental-watch-score{background:#FBFCFA; border:1px solid var(--border); border-radius:12px; padding:14px; margin:12px 0;}
+.mental-watch-score .label{font-size:11px; font-weight:800; text-transform:uppercase; letter-spacing:.06em; color:var(--ink-soft);}
+.mental-watch-score .value{font-family:'IBM Plex Mono', monospace; font-size:28px; font-weight:700; color:var(--teal-dark); margin-top:5px;}
+.test-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-top:16px;}
+.test-card{background:#fff; border:1px solid var(--border); border-radius:14px; padding:16px; display:flex; flex-direction:column; gap:10px;}
+.test-card h3{margin:0; font-size:15px;}
+.test-card p{margin:0; color:var(--ink-soft); font-size:12.5px; line-height:1.45; flex:1;}
+.test-card .btn-secondary{width:100%;}
+@media(max-width:980px){.test-grid{grid-template-columns:repeat(2,1fr);}}
+@media(max-width:760px){.mental-layout{grid-template-columns:1fr;}}
+@media(max-width:520px){.test-grid{grid-template-columns:1fr;}}
+
 /* Community */
 .patient-card{
   display:flex; align-items:center; justify-content:space-between; gap:12px; padding:16px; border-radius:14px;
@@ -422,6 +445,10 @@ input[type=number]:focus{border-color:var(--teal); outline:none; background:#fff
     <button data-tab="summary">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v12H7l-3 3V4z"/></svg>
       <span data-i18n="tabSummary">AI Summary</span>
+    </button>
+    <button data-tab="mental">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7.5-4.6-10-9.3C.3 8 2 4 6 4c2.4 0 3.9 1.3 6 3.6C14.1 5.3 15.6 4 18 4c4 0 5.7 4 4 7.7C19.5 16.4 12 21 12 21z"/></svg>
+      <span data-i18n="tabMental">Mental Health</span>
     </button>
     <button data-tab="trend">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 17l5-6 4 4 8-9"/></svg>
@@ -541,6 +568,71 @@ input[type=number]:focus{border-color:var(--teal); outline:none; background:#fff
     </div>
   </section>
 
+  <!-- ============ MENTAL HEALTH ============ -->
+  <section class="view" id="view-mental">
+    <div class="section-title">
+      <div>
+        <h2 data-i18n="mentalTitle">Mental Health Check-in</h2>
+        <div class="sub" data-i18n="mentalSub">A short wellbeing check connected to sleep, symptoms and medication patterns</div>
+      </div>
+    </div>
+
+    <div class="mental-layout">
+      <div class="card">
+        <h3 class="mental-card-title" data-i18n="moodCheckTitle">Quick mood check</h3>
+        <p class="mental-card-sub" data-i18n="moodCheckSub">Record how you feel today without replacing official screening tests.</p>
+
+        <div class="range-field">
+          <div class="range-row"><label for="mhMood" data-i18n="moodLabel">Mood today</label><span class="range-value" id="moodValue">3/5</span></div>
+          <input type="range" id="mhMood" min="1" max="5" value="3">
+          <div class="range-scale"><span data-i18n="moodLow">Low</span><span data-i18n="moodHigh">Good</span></div>
+        </div>
+
+        <div class="range-field">
+          <div class="range-row"><label for="mhStress" data-i18n="stressLabel">Stress level</label><span class="range-value" id="stressValue">4/10</span></div>
+          <input type="range" id="mhStress" min="0" max="10" value="4">
+        </div>
+
+        <div class="range-field">
+          <div class="range-row"><label for="mhAnxiety" data-i18n="anxietyLabel">Anxiety level</label><span class="range-value" id="anxietyValue">3/10</span></div>
+          <input type="range" id="mhAnxiety" min="0" max="10" value="3">
+        </div>
+
+        <label class="field-label" data-i18n="sleepQualityLabel">Sleep quality</label>
+        <div class="mental-segment">
+          <button class="filter-btn" data-mental-sleep="good" data-i18n="sleepGood">Good</button>
+          <button class="filter-btn active" data-mental-sleep="okay" data-i18n="sleepOkay">Okay</button>
+          <button class="filter-btn" data-mental-sleep="poor" data-i18n="sleepPoor">Poor</button>
+        </div>
+
+        <label class="field-label" data-i18n="supportLabel">Someone to talk to today?</label>
+        <div class="mental-segment">
+          <button class="filter-btn active" data-mental-support="yes" data-i18n="supportYes">Yes</button>
+          <button class="filter-btn" data-mental-support="no" data-i18n="supportNo">No</button>
+        </div>
+      </div>
+
+      <div class="card" id="mentalWatchCard"></div>
+    </div>
+
+    <div class="section-title" style="margin-top:24px;">
+      <div>
+        <h2 data-i18n="mentariTitle">MENTARI official self-tests</h2>
+        <div class="sub" data-i18n="mentariSub">Open MOH MENTARI screening tools when you want a fuller self-test.</div>
+      </div>
+    </div>
+    <div class="test-grid">
+      <div class="test-card"><h3>PHQ-9</h3><p data-i18n="phqDesc">Screens depression symptoms and severity.</p><a class="btn-secondary" href="https://mits.moh.gov.my/Modules/Patient/public-phq-9/" target="_blank" rel="noopener" data-i18n="takeOfficialTest">Take official test</a></div>
+      <div class="test-card"><h3>DASS</h3><p data-i18n="dassDesc">Screens depression, anxiety and stress.</p><a class="btn-secondary" href="https://mits.moh.gov.my/Modules/Patient/public-dass/" target="_blank" rel="noopener" data-i18n="takeOfficialTest">Take official test</a></div>
+      <div class="test-card"><h3>CBI</h3><p data-i18n="cbiDesc">Screens burnout and prolonged exhaustion.</p><a class="btn-secondary" href="https://mits.moh.gov.my/Modules/Patient/public-cbi/" target="_blank" rel="noopener" data-i18n="takeOfficialTest">Take official test</a></div>
+      <div class="test-card"><h3>WHODAS</h3><p data-i18n="whodasDesc">Screens difficulties in daily functioning.</p><a class="btn-secondary" href="https://mits.moh.gov.my/Modules/Patient/public-whodass/" target="_blank" rel="noopener" data-i18n="takeOfficialTest">Take official test</a></div>
+    </div>
+    <div class="disclaimer">
+      <span>⚠️</span>
+      <span data-i18n="mentalDisclaimer">Mental health self-checks are not a diagnosis. If you feel unsafe, at risk of harming yourself, or unable to cope, seek urgent help from local emergency services or a healthcare professional.</span>
+    </div>
+  </section>
+
   <!-- ============ AI SUMMARY ============ -->
   <section class="view" id="view-summary">
     <div class="section-title">
@@ -636,7 +728,7 @@ const I18N = {
 en:{
   appName:"CareU", appTag:"AI-assisted hypertension & diabetes monitoring for rural communities",
   online:"Online · synced", offline:"Offline · will sync later",
-  tabDashboard:"Dashboard", tabEntry:"Daily Entry", tabSummary:"AI Summary", tabTrend:"Weekly Trend", tabClinics:"Find a clinic",
+  tabDashboard:"Dashboard", tabEntry:"Daily Entry", tabSummary:"AI Summary", tabMental:"Mental Health", tabTrend:"Weekly Trend", tabClinics:"Find a clinic",
   clinicFinderTitle:"Find a nearby clinic", clinicFinderSub:"Choose your preference and use your location to search Google Maps.", clinicPreferenceTitle:"Clinic preference", clinicPreferenceSub:"Select the type of clinic you would like to visit.", clinicTypeLabel:"Clinic type", clinicGovernment:"Government clinic", clinicPrivate:"Private clinic", findClinicsBtn:"Use my location", openGoogleMaps:"Open in Google Maps", clinicReady:"Showing nearby", clinicLocating:"Finding your location…", clinicLocationDenied:"Location unavailable — showing clinics in Sarawak.", clinicDisclaimer:"Google Maps results are provided for convenience. Please call the clinic to confirm services, hours and availability.",
   dashTitle:"Patient Dashboard",
   statBP:"Blood Pressure", statGlucose:"Blood Glucose", statHR:"Heart Rate", statSleep:"Sleep", statRisk:"Risk Level",
@@ -649,6 +741,20 @@ en:{
   medLabel:"Medication taken today?", yes:"Yes", no:"No",
   symptomLabel:"Symptoms today",
   saveBtn:"Save today's entry",
+  mentalTitle:"Mental Health Check-in", mentalSub:"A short wellbeing check connected to sleep, symptoms and medication patterns",
+  moodCheckTitle:"Quick mood check", moodCheckSub:"Record how you feel today without replacing official screening tests.",
+  moodLabel:"Mood today", moodLow:"Low", moodHigh:"Good", stressLabel:"Stress level", anxietyLabel:"Anxiety level",
+  sleepQualityLabel:"Sleep quality", sleepGood:"Good", sleepOkay:"Okay", sleepPoor:"Poor",
+  supportLabel:"Someone to talk to today?", supportYes:"Yes", supportNo:"No",
+  mentalWatchTitle:"Mental Health Watch", mentalWatchScore:"Wellbeing watch", mentalWatchLow:"Low", mentalWatchModerate:"Moderate", mentalWatchHigh:"High",
+  mentalWatchLowMsg:"Today's wellbeing check looks relatively steady. Keep tracking mood, sleep and symptoms.",
+  mentalWatchModerateMsg:"CareU sees a moderate wellbeing watch pattern today. Short sleep, stress or symptoms may be affecting self-care.",
+  mentalWatchHighMsg:"CareU sees a high wellbeing watch pattern today. Consider talking to a trusted person or healthcare professional soon.",
+  mentalFactorLowMood:"low mood", mentalFactorStress:"high stress", mentalFactorAnxiety:"high anxiety", mentalFactorPoorSleep:"poor sleep quality", mentalFactorShortSleep:"short sleep duration", mentalFactorNoSupport:"limited support", mentalFactorSymptoms:"physical symptoms", mentalFactorStable:"steady wellbeing pattern",
+  mentariTitle:"MENTARI official self-tests", mentariSub:"Open MOH MENTARI screening tools when you want a fuller self-test.",
+  phqDesc:"Screens depression symptoms and severity.", dassDesc:"Screens depression, anxiety and stress.", cbiDesc:"Screens burnout and prolonged exhaustion.", whodasDesc:"Screens difficulties in daily functioning.",
+  takeOfficialTest:"Take official test",
+  mentalDisclaimer:"Mental health self-checks are not a diagnosis. If you feel unsafe, at risk of harming yourself, or unable to cope, seek urgent help from local emergency services or a healthcare professional.",
   summaryTitle:"AI Health Summary", summarySub:"A plain-language recap of this week's readings",
   genBtn:"Generate summary", aiTag:"AI-generated summary",
   summaryPlaceholder:"Tap \"Generate summary\" to create this week's health recap.",
@@ -693,7 +799,7 @@ en:{
 bm:{
   appName:"CareU", appTag:"Pemantauan tekanan darah tinggi & diabetes berbantukan AI untuk komuniti luar bandar",
   online:"Dalam talian · disegerak", offline:"Luar talian · akan disegerak kemudian",
-  tabDashboard:"Papan Pemuka", tabEntry:"Catatan Harian", tabSummary:"Ringkasan AI", tabTrend:"Trend Mingguan", tabClinics:"Cari klinik",
+  tabDashboard:"Papan Pemuka", tabEntry:"Catatan Harian", tabSummary:"Ringkasan AI", tabMental:"Kesihatan Mental", tabTrend:"Trend Mingguan", tabClinics:"Cari klinik",
   clinicFinderTitle:"Cari klinik berdekatan", clinicFinderSub:"Pilih keutamaan anda dan gunakan lokasi anda untuk mencari di Google Maps.", clinicPreferenceTitle:"Keutamaan klinik", clinicPreferenceSub:"Pilih jenis klinik yang anda ingin lawati.", clinicTypeLabel:"Jenis klinik", clinicGovernment:"Klinik kerajaan", clinicPrivate:"Klinik swasta", findClinicsBtn:"Guna lokasi saya", openGoogleMaps:"Buka dalam Google Maps", clinicReady:"Memaparkan klinik berdekatan", clinicLocating:"Mencari lokasi anda…", clinicLocationDenied:"Lokasi tidak tersedia — memaparkan klinik di Sarawak.", clinicDisclaimer:"Keputusan Google Maps disediakan untuk kemudahan. Sila hubungi klinik untuk mengesahkan perkhidmatan, waktu dan ketersediaan.",
   dashTitle:"Papan Pemuka Pesakit",
   statBP:"Tekanan Darah", statGlucose:"Gula Darah", statHR:"Kadar Nadi", statSleep:"Tidur", statRisk:"Tahap Risiko",
@@ -706,6 +812,20 @@ bm:{
   medLabel:"Sudah ambil ubat hari ini?", yes:"Ya", no:"Tidak",
   symptomLabel:"Simptom hari ini",
   saveBtn:"Simpan catatan hari ini",
+  mentalTitle:"Semakan Kesihatan Mental", mentalSub:"Semakan kesejahteraan ringkas yang dikaitkan dengan tidur, simptom dan corak ubat",
+  moodCheckTitle:"Semakan mood ringkas", moodCheckSub:"Rekod perasaan hari ini tanpa menggantikan ujian saringan rasmi.",
+  moodLabel:"Mood hari ini", moodLow:"Rendah", moodHigh:"Baik", stressLabel:"Tahap tekanan", anxietyLabel:"Tahap keresahan",
+  sleepQualityLabel:"Kualiti tidur", sleepGood:"Baik", sleepOkay:"Sederhana", sleepPoor:"Lemah",
+  supportLabel:"Ada seseorang untuk bercakap hari ini?", supportYes:"Ya", supportNo:"Tidak",
+  mentalWatchTitle:"Pemantauan Kesihatan Mental", mentalWatchScore:"Pemantauan kesejahteraan", mentalWatchLow:"Rendah", mentalWatchModerate:"Sederhana", mentalWatchHigh:"Tinggi",
+  mentalWatchLowMsg:"Semakan kesejahteraan hari ini kelihatan agak stabil. Teruskan menjejak mood, tidur dan simptom.",
+  mentalWatchModerateMsg:"CareU melihat corak pemantauan kesejahteraan sederhana hari ini. Tidur pendek, tekanan atau simptom mungkin menjejaskan penjagaan diri.",
+  mentalWatchHighMsg:"CareU melihat corak pemantauan kesejahteraan tinggi hari ini. Pertimbangkan untuk bercakap dengan orang dipercayai atau profesional kesihatan.",
+  mentalFactorLowMood:"mood rendah", mentalFactorStress:"tekanan tinggi", mentalFactorAnxiety:"keresahan tinggi", mentalFactorPoorSleep:"kualiti tidur lemah", mentalFactorShortSleep:"tempoh tidur pendek", mentalFactorNoSupport:"sokongan terhad", mentalFactorSymptoms:"simptom fizikal", mentalFactorStable:"corak kesejahteraan stabil",
+  mentariTitle:"Ujian kendiri rasmi MENTARI", mentariSub:"Buka alat saringan MOH MENTARI apabila anda mahukan ujian kendiri yang lebih lengkap.",
+  phqDesc:"Menyaring simptom dan keterukan kemurungan.", dassDesc:"Menyaring kemurungan, keresahan dan tekanan.", cbiDesc:"Menyaring kelesuan dan keletihan berpanjangan.", whodasDesc:"Menyaring kesukaran dalam fungsi harian.",
+  takeOfficialTest:"Ambil ujian rasmi",
+  mentalDisclaimer:"Semakan kendiri kesihatan mental bukan diagnosis. Jika anda berasa tidak selamat, berisiko mencederakan diri, atau tidak mampu mengawal keadaan, dapatkan bantuan segera daripada perkhidmatan kecemasan tempatan atau profesional kesihatan.",
   summaryTitle:"Ringkasan Kesihatan AI", summarySub:"Ringkasan mudah faham bacaan minggu ini",
   genBtn:"Jana ringkasan", aiTag:"Ringkasan dijana AI",
   summaryPlaceholder:"Tekan \"Jana ringkasan\" untuk hasilkan ringkasan kesihatan minggu ini.",
@@ -750,7 +870,8 @@ bm:{
 zh:{
   appName:"CareU", appTag:"AI 辅助高血压与糖尿病健康监测 · 服务乡区社区",
   online:"在线 · 已同步", offline:"离线 · 恢复网络后同步",
-  tabDashboard:"健康仪表板", tabEntry:"每日记录", tabSummary:"AI 健康摘要", tabTrend:"每周趋势",
+  tabDashboard:"健康仪表板", tabEntry:"每日记录", tabSummary:"AI 健康摘要", tabMental:"心理健康", tabTrend:"每周趋势", tabClinics:"寻找诊所",
+  clinicFinderTitle:"寻找附近诊所", clinicFinderSub:"选择偏好的诊所类型，并使用你的位置在 Google Maps 搜索。", clinicPreferenceTitle:"诊所偏好", clinicPreferenceSub:"选择你想前往的诊所类型。", clinicTypeLabel:"诊所类型", clinicGovernment:"政府诊所", clinicPrivate:"私人诊所", findClinicsBtn:"使用我的位置", openGoogleMaps:"在 Google Maps 打开", clinicReady:"正在显示附近", clinicLocating:"正在寻找你的位置…", clinicLocationDenied:"无法取得位置 — 显示砂拉越诊所。", clinicDisclaimer:"Google Maps 结果仅供方便参考。请致电诊所确认服务、营业时间和可用性。",
   dashTitle:"患者仪表板",
   statBP:"血压", statGlucose:"血糖", statHR:"心率", statSleep:"睡眠", statRisk:"风险等级",
   medAdherenceTitle:"今日服药情况", editEntry:"编辑今日记录",
@@ -762,6 +883,20 @@ zh:{
   medLabel:"今天是否已服药？", yes:"是", no:"否",
   symptomLabel:"今日症状",
   saveBtn:"保存今日记录",
+  mentalTitle:"心理健康记录", mentalSub:"结合睡眠、症状和服药模式的简短身心状态记录",
+  moodCheckTitle:"快速心情记录", moodCheckSub:"记录今天的感受，但不取代官方筛查测试。",
+  moodLabel:"今日心情", moodLow:"低落", moodHigh:"良好", stressLabel:"压力程度", anxietyLabel:"焦虑程度",
+  sleepQualityLabel:"睡眠质量", sleepGood:"良好", sleepOkay:"普通", sleepPoor:"较差",
+  supportLabel:"今天有人可以倾诉吗？", supportYes:"有", supportNo:"没有",
+  mentalWatchTitle:"心理健康观察", mentalWatchScore:"身心状态观察", mentalWatchLow:"低", mentalWatchModerate:"中等", mentalWatchHigh:"高",
+  mentalWatchLowMsg:"今天的身心状态相对稳定，请继续记录心情、睡眠和症状。",
+  mentalWatchModerateMsg:"CareU 看到今天有中等程度的身心观察信号。睡眠不足、压力或症状可能影响自我照护。",
+  mentalWatchHighMsg:"CareU 看到今天有较高的身心观察信号。建议尽快和可信任的人或医护专业人员谈谈。",
+  mentalFactorLowMood:"心情低落", mentalFactorStress:"压力较高", mentalFactorAnxiety:"焦虑较高", mentalFactorPoorSleep:"睡眠质量较差", mentalFactorShortSleep:"睡眠时长不足", mentalFactorNoSupport:"支持较少", mentalFactorSymptoms:"有身体症状", mentalFactorStable:"身心状态稳定",
+  mentariTitle:"MENTARI 官方自我筛查", mentariSub:"需要更完整的自我筛查时，可打开 MOH MENTARI 官方工具。",
+  phqDesc:"筛查抑郁症状和严重程度。", dassDesc:"筛查抑郁、焦虑和压力。", cbiDesc:"筛查倦怠和长期疲惫。", whodasDesc:"筛查日常功能困难。",
+  takeOfficialTest:"打开官方测试",
+  mentalDisclaimer:"心理健康自我记录不是诊断。如果你感到不安全、有伤害自己的风险，或已经无法应对，请立即向本地紧急服务或医护专业人员求助。",
   summaryTitle:"AI 健康摘要", summarySub:"以简单语言总结本周健康数据",
   genBtn:"生成摘要", aiTag:"AI 生成摘要",
   summaryPlaceholder:"点击「生成摘要」以创建本周健康总结。",
@@ -860,6 +995,7 @@ let history = dateSeries.map((d,i)=>({
 
 let draftEntry = null; // holds in-progress form state for today
 let medicationReminder = {enabled:false, time:'08:00', lastFiredDate:null};
+let mentalCheck = {mood:3, stress:4, anxiety:3, sleepQuality:'okay', support:'yes'};
 
 /* ================= RISK ENGINE ================= */
 function assessBP(sys,dia){
@@ -931,6 +1067,24 @@ function futureRiskWatch(){
   if(score >= 5) return {level:'high', cls:'high', score, factors, message:t('futureRiskHighMsg')};
   if(score >= 2) return {level:'moderate', cls:'attention', score, factors, message:t('futureRiskModerateMsg')};
   return {level:'low', cls:'normal', score, factors, message:t('futureRiskLowMsg')};
+}
+function mentalHealthWatch(){
+  const today = history[history.length-1];
+  const factors = [];
+  let score = 0;
+
+  if(mentalCheck.mood <= 2){ score += 1; factors.push(t('mentalFactorLowMood')); }
+  if(mentalCheck.stress >= 7){ score += 1; factors.push(t('mentalFactorStress')); }
+  if(mentalCheck.anxiety >= 7){ score += 1; factors.push(t('mentalFactorAnxiety')); }
+  if(mentalCheck.sleepQuality === 'poor'){ score += 1; factors.push(t('mentalFactorPoorSleep')); }
+  if(today.sleep < 6){ score += 1; factors.push(t('mentalFactorShortSleep')); }
+  if(mentalCheck.support === 'no'){ score += 1; factors.push(t('mentalFactorNoSupport')); }
+  if(today.symptoms.some(s=>s!=='none')){ score += 1; factors.push(t('mentalFactorSymptoms')); }
+  if(!factors.length) factors.push(t('mentalFactorStable'));
+
+  if(score >= 5) return {level:'high', cls:'high', factors, message:t('mentalWatchHighMsg')};
+  if(score >= 2) return {level:'moderate', cls:'attention', factors, message:t('mentalWatchModerateMsg')};
+  return {level:'low', cls:'normal', factors, message:t('mentalWatchLowMsg')};
 }
 
 /* ================= RENDER: DASHBOARD ================= */
@@ -1005,6 +1159,56 @@ function renderDashboard(){
   medHost.innerHTML = `${today.med ? '💊' : '⛔'} ${today.med ? t('medYes') : t('medNo')}`;
 }
 function cap(s){ return s.charAt(0).toUpperCase()+s.slice(1); }
+
+/* ================= MENTAL HEALTH ================= */
+function renderMentalHealth(){
+  const card = document.getElementById('mentalWatchCard');
+  if(!card) return;
+  document.getElementById('mhMood').value = mentalCheck.mood;
+  document.getElementById('mhStress').value = mentalCheck.stress;
+  document.getElementById('mhAnxiety').value = mentalCheck.anxiety;
+  document.getElementById('moodValue').textContent = `${mentalCheck.mood}/5`;
+  document.getElementById('stressValue').textContent = `${mentalCheck.stress}/10`;
+  document.getElementById('anxietyValue').textContent = `${mentalCheck.anxiety}/10`;
+
+  document.querySelectorAll('[data-mental-sleep]').forEach(btn=>{
+    btn.classList.toggle('active', btn.dataset.mentalSleep===mentalCheck.sleepQuality);
+  });
+  document.querySelectorAll('[data-mental-support]').forEach(btn=>{
+    btn.classList.toggle('active', btn.dataset.mentalSupport===mentalCheck.support);
+  });
+
+  const watch = mentalHealthWatch();
+  card.innerHTML = `
+    <h3 class="mental-card-title">${t('mentalWatchTitle')}</h3>
+    <p class="mental-card-sub">${watch.message}</p>
+    <div class="mental-watch-score">
+      <div class="label">${t('mentalWatchScore')}</div>
+      <div class="value">${t('mentalWatch'+cap(watch.level))}</div>
+      <div style="margin-top:8px;"><span class="risk-pill ${watch.cls}"><span class="dot"></span>${t('mentalWatch'+cap(watch.level))}</span></div>
+    </div>
+    <div class="factor-list">${watch.factors.map(f=>`<span class="factor-chip">${escapeHtml(f)}</span>`).join('')}</div>
+  `;
+}
+['mhMood','mhStress','mhAnxiety'].forEach(id=>{
+  document.getElementById(id).addEventListener('input', e=>{
+    const key = id==='mhMood' ? 'mood' : id==='mhStress' ? 'stress' : 'anxiety';
+    mentalCheck[key] = Number(e.target.value);
+    renderMentalHealth();
+  });
+});
+document.querySelectorAll('[data-mental-sleep]').forEach(btn=>{
+  btn.onclick = ()=>{
+    mentalCheck.sleepQuality = btn.dataset.mentalSleep;
+    renderMentalHealth();
+  };
+});
+document.querySelectorAll('[data-mental-support]').forEach(btn=>{
+  btn.onclick = ()=>{
+    mentalCheck.support = btn.dataset.mentalSupport;
+    renderMentalHealth();
+  };
+});
 
 /* ================= MEDICATION REMINDER ================= */
 function renderMedicationReminder(){
@@ -1385,6 +1589,7 @@ function showTab(name){
   document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
   document.getElementById('view-'+name).classList.add('active');
   document.querySelectorAll('nav.tabs button').forEach(b=>b.classList.toggle('active', b.dataset.tab===name));
+  if(name==='mental') renderMentalHealth();
   if(name==='clinics') updateClinicMap();
 }
 document.querySelectorAll('nav.tabs button').forEach(btn=>{
@@ -1403,6 +1608,7 @@ document.querySelectorAll('.lang-switch button').forEach(btn=>{
     applyStaticI18n();
     renderDashboard();
     renderEntryForm();
+    renderMentalHealth();
     renderTrend();
     updateClinicMap();
     document.getElementById('summaryText').textContent = t('summaryPlaceholder');
@@ -1443,6 +1649,7 @@ function showToast(msg){
 applyStaticI18n();
 renderDashboard();
 renderEntryForm();
+renderMentalHealth();
 renderTrend();
 updateClinicMap();
 updateSyncBadge();
