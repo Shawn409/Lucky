@@ -36,6 +36,10 @@ body{
   -webkit-font-smoothing:antialiased;
   min-height:100vh;
 }
+body.auth-mode{padding-left:0;}
+body.auth-mode header.app-header,
+body.auth-mode main,
+body.auth-mode .footer-note{display:none;}
 h1,h2,h3,.display{
   font-family:'Fraunces', Georgia, serif;
   font-weight:600;
@@ -45,6 +49,53 @@ h1,h2,h3,.display{
 .mono{font-family:'IBM Plex Mono', monospace;}
 button{font-family:inherit;}
 :focus-visible{outline:3px solid var(--river); outline-offset:2px;}
+
+/* ---------- Auth ---------- */
+.auth-screen{
+  min-height:100vh;
+  display:grid;
+  place-items:center;
+  padding:32px 18px;
+  background:linear-gradient(135deg, var(--teal) 0%, var(--teal-dark) 100%);
+}
+body:not(.auth-mode) .auth-screen{display:none;}
+.auth-card{
+  width:min(880px,100%);
+  background:var(--surface);
+  border:1px solid rgba(255,255,255,.35);
+  border-radius:18px;
+  box-shadow:0 24px 70px -32px rgba(0,0,0,.55);
+  overflow:hidden;
+  display:grid;
+  grid-template-columns:minmax(240px,.75fr) minmax(0,1fr);
+}
+.auth-brand{
+  background:#F3F5EF;
+  padding:28px;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  gap:28px;
+}
+.auth-brand .brand-mark{width:52px;height:52px;}
+.auth-brand h1{font-size:30px; margin:12px 0 8px;}
+.auth-brand p{margin:0; color:var(--ink-soft); line-height:1.55; font-size:14px;}
+.auth-panel{padding:28px;}
+.auth-form{display:grid; gap:14px;}
+.auth-form[hidden]{display:none;}
+.auth-form h2{margin:0; font-size:24px;}
+.auth-form .sub{margin:-8px 0 4px; color:var(--ink-soft); font-size:13.5px; line-height:1.5;}
+.auth-grid{display:grid; grid-template-columns:1fr 1fr; gap:12px;}
+.auth-actions{display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; margin-top:4px;}
+.auth-link{border:none; background:transparent; color:var(--teal); padding:0; font-weight:800; cursor:pointer;}
+.auth-message{
+  min-height:20px;
+  color:var(--risk-high);
+  font-size:12.5px;
+  font-weight:700;
+  line-height:1.45;
+}
+@media(max-width:760px){.auth-card{grid-template-columns:1fr;}.auth-brand{padding:22px;}.auth-panel{padding:22px;}.auth-grid{grid-template-columns:1fr;}}
 
 /* ---------- River motif ---------- */
 .river-divider{
@@ -64,6 +115,8 @@ header.app-header{
   height:100vh;
   overflow-y:auto;
   z-index:20;
+  display:flex;
+  flex-direction:column;
 }
 .header-row{
   display:flex; align-items:stretch; justify-content:flex-start; gap:18px; flex-direction:column;
@@ -99,6 +152,8 @@ header.app-header{
 nav.tabs{
   margin:28px 0 0; padding:0;
   display:flex; gap:8px; flex-direction:column; position:relative; z-index:2;
+  flex:1;
+  min-height:0;
 }
 nav.tabs button{
   width:100%;
@@ -110,6 +165,135 @@ nav.tabs button svg{width:16px;height:16px; opacity:.7;}
 nav.tabs button.active{background:var(--gold); border-color:var(--gold); color:var(--teal-dark);}
 nav.tabs button.active svg{opacity:1;}
 nav.tabs button:hover:not(.active){border-color:rgba(255,255,255,0.45); color:#fff;}
+
+/* Sidebar account */
+.sidebar-account{
+  margin-top:auto;
+  padding-top:18px;
+  position:relative;
+  z-index:4;
+}
+.account-trigger{
+  width:100%;
+  border:1px solid rgba(255,255,255,0.16);
+  background:rgba(255,255,255,0.10);
+  color:#fff;
+  padding:10px;
+  border-radius:14px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  cursor:pointer;
+  text-align:left;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.08);
+  transition:.15s;
+}
+.account-trigger:hover,.account-trigger.active,.account-trigger.selected{
+  background:rgba(255,255,255,0.16);
+  border-color:rgba(255,255,255,0.32);
+}
+.account-avatar{
+  width:38px;
+  height:38px;
+  border-radius:10px;
+  background:#F5F0E5;
+  color:var(--teal-dark);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-shrink:0;
+  font-size:15px;
+  font-weight:800;
+  text-transform:uppercase;
+}
+.account-trigger-text{
+  display:grid;
+  gap:2px;
+  min-width:0;
+  flex:1;
+}
+.account-trigger-text strong{
+  font-size:13.5px;
+  line-height:1.2;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+.account-trigger-text small{
+  color:#CFE3DE;
+  font-size:11.5px;
+  line-height:1.2;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+.account-chevron{
+  width:16px;
+  height:16px;
+  opacity:.75;
+  flex-shrink:0;
+  transition:.15s;
+}
+.account-trigger.active .account-chevron{transform:rotate(180deg);}
+.account-popover{
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:calc(100% + 10px);
+  background:#fff;
+  color:var(--ink);
+  border:1px solid rgba(18,58,53,0.10);
+  border-radius:14px;
+  box-shadow:0 18px 44px -22px rgba(0,0,0,0.45);
+  overflow:hidden;
+}
+.account-popover-head{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:12px;
+  border-bottom:1px solid var(--border);
+}
+.account-popover-head .account-avatar{background:#EEF3F0;}
+.account-popover-name{
+  font-size:13.5px;
+  font-weight:800;
+  color:var(--teal-dark);
+  line-height:1.25;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+.account-popover-email{
+  margin-top:2px;
+  color:var(--ink-soft);
+  font-size:11.5px;
+  line-height:1.25;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  max-width:178px;
+}
+.account-menu-item{
+  width:100%;
+  border:0;
+  border-bottom:1px solid var(--border);
+  background:#fff;
+  color:var(--ink);
+  padding:12px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-size:13.5px;
+  font-weight:700;
+  cursor:pointer;
+  text-align:left;
+}
+.account-menu-item:last-child{border-bottom:0;}
+.account-menu-item:hover{background:#F7FAF7;}
+.account-menu-item svg{width:16px; height:16px; color:var(--ink-soft);}
+.account-menu-item.danger{color:var(--risk-high);}
+.account-menu-item.danger svg{color:var(--risk-high);}
 @media(max-width:860px){
   body{padding-left:0;}
   header.app-header{position:sticky; top:0; width:auto; height:auto; padding:18px 16px 20px;}
@@ -121,12 +305,16 @@ nav.tabs button:hover:not(.active){border-color:rgba(255,255,255,0.45); color:#f
     overflow-x:auto;
     flex-wrap:nowrap;
     flex-direction:row;
+    flex:0 0 auto;
     padding-bottom:4px;
     -webkit-overflow-scrolling:touch;
     scrollbar-width:none;
   }
   nav.tabs::-webkit-scrollbar{display:none;}
   nav.tabs button{flex:0 0 auto; width:auto;}
+  .sidebar-account{margin-top:12px; padding-top:0; width:100%;}
+  .account-popover{position:static; margin-bottom:8px;}
+  .account-popover-email{max-width:none;}
 }
 @media(max-width:420px){
   .brand-text h1{font-size:20px;}
@@ -191,6 +379,12 @@ main{max-width:1180px; margin:0 auto; padding:36px 32px 80px;}
 .risk-banner .icon{width:38px;height:38px;border-radius:10px; flex-shrink:0; display:flex; align-items:center; justify-content:center; background:rgba(255,255,255,0.6);}
 .risk-banner h3{margin:0 0 4px; font-size:16px;}
 .risk-banner p{margin:0; font-size:13.5px; color:var(--ink); line-height:1.5;}
+.risk-reasons{display:flex; gap:8px; flex-wrap:wrap; margin-top:12px;}
+.risk-reason{
+  display:inline-flex; align-items:center; gap:6px; padding:6px 10px; border-radius:999px;
+  background:rgba(255,255,255,0.64); border:1px solid rgba(18,58,53,0.08);
+  color:var(--ink); font-size:12.5px; font-weight:700;
+}
 .personal-review{
   margin-top:16px;
   display:grid;
@@ -243,12 +437,12 @@ main{max-width:1180px; margin:0 auto; padding:36px 32px 80px;}
 @media(max-width:640px){.form-grid{grid-template-columns:1fr;}}
 label.field-label{display:block; font-size:12.5px; font-weight:700; color:var(--ink-soft); text-transform:uppercase; letter-spacing:.04em; margin-bottom:6px;}
 .input-wrap{position:relative;}
-input[type=number]{
+input[type=number], input[type=text], input[type=email], input[type=password], select.text-input{
   width:100%; padding:13px 14px; border-radius:10px; border:1.5px solid var(--border);
-  font-family:'IBM Plex Mono', monospace; font-size:17px; font-weight:600; color:var(--teal-dark);
+  font-family:'IBM Plex Mono', monospace; font-size:16px; font-weight:600; color:var(--teal-dark);
   background:#FBFCFA;
 }
-input[type=number]:focus{border-color:var(--teal); outline:none; background:#fff;}
+input[type=number]:focus, input[type=text]:focus, input[type=email]:focus, input[type=password]:focus, select.text-input:focus{border-color:var(--teal); outline:none; background:#fff;}
 input.is-invalid{border-color:var(--risk-high) !important; background:#FFF8F7 !important;}
 .field-hint{font-size:11.5px; color:var(--ink-soft); margin-top:5px;}
 .form-alert{
@@ -422,6 +616,14 @@ input[type=range]{width:100%; accent-color:var(--teal);}
 @media(max-width:520px){.test-grid{grid-template-columns:1fr;}}
 @media(max-width:520px){.score-form{grid-template-columns:1fr;}.score-row{align-items:flex-start; flex-direction:column;}.score-tags{justify-content:flex-start;}}
 
+/* Profile */
+.profile-card{display:grid; gap:18px;}
+.profile-head{display:flex; align-items:flex-start; justify-content:space-between; gap:12px; flex-wrap:wrap;}
+.profile-head h3{margin:0 0 4px; font-size:18px;}
+.profile-head p{margin:0; color:var(--ink-soft); font-size:13.5px; line-height:1.5;}
+.profile-actions{display:flex; gap:10px; flex-wrap:wrap;}
+.account-email{font-size:12.5px; color:var(--ink-soft); font-weight:700;}
+
 /* Community */
 .patient-card{
   display:flex; align-items:center; justify-content:space-between; gap:12px; padding:16px; border-radius:14px;
@@ -459,7 +661,89 @@ input[type=range]{width:100%; accent-color:var(--teal);}
 }
 </style>
 </head>
-<body>
+<body class="auth-mode">
+
+<section class="auth-screen" id="authScreen">
+  <div class="auth-card">
+    <div class="auth-brand">
+      <div>
+        <div class="brand-mark">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M12 21s-7.5-4.6-10-9.3C.3 8 2 4 6 4c2.4 0 3.9 1.3 6 3.6C14.1 5.3 15.6 4 18 4c4 0 5.7 4 4 7.7C19.5 16.4 12 21 12 21z" fill="#123A35"/></svg>
+        </div>
+        <h1 data-i18n="appName">CareU</h1>
+        <p data-i18n="authIntro">Sign in to save your personal health review, daily readings and profile to MySQL.</p>
+      </div>
+      <p data-i18n="authPrivacy">Your password is hashed before storage. This prototype keeps medical data for demo use only.</p>
+    </div>
+    <div class="auth-panel">
+      <form class="auth-form" id="loginForm">
+        <h2 data-i18n="loginTitle">Login</h2>
+        <p class="sub" data-i18n="loginSub">Continue your CareU personal health review.</p>
+        <div>
+          <label class="field-label" for="loginEmail" data-i18n="emailLabel">Email</label>
+          <input type="email" id="loginEmail" autocomplete="email" required>
+        </div>
+        <div>
+          <label class="field-label" for="loginPassword" data-i18n="passwordLabel">Password</label>
+          <input type="password" id="loginPassword" autocomplete="current-password" required>
+        </div>
+        <div class="auth-message" id="loginMessage"></div>
+        <div class="auth-actions">
+          <button class="btn-primary" type="submit" data-i18n="loginBtn">Login</button>
+          <button class="auth-link" type="button" data-auth-switch="register" data-i18n="goRegister">Create account</button>
+        </div>
+      </form>
+
+      <form class="auth-form" id="registerForm" hidden>
+        <h2 data-i18n="registerTitle">Register</h2>
+        <p class="sub" data-i18n="registerSub">Create a CareU account and patient profile.</p>
+        <div class="auth-grid">
+          <div>
+            <label class="field-label" for="regName" data-i18n="fullNameLabel">Full name</label>
+            <input type="text" id="regName" autocomplete="name" required>
+          </div>
+          <div>
+            <label class="field-label" for="regEmail" data-i18n="emailLabel">Email</label>
+            <input type="email" id="regEmail" autocomplete="email" required>
+          </div>
+          <div>
+            <label class="field-label" for="regPassword" data-i18n="passwordLabel">Password</label>
+            <input type="password" id="regPassword" autocomplete="new-password" minlength="6" required>
+          </div>
+          <div>
+            <label class="field-label" for="regAge" data-i18n="profileAge">Age</label>
+            <input type="number" id="regAge" min="0" max="120" value="67" required>
+          </div>
+          <div>
+            <label class="field-label" for="regGender" data-i18n="profileGender">Gender</label>
+            <select class="text-input" id="regGender">
+              <option value="male" data-i18n="genderMale">Male</option>
+              <option value="female" data-i18n="genderFemale">Female</option>
+              <option value="other" data-i18n="genderOther">Other</option>
+            </select>
+          </div>
+          <div>
+            <label class="field-label" for="regPhone" data-i18n="phoneLabel">Phone</label>
+            <input type="text" id="regPhone" autocomplete="tel">
+          </div>
+          <div>
+            <label class="field-label" for="regVillage" data-i18n="profileVillage">Village</label>
+            <input type="text" id="regVillage" value="Kampung Bunuk">
+          </div>
+          <div>
+            <label class="field-label" for="regCity" data-i18n="cityLabel">City</label>
+            <input type="text" id="regCity" value="Kuching">
+          </div>
+        </div>
+        <div class="auth-message" id="registerMessage"></div>
+        <div class="auth-actions">
+          <button class="btn-primary" type="submit" data-i18n="registerBtn">Register</button>
+          <button class="auth-link" type="button" data-auth-switch="login" data-i18n="goLogin">Already have account?</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
 
 <header class="app-header">
   <div class="header-row">
@@ -492,7 +776,7 @@ input[type=range]{width:100%; accent-color:var(--teal);}
     </button>
     <button data-tab="summary">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v12H7l-3 3V4z"/></svg>
-      <span data-i18n="tabSummary">AI Summary</span>
+      <span data-i18n="tabSummary">Health Summary</span>
     </button>
     <button data-tab="mental">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7.5-4.6-10-9.3C.3 8 2 4 6 4c2.4 0 3.9 1.3 6 3.6C14.1 5.3 15.6 4 18 4c4 0 5.7 4 4 7.7C19.5 16.4 12 21 12 21z"/></svg>
@@ -507,6 +791,33 @@ input[type=range]{width:100%; accent-color:var(--teal);}
       <span data-i18n="tabClinics">Find a clinic</span>
     </button>
   </nav>
+  <div class="sidebar-account" id="sidebarAccount">
+    <div class="account-popover" id="accountMenu" hidden>
+      <div class="account-popover-head">
+        <div class="account-avatar" id="accountMenuAvatar">C</div>
+        <div class="account-trigger-text">
+          <div class="account-popover-name" id="accountMenuName">CareU User</div>
+          <div class="account-popover-email" id="accountMenuEmail">careu@example.com</div>
+        </div>
+      </div>
+      <button class="account-menu-item" id="accountProfileBtn" type="button">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.8-4 4.5-6 8-6s6.2 2 8 6"/></svg>
+        <span data-i18n="profileTitle">Profile</span>
+      </button>
+      <button class="account-menu-item danger" id="accountLogoutBtn" type="button">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 17l5-5-5-5"/><path d="M15 12H3"/><path d="M21 3v18"/></svg>
+        <span data-i18n="logoutBtn">Logout</span>
+      </button>
+    </div>
+    <button class="account-trigger" id="accountTrigger" type="button" aria-expanded="false" aria-controls="accountMenu">
+      <span class="account-avatar" id="accountAvatar">C</span>
+      <span class="account-trigger-text">
+        <strong id="accountName">CareU User</strong>
+        <small id="accountEmail" data-i18n="accountRole">Patient account</small>
+      </span>
+      <svg class="account-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+    </button>
+  </div>
 </header>
 <svg class="river-divider" viewBox="0 0 1040 22" preserveAspectRatio="none"><path d="M0 10 Q 60 0 120 10 T 240 10 T 360 10 T 480 10 T 600 10 T 720 10 T 840 10 T 960 10 T 1080 10 V22 H0 Z"></path></svg>
 
@@ -795,6 +1106,61 @@ input[type=range]{width:100%; accent-color:var(--teal);}
     </div>
   </section>
 
+  <!-- ============ PROFILE ============ -->
+  <section class="view" id="view-profile">
+    <div class="section-title">
+      <div>
+        <h2 data-i18n="profileTitle">Profile</h2>
+        <div class="sub" data-i18n="profileSub">Manage account and patient details saved in MySQL.</div>
+      </div>
+      <span class="account-email" id="profileAccountEmail"></span>
+    </div>
+    <div class="card profile-card">
+      <div class="profile-head">
+        <div>
+          <h3 data-i18n="profileDetailsTitle">Patient details</h3>
+          <p data-i18n="profileDetailsSub">These details are used in the dashboard, reports and personal health review.</p>
+        </div>
+        <span class="risk-pill normal"><span class="dot"></span><span data-i18n="savedLocalToast">Saved on this device.</span></span>
+      </div>
+      <div class="form-grid">
+        <div>
+          <label class="field-label" for="profileName" data-i18n="fullNameLabel">Full name</label>
+          <input type="text" id="profileName">
+        </div>
+        <div>
+          <label class="field-label" for="profileAge" data-i18n="profileAge">Age</label>
+          <input type="number" id="profileAge" min="0" max="120">
+        </div>
+        <div>
+          <label class="field-label" for="profileGender" data-i18n="profileGender">Gender</label>
+          <select class="text-input" id="profileGender">
+            <option value="male" data-i18n="genderMale">Male</option>
+            <option value="female" data-i18n="genderFemale">Female</option>
+            <option value="other" data-i18n="genderOther">Other</option>
+          </select>
+        </div>
+        <div>
+          <label class="field-label" for="profilePhone" data-i18n="phoneLabel">Phone</label>
+          <input type="text" id="profilePhone">
+        </div>
+        <div>
+          <label class="field-label" for="profileVillage" data-i18n="profileVillage">Village</label>
+          <input type="text" id="profileVillage">
+        </div>
+        <div>
+          <label class="field-label" for="profileCity" data-i18n="cityLabel">City</label>
+          <input type="text" id="profileCity">
+        </div>
+      </div>
+      <div class="form-alert" id="profileValidation" hidden></div>
+      <div class="profile-actions">
+        <button class="btn-primary" id="saveProfileBtn" data-i18n="saveProfileBtn">Save profile</button>
+        <button class="btn-secondary" id="logoutBtn" data-i18n="logoutBtn">Logout</button>
+      </div>
+    </div>
+  </section>
+
 </main>
 
 <section class="print-report" id="printReport" aria-hidden="true"></section>
@@ -809,7 +1175,14 @@ const I18N = {
 en:{
   appName:"CareU", appTag:"AI-assisted hypertension & diabetes monitoring for rural communities",
   online:"Online · saved locally", offline:"Offline · saved locally",
-  tabDashboard:"Dashboard", tabEntry:"Daily Entry", tabSummary:"AI Summary", tabMental:"Mental Health", tabTrend:"Weekly Trend", tabClinics:"Find a clinic",
+  tabDashboard:"Dashboard", tabEntry:"Daily Entry", tabSummary:"Health Summary", tabMental:"Mental Health", tabTrend:"Weekly Trend", tabClinics:"Find a clinic", tabProfile:"Profile",
+  accountRole:"Patient account",
+  authIntro:"Sign in to save your personal health review, daily readings and profile to MySQL.",
+  authPrivacy:"Your password is hashed before storage. This prototype keeps medical data for demo use only.",
+  loginTitle:"Login", loginSub:"Continue your CareU personal health review.", emailLabel:"Email", passwordLabel:"Password",
+  loginBtn:"Login", goRegister:"Create account", registerTitle:"Register", registerSub:"Create a CareU account and patient profile.",
+  fullNameLabel:"Full name", phoneLabel:"Phone", cityLabel:"City", registerBtn:"Register", goLogin:"Already have account?",
+  loginSuccessToast:"Logged in.", registerSuccessToast:"Account created.", logoutToast:"Logged out.", authServerError:"Please run CareU through the Go server so login can reach MySQL.",
   clinicFinderTitle:"Find a nearby clinic", clinicFinderSub:"Choose your preference and use your location to search Google Maps.", clinicPreferenceTitle:"Clinic preference", clinicPreferenceSub:"Select the type of clinic you would like to visit.", clinicTypeLabel:"Clinic type", clinicGovernment:"Government clinic", clinicPrivate:"Private clinic", findClinicsBtn:"Use my location", openGoogleMaps:"Open in Google Maps", clinicReady:"Showing nearby", clinicLocating:"Finding your location…", clinicLocationDenied:"Location unavailable — showing clinics in Sarawak.", clinicDisclaimer:"Google Maps results are provided for convenience. Please call the clinic to confirm services, hours and availability.",
   dashTitle:"Patient Dashboard",
   statBP:"Blood Pressure", statGlucose:"Blood Glucose", statHR:"Heart Rate", statSleep:"Sleep", statRisk:"Risk Level",
@@ -840,7 +1213,7 @@ en:{
   genBtn:"Generate summary", aiTag:"Free rule-based summary",
   summaryPlaceholder:"Tap \"Generate summary\" to create this week's health recap.",
   disclaimer:"This summary highlights unusual patterns only — it is not a diagnosis. Please consult a healthcare professional for medical advice.",
-  healthReviewTitle:"Personal Health Review", healthReviewSub:"CareU reviews physical readings, mental wellbeing and self-care patterns together.",
+  healthReviewTitle:"Personal Health Summary", healthReviewSub:"CareU reviews physical readings, mental wellbeing and self-care patterns together.",
   healthReviewScore:"Review level", healthReviewNormalMsg:"Today's overall pattern looks steady. Keep daily logging and routine self-care.",
   healthReviewAttentionMsg:"CareU sees signals that need closer watching today. Review the linked factors below.",
   healthReviewHighMsg:"CareU sees several linked health signals today. Consider contacting a healthcare professional if this persists or feels concerning.",
@@ -867,7 +1240,9 @@ en:{
   riskNormalMsg:"Today's readings are within the patient's usual healthy range. Keep up the daily logging.",
   riskAttentionMsg:"One or more readings today are outside the usual range. Continue monitoring closely over the next few days.",
   riskHighMsg:"Readings today are significantly outside the safe range. The system recommends seeking professional medical advice soon.",
-  profileAge:"Age", profileGender:"Gender", profileVillage:"Village", genderMale:"Male", genderFemale:"Female",
+  riskReasonHighBP:"Blood pressure is high ({value} mmHg).", riskReasonHighGlucose:"Blood glucose is high ({value} mg/dL).", riskReasonLowGlucose:"Blood glucose is low ({value} mg/dL).", riskReasonHighHR:"Heart rate is high ({value} bpm).", riskReasonLowHR:"Heart rate is low ({value} bpm).", riskReasonShortSleep:"Sleep is short ({value} hrs).", riskReasonLongSleep:"Sleep is unusually long ({value} hrs).",
+  profileAge:"Age", profileGender:"Gender", profileVillage:"Village", genderMale:"Male", genderFemale:"Female", genderOther:"Other",
+  profileTitle:"Profile", profileSub:"Manage account and patient details saved in MySQL.", profileDetailsTitle:"Patient details", profileDetailsSub:"These details are used in the dashboard, reports and personal health review.", saveProfileBtn:"Save profile", logoutBtn:"Logout", profileSavedToast:"Profile saved.",
   futureRiskTitle:"Future Risk Watch (AI)", futureRiskScore:"Next 7-day watch",
   futureRiskLow:"Low", futureRiskModerate:"Moderate", futureRiskHigh:"High",
   futureRiskLowMsg:"Current patterns look relatively stable. Keep daily monitoring.",
@@ -902,7 +1277,14 @@ en:{
 bm:{
   appName:"CareU", appTag:"Pemantauan tekanan darah tinggi & diabetes berbantukan AI untuk komuniti luar bandar",
   online:"Dalam talian · disimpan setempat", offline:"Luar talian · disimpan setempat",
-  tabDashboard:"Papan Pemuka", tabEntry:"Catatan Harian", tabSummary:"Ringkasan AI", tabMental:"Kesihatan Mental", tabTrend:"Trend Mingguan", tabClinics:"Cari klinik",
+  tabDashboard:"Papan Pemuka", tabEntry:"Catatan Harian", tabSummary:"Ringkasan Kesihatan", tabMental:"Kesihatan Mental", tabTrend:"Trend Mingguan", tabClinics:"Cari klinik", tabProfile:"Profil",
+  accountRole:"Akaun pesakit",
+  authIntro:"Log masuk untuk menyimpan semakan kesihatan peribadi, bacaan harian dan profil ke MySQL.",
+  authPrivacy:"Kata laluan di-hash sebelum disimpan. Prototaip ini menyimpan data perubatan untuk demo sahaja.",
+  loginTitle:"Log masuk", loginSub:"Teruskan semakan kesihatan peribadi CareU.", emailLabel:"E-mel", passwordLabel:"Kata laluan",
+  loginBtn:"Log masuk", goRegister:"Cipta akaun", registerTitle:"Daftar", registerSub:"Cipta akaun CareU dan profil pesakit.",
+  fullNameLabel:"Nama penuh", phoneLabel:"Telefon", cityLabel:"Bandar", registerBtn:"Daftar", goLogin:"Sudah ada akaun?",
+  loginSuccessToast:"Berjaya log masuk.", registerSuccessToast:"Akaun dicipta.", logoutToast:"Berjaya log keluar.", authServerError:"Sila jalankan CareU melalui pelayan Go supaya log masuk boleh mencapai MySQL.",
   clinicFinderTitle:"Cari klinik berdekatan", clinicFinderSub:"Pilih keutamaan anda dan gunakan lokasi anda untuk mencari di Google Maps.", clinicPreferenceTitle:"Keutamaan klinik", clinicPreferenceSub:"Pilih jenis klinik yang anda ingin lawati.", clinicTypeLabel:"Jenis klinik", clinicGovernment:"Klinik kerajaan", clinicPrivate:"Klinik swasta", findClinicsBtn:"Guna lokasi saya", openGoogleMaps:"Buka dalam Google Maps", clinicReady:"Memaparkan klinik berdekatan", clinicLocating:"Mencari lokasi anda…", clinicLocationDenied:"Lokasi tidak tersedia — memaparkan klinik di Sarawak.", clinicDisclaimer:"Keputusan Google Maps disediakan untuk kemudahan. Sila hubungi klinik untuk mengesahkan perkhidmatan, waktu dan ketersediaan.",
   dashTitle:"Papan Pemuka Pesakit",
   statBP:"Tekanan Darah", statGlucose:"Gula Darah", statHR:"Kadar Nadi", statSleep:"Tidur", statRisk:"Tahap Risiko",
@@ -933,7 +1315,7 @@ bm:{
   genBtn:"Jana ringkasan", aiTag:"Ringkasan percuma berasaskan peraturan",
   summaryPlaceholder:"Tekan \"Jana ringkasan\" untuk hasilkan ringkasan kesihatan minggu ini.",
   disclaimer:"Ringkasan ini hanya menonjolkan corak luar biasa — ia bukan diagnosis. Sila rujuk profesional kesihatan untuk nasihat perubatan.",
-  healthReviewTitle:"Semakan Kesihatan Peribadi", healthReviewSub:"CareU menyemak bacaan fizikal, kesejahteraan mental dan corak penjagaan diri secara bersama.",
+  healthReviewTitle:"Ringkasan Kesihatan Peribadi", healthReviewSub:"CareU menyemak bacaan fizikal, kesejahteraan mental dan corak penjagaan diri secara bersama.",
   healthReviewScore:"Tahap semakan", healthReviewNormalMsg:"Corak keseluruhan hari ini kelihatan stabil. Teruskan catatan harian dan rutin penjagaan diri.",
   healthReviewAttentionMsg:"CareU melihat isyarat yang perlu diperhatikan dengan lebih rapi hari ini. Semak faktor yang dikaitkan di bawah.",
   healthReviewHighMsg:"CareU melihat beberapa isyarat kesihatan yang berkait hari ini. Pertimbangkan untuk menghubungi profesional kesihatan jika ia berterusan atau membimbangkan.",
@@ -960,7 +1342,9 @@ bm:{
   riskNormalMsg:"Bacaan hari ini berada dalam julat sihat biasa pesakit. Teruskan catatan harian.",
   riskAttentionMsg:"Satu atau lebih bacaan hari ini di luar julat biasa. Teruskan pemantauan rapi dalam beberapa hari akan datang.",
   riskHighMsg:"Bacaan hari ini jauh di luar julat selamat. Sistem mengesyorkan mendapatkan nasihat perubatan profesional segera.",
-  profileAge:"Umur", profileGender:"Jantina", profileVillage:"Kampung", genderMale:"Lelaki", genderFemale:"Perempuan",
+  riskReasonHighBP:"Tekanan darah tinggi ({value} mmHg).", riskReasonHighGlucose:"Gula darah tinggi ({value} mg/dL).", riskReasonLowGlucose:"Gula darah rendah ({value} mg/dL).", riskReasonHighHR:"Kadar nadi tinggi ({value} bpm).", riskReasonLowHR:"Kadar nadi rendah ({value} bpm).", riskReasonShortSleep:"Tidur pendek ({value} jam).", riskReasonLongSleep:"Tidur luar biasa panjang ({value} jam).",
+  profileAge:"Umur", profileGender:"Jantina", profileVillage:"Kampung", genderMale:"Lelaki", genderFemale:"Perempuan", genderOther:"Lain-lain",
+  profileTitle:"Profil", profileSub:"Urus akaun dan butiran pesakit yang disimpan dalam MySQL.", profileDetailsTitle:"Butiran pesakit", profileDetailsSub:"Butiran ini digunakan dalam papan pemuka, laporan dan semakan kesihatan peribadi.", saveProfileBtn:"Simpan profil", logoutBtn:"Log keluar", profileSavedToast:"Profil disimpan.",
   futureRiskTitle:"Pemantauan Risiko Masa Depan (AI)", futureRiskScore:"Pemantauan 7 hari seterusnya",
   futureRiskLow:"Rendah", futureRiskModerate:"Sederhana", futureRiskHigh:"Tinggi",
   futureRiskLowMsg:"Corak semasa kelihatan agak stabil. Teruskan pemantauan harian.",
@@ -995,7 +1379,14 @@ bm:{
 zh:{
   appName:"CareU", appTag:"AI 辅助高血压与糖尿病健康监测 · 服务乡区社区",
   online:"在线 · 已本地保存", offline:"离线 · 已本地保存",
-  tabDashboard:"健康仪表板", tabEntry:"每日记录", tabSummary:"AI 健康摘要", tabMental:"心理健康", tabTrend:"每周趋势", tabClinics:"寻找诊所",
+  tabDashboard:"健康仪表板", tabEntry:"每日记录", tabSummary:"健康摘要", tabMental:"心理健康", tabTrend:"每周趋势", tabClinics:"寻找诊所", tabProfile:"个人资料",
+  accountRole:"病人账号",
+  authIntro:"登录后可把个人健康审查、每日记录和个人资料保存到 MySQL。",
+  authPrivacy:"密码会先 hash 才保存。此原型的医疗数据仅用于 demo。",
+  loginTitle:"登录", loginSub:"继续使用 CareU 个人健康审查。", emailLabel:"电邮", passwordLabel:"密码",
+  loginBtn:"登录", goRegister:"创建账号", registerTitle:"注册", registerSub:"创建 CareU 账号和病人资料。",
+  fullNameLabel:"全名", phoneLabel:"电话", cityLabel:"城市", registerBtn:"注册", goLogin:"已有账号？",
+  loginSuccessToast:"已登录。", registerSuccessToast:"账号已创建。", logoutToast:"已登出。", authServerError:"请通过 Go server 运行 CareU，这样登录才能连接 MySQL。",
   clinicFinderTitle:"寻找附近诊所", clinicFinderSub:"选择偏好的诊所类型，并使用你的位置在 Google Maps 搜索。", clinicPreferenceTitle:"诊所偏好", clinicPreferenceSub:"选择你想前往的诊所类型。", clinicTypeLabel:"诊所类型", clinicGovernment:"政府诊所", clinicPrivate:"私人诊所", findClinicsBtn:"使用我的位置", openGoogleMaps:"在 Google Maps 打开", clinicReady:"正在显示附近", clinicLocating:"正在寻找你的位置…", clinicLocationDenied:"无法取得位置 — 显示砂拉越诊所。", clinicDisclaimer:"Google Maps 结果仅供方便参考。请致电诊所确认服务、营业时间和可用性。",
   dashTitle:"患者仪表板",
   statBP:"血压", statGlucose:"血糖", statHR:"心率", statSleep:"睡眠", statRisk:"风险等级",
@@ -1026,7 +1417,7 @@ zh:{
   genBtn:"生成摘要", aiTag:"免费规则式摘要",
   summaryPlaceholder:"点击「生成摘要」以创建本周健康总结。",
   disclaimer:"此摘要仅用于标示异常趋势，并非诊断结果。如有需要，请咨询医护专业人员。",
-  healthReviewTitle:"个人健康审查", healthReviewSub:"CareU 会把身体数据、心理状态和自我照护模式放在一起审查。",
+  healthReviewTitle:"个人健康摘要", healthReviewSub:"CareU 会把身体数据、心理状态和自我照护模式放在一起审查。",
   healthReviewScore:"审查等级", healthReviewNormalMsg:"今天整体模式相对稳定，请继续每日记录和维持照护习惯。",
   healthReviewAttentionMsg:"CareU 看到今天有一些需要留意的信号，请查看下方已连接的因素。",
   healthReviewHighMsg:"CareU 看到今天有多个健康信号互相关联；如果持续或让你担心，请考虑联系医护专业人员。",
@@ -1053,7 +1444,9 @@ zh:{
   riskNormalMsg:"今日数据处于患者平常的健康范围内，请继续每日记录。",
   riskAttentionMsg:"今日有一项或多项数据超出平常范围，请在接下来几天密切留意。",
   riskHighMsg:"今日数据明显超出安全范围，系统建议尽快寻求医护专业人员的意见。",
-  profileAge:"年龄", profileGender:"性别", profileVillage:"村庄", genderMale:"男", genderFemale:"女",
+  riskReasonHighBP:"血压偏高（{value} mmHg）。", riskReasonHighGlucose:"血糖偏高（{value} mg/dL）。", riskReasonLowGlucose:"血糖过低（{value} mg/dL）。", riskReasonHighHR:"心率偏高（{value} bpm）。", riskReasonLowHR:"心率偏低（{value} bpm）。", riskReasonShortSleep:"睡眠时间偏短（{value} 小时）。", riskReasonLongSleep:"睡眠时间异常偏长（{value} 小时）。",
+  profileAge:"年龄", profileGender:"性别", profileVillage:"村庄", genderMale:"男", genderFemale:"女", genderOther:"其他",
+  profileTitle:"个人资料", profileSub:"管理保存到 MySQL 的账号和病人资料。", profileDetailsTitle:"病人资料", profileDetailsSub:"这些资料会用于仪表板、报告和个人健康审查。", saveProfileBtn:"保存资料", logoutBtn:"登出", profileSavedToast:"资料已保存。",
   futureRiskTitle:"未来风险观察 (AI)", futureRiskScore:"未来 7 天观察",
   futureRiskLow:"低", futureRiskModerate:"中等", futureRiskHigh:"高",
   futureRiskLowMsg:"目前趋势相对稳定，请继续每日监测。",
@@ -1120,7 +1513,9 @@ let patientProfile = {
   age:67,
   gender:'male',
   village:'Kampung Bunuk',
-  city:{en:'Kuching', bm:'Kuching', zh:'古晋'}
+  city:{en:'Kuching', bm:'Kuching', zh:'古晋'},
+  phone:'',
+  email:''
 };
 
 // Simulated week: BP trending upward the last 3 days, one glucose spike, two missed meds.
@@ -1144,8 +1539,11 @@ let draftEntry = null; // holds in-progress form state for today
 let medicationReminder = {enabled:false, time:'08:00', lastFiredDate:null};
 let mentalCheck = {mood:3, stress:4, anxiety:3, sleepQuality:'okay', support:'yes'};
 let mentalScores = [];
+let authUser = null;
+let serverSaveTimer = null;
 
 const STORAGE_KEY = 'careu-local-state-v2';
+const API_BASE = '';
 function serialiseEntry(entry){
   return {
     date: entry.date,
@@ -1158,50 +1556,244 @@ function serialiseEntry(entry){
     symptoms: Array.isArray(entry.symptoms) ? entry.symptoms : ['none']
   };
 }
+function appStatePayload(){
+  return {
+    patientProfile,
+    history: history.map(serialiseEntry),
+    medicationReminder,
+    mentalCheck,
+    mentalScores
+  };
+}
+function applySavedState(saved){
+  if(!saved || typeof saved !== 'object') return;
+  if(saved.patientProfile && typeof saved.patientProfile === 'object'){
+    patientProfile = {...patientProfile, ...saved.patientProfile};
+  }
+  if(Array.isArray(saved.history)){
+    const savedByDate = new Map(saved.history.map(entry => [entry.date, entry]));
+    history = history.map(entry => {
+      const savedEntry = savedByDate.get(entry.date);
+      if(!savedEntry) return entry;
+      return {
+        ...entry,
+        ...savedEntry,
+        dateObj: entry.dateObj,
+        symptoms: Array.isArray(savedEntry.symptoms) && savedEntry.symptoms.length ? savedEntry.symptoms : ['none']
+      };
+    });
+  }
+  if(saved.medicationReminder && typeof saved.medicationReminder === 'object'){
+    medicationReminder = {...medicationReminder, ...saved.medicationReminder};
+  }
+  if(saved.mentalCheck && typeof saved.mentalCheck === 'object'){
+    mentalCheck = {...mentalCheck, ...saved.mentalCheck};
+  }
+  if(Array.isArray(saved.mentalScores)){
+    mentalScores = saved.mentalScores.filter(item => item && item.date).slice(0,30);
+  }
+}
 function saveState(){
+  const state = appStatePayload();
   try{
-    localStorage.setItem(STORAGE_KEY, JSON.stringify({
-      patientProfile,
-      history: history.map(serialiseEntry),
-      medicationReminder,
-      mentalCheck,
-      mentalScores
-    }));
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
   } catch(err){}
+  queueServerStateSave(state);
 }
 function loadState(){
   try{
     const raw = localStorage.getItem(STORAGE_KEY);
     if(!raw) return;
-    const saved = JSON.parse(raw);
-    if(saved.patientProfile && typeof saved.patientProfile === 'object'){
-      patientProfile = {...patientProfile, ...saved.patientProfile};
-    }
-    if(Array.isArray(saved.history)){
-      const savedByDate = new Map(saved.history.map(entry => [entry.date, entry]));
-      history = history.map(entry => {
-        const savedEntry = savedByDate.get(entry.date);
-        if(!savedEntry) return entry;
-        return {
-          ...entry,
-          ...savedEntry,
-          dateObj: entry.dateObj,
-          symptoms: Array.isArray(savedEntry.symptoms) && savedEntry.symptoms.length ? savedEntry.symptoms : ['none']
-        };
-      });
-    }
-    if(saved.medicationReminder && typeof saved.medicationReminder === 'object'){
-      medicationReminder = {...medicationReminder, ...saved.medicationReminder};
-    }
-    if(saved.mentalCheck && typeof saved.mentalCheck === 'object'){
-      mentalCheck = {...mentalCheck, ...saved.mentalCheck};
-    }
-    if(Array.isArray(saved.mentalScores)){
-      mentalScores = saved.mentalScores.filter(item => item && item.date).slice(0,30);
-    }
+    applySavedState(JSON.parse(raw));
   } catch(err){}
 }
 loadState();
+
+/* ================= AUTH / MYSQL API ================= */
+async function apiRequest(path, options={}){
+  const response = await fetch(API_BASE + path, {
+    credentials:'same-origin',
+    headers:{'Content-Type':'application/json', ...(options.headers||{})},
+    ...options
+  });
+  const data = await response.json().catch(()=>({}));
+  if(!response.ok) throw new Error(data.error || 'Request failed');
+  return data;
+}
+function showAuthForm(mode){
+  document.getElementById('loginForm').hidden = mode !== 'login';
+  document.getElementById('registerForm').hidden = mode !== 'register';
+  document.getElementById('loginMessage').textContent = '';
+  document.getElementById('registerMessage').textContent = '';
+}
+function profileToPatient(profile, email=''){
+  const fullName = profile.fullName || 'CareU User';
+  const city = profile.city || '';
+  patientProfile = {
+    ...patientProfile,
+    name:{en:fullName, bm:fullName, zh:fullName},
+    age:Number(profile.age)||0,
+    gender:profile.gender || 'male',
+    village:profile.village || '',
+    city:{en:city, bm:city, zh:city},
+    phone:profile.phone || '',
+    email
+  };
+}
+function patientToProfile(){
+  return {
+    fullName: patientProfile.name.en || '',
+    age: Number(patientProfile.age)||0,
+    gender: patientProfile.gender || 'male',
+    village: patientProfile.village || '',
+    city: patientProfile.city.en || '',
+    phone: patientProfile.phone || ''
+  };
+}
+function sidebarProfileName(){
+  const value = patientProfile.name;
+  if(typeof value === 'string') return value || 'CareU User';
+  return (value && (value[currentLang] || value.en || value.bm || value.zh)) || 'CareU User';
+}
+function sidebarProfileEmail(){
+  return (authUser && authUser.email) || patientProfile.email || '';
+}
+function sidebarProfileInitial(name){
+  const clean = (name || '').trim();
+  return clean ? clean.charAt(0).toUpperCase() : 'C';
+}
+function renderSidebarAccount(){
+  const trigger = document.getElementById('accountTrigger');
+  if(!trigger) return;
+  const name = sidebarProfileName();
+  const email = sidebarProfileEmail();
+  const meta = email || t('accountRole');
+  const initial = sidebarProfileInitial(name);
+  [
+    ['accountAvatar', initial],
+    ['accountMenuAvatar', initial],
+    ['accountName', name],
+    ['accountMenuName', name],
+    ['accountEmail', meta],
+    ['accountMenuEmail', meta]
+  ].forEach(([id, text])=>{
+    const el = document.getElementById(id);
+    if(el) el.textContent = text;
+  });
+}
+function setAccountMenu(open){
+  const menu = document.getElementById('accountMenu');
+  const trigger = document.getElementById('accountTrigger');
+  if(!menu || !trigger) return;
+  menu.hidden = !open;
+  trigger.classList.toggle('active', open);
+  trigger.setAttribute('aria-expanded', String(open));
+}
+function closeAccountMenu(){
+  setAccountMenu(false);
+}
+function toggleAccountMenu(){
+  const menu = document.getElementById('accountMenu');
+  setAccountMenu(menu ? menu.hidden : false);
+}
+function applyAuthUser(user){
+  authUser = user;
+  profileToPatient(user.profile || {}, user.email || '');
+  renderProfileForm();
+}
+async function loadServerState(){
+  if(!authUser) return;
+  try{
+    const data = await apiRequest('/api/state');
+    if(data.state && Object.keys(data.state).length){
+      applySavedState(data.state);
+    }
+  } catch(err){}
+}
+function queueServerStateSave(state=appStatePayload()){
+  if(!authUser) return;
+  clearTimeout(serverSaveTimer);
+  serverSaveTimer = setTimeout(()=>saveServerState(state), 500);
+}
+async function saveServerState(state=appStatePayload()){
+  if(!authUser) return;
+  try{
+    await apiRequest('/api/state', {method:'PUT', body:JSON.stringify({state})});
+  } catch(err){}
+}
+function refreshAllViews(){
+  draftEntry = null;
+  applyStaticI18n();
+  renderSidebarAccount();
+  renderDashboard();
+  renderEntryForm();
+  renderMentalHealth();
+  renderHealthReview();
+  renderTrend();
+  updateClinicMap();
+  renderProfileForm();
+  updateSyncBadge();
+}
+async function enterApp(user, shouldSaveState=false){
+  applyAuthUser(user);
+  document.body.classList.remove('auth-mode');
+  await loadServerState();
+  refreshAllViews();
+  if(shouldSaveState) saveState();
+}
+async function initAuth(){
+  try{
+    const data = await apiRequest('/api/me');
+    await enterApp(data.user, false);
+  } catch(err){
+    document.body.classList.add('auth-mode');
+    showAuthForm('login');
+  }
+}
+function authProfileFromForm(prefix){
+  return {
+    fullName: document.getElementById(prefix+'Name').value.trim(),
+    age: Number(document.getElementById(prefix+'Age').value) || 0,
+    gender: document.getElementById(prefix+'Gender').value,
+    village: document.getElementById(prefix+'Village').value.trim(),
+    city: document.getElementById(prefix+'City').value.trim(),
+    phone: document.getElementById(prefix+'Phone').value.trim()
+  };
+}
+document.querySelectorAll('[data-auth-switch]').forEach(btn=>{
+  btn.onclick = ()=> showAuthForm(btn.dataset.authSwitch);
+});
+document.getElementById('loginForm').onsubmit = async e=>{
+  e.preventDefault();
+  const msg = document.getElementById('loginMessage');
+  msg.textContent = '';
+  try{
+    const data = await apiRequest('/api/login', {method:'POST', body:JSON.stringify({
+      email:document.getElementById('loginEmail').value.trim(),
+      password:document.getElementById('loginPassword').value
+    })});
+    await enterApp(data.user, false);
+    showToast(t('loginSuccessToast'));
+  } catch(err){
+    msg.textContent = err.message === 'Failed to fetch' ? t('authServerError') : err.message;
+  }
+};
+document.getElementById('registerForm').onsubmit = async e=>{
+  e.preventDefault();
+  const msg = document.getElementById('registerMessage');
+  msg.textContent = '';
+  try{
+    const data = await apiRequest('/api/register', {method:'POST', body:JSON.stringify({
+      email:document.getElementById('regEmail').value.trim(),
+      password:document.getElementById('regPassword').value,
+      profile:authProfileFromForm('reg')
+    })});
+    await enterApp(data.user, true);
+    showToast(t('registerSuccessToast'));
+  } catch(err){
+    msg.textContent = err.message === 'Failed to fetch' ? t('authServerError') : err.message;
+  }
+};
 
 /* ================= RISK ENGINE ================= */
 function assessBP(sys,dia){
@@ -1233,6 +1825,31 @@ function overallRisk(entry){
   const levels = [assessBP(entry.systolic,entry.diastolic), assessGlucose(entry.glucose), assessHR(entry.hr), assessSleep(entry.sleep)];
   return levels.reduce((a,b)=> RANK[b]>RANK[a] ? b : a, 'normal');
 }
+function riskReason(key, value){
+  return t(key).replace('{value}', value);
+}
+function riskReasons(entry){
+  const reasons = [];
+  if(assessBP(entry.systolic, entry.diastolic) !== 'normal'){
+    reasons.push(riskReason('riskReasonHighBP', `${entry.systolic}/${entry.diastolic}`));
+  }
+  if(entry.glucose < 70){
+    reasons.push(riskReason('riskReasonLowGlucose', entry.glucose));
+  } else if(entry.glucose > 140){
+    reasons.push(riskReason('riskReasonHighGlucose', entry.glucose));
+  }
+  if(entry.hr < 60){
+    reasons.push(riskReason('riskReasonLowHR', entry.hr));
+  } else if(entry.hr > 100){
+    reasons.push(riskReason('riskReasonHighHR', entry.hr));
+  }
+  if(entry.sleep < 6){
+    reasons.push(riskReason('riskReasonShortSleep', entry.sleep));
+  } else if(entry.sleep > 10){
+    reasons.push(riskReason('riskReasonLongSleep', entry.sleep));
+  }
+  return reasons;
+}
 function persistentElevatedTrend(hist){
   const last3 = hist.slice(-3);
   return last3.every(e => assessBP(e.systolic,e.diastolic) !== 'normal');
@@ -1247,9 +1864,14 @@ function bpDirection(hist){
 function averageSleep(hist=history){
   return hist.reduce((sum,e)=>sum+(Number(e.sleep)||0),0)/hist.length;
 }
+function genderLabel(gender=patientProfile.gender){
+  if(gender === 'female') return t('genderFemale');
+  if(gender === 'other') return t('genderOther');
+  return t('genderMale');
+}
 function patientLine(){
   const city = patientProfile.city[currentLang] || patientProfile.city.en;
-  return `${patientProfile.name[currentLang] || patientProfile.name.en} · ${patientProfile.age} ${currentLang==='zh'?'岁':(currentLang==='bm'?'tahun':'y/o')} · ${t('genderMale')} · ${patientProfile.village}, ${city}`;
+  return `${patientProfile.name[currentLang] || patientProfile.name.en} · ${patientProfile.age} ${currentLang==='zh'?'岁':(currentLang==='bm'?'tahun':'y/o')} · ${genderLabel()} · ${patientProfile.village}, ${city}`;
 }
 function futureRiskWatch(){
   const today = history[history.length-1];
@@ -1341,7 +1963,6 @@ function personalHealthReview(){
   const mentalWatch = mentalHealthWatch();
   const latestScore = latestMentalScore();
   const scoreWatch = mentalScoreLevel(latestScore);
-  const missedThisWeek = history.filter(e=>!e.med).length;
   const hasSymptoms = today.symptoms.some(s=>s!=='none');
   const factors = [];
   const actions = [];
@@ -1382,11 +2003,6 @@ function personalHealthReview(){
   if(!today.med){
     selfCareScore += 2;
     addUnique(factors, t('mentalFactorMedToday'));
-    addUnique(actions, t('actionMedication'));
-  }
-  if(missedThisWeek >= 2){
-    selfCareScore += 1;
-    addUnique(factors, t('factorMissedMed'));
     addUnique(actions, t('actionMedication'));
   }
   if(mentalWatch.level === 'high'){
@@ -1435,6 +2051,7 @@ function renderDashboard(){
 
   const bannerHost = document.getElementById('riskBannerHost');
   let msgKey = risk==='high' ? 'riskHighMsg' : risk==='attention' ? 'riskAttentionMsg' : 'riskNormalMsg';
+  const reasons = riskReasons(today);
   let extra = '';
   if(persistent && risk!=='normal'){
     extra = currentLang==='zh' ? ' 血压已连续三天高于平常水平，建议持续监测。'
@@ -1448,6 +2065,7 @@ function renderDashboard(){
       <div>
         <h3>${t('risk'+cap(risk))}</h3>
         <p>${t(msgKey)}${extra}</p>
+        ${reasons.length ? `<div class="risk-reasons">${reasons.map(reason=>`<span class="risk-reason">${escapeHtml(reason)}</span>`).join('')}</div>` : ''}
       </div>
     </div>`;
 
@@ -1470,7 +2088,7 @@ function renderDashboard(){
     <div class="card stat-card">
       <div class="label">${c.label}</div>
       <div class="value" style="${c.isRiskCard?`font-size:19px;`:''}">${c.value}<span class="unit">${c.unit}</span></div>
-      ${c.trend ? `<div class="trend ${c.trend.cls}">${c.trend.glyph} ${currentLang==='zh'?'较昨日':(currentLang==='bm'?'berbanding semalam':'vs yesterday')}</div>` : `<div class="trend"><span class="risk-pill ${c.risk}"><span class="dot"></span>${t('risk'+cap(c.risk))}</span></div>`}
+      ${c.trend ? `<div class="trend ${c.trend.cls}">${c.trend.glyph} ${currentLang==='zh'?'较昨日':(currentLang==='bm'?'berbanding semalam':'vs yesterday')}</div>${c.risk !== 'normal' ? `<div class="trend"><span class="risk-pill ${c.risk}"><span class="dot"></span>${t('risk'+cap(c.risk))}</span></div>` : ''}` : `<div class="trend"><span class="risk-pill ${c.risk}"><span class="dot"></span>${t('risk'+cap(c.risk))}</span></div>`}
     </div>
   `).join('');
 
@@ -1521,6 +2139,72 @@ function renderHealthReview(){
       <div class="review-note">${t('reviewNote')}</div>
     </div>`;
 }
+
+/* ================= PROFILE ================= */
+function renderProfileForm(){
+  const nameInput = document.getElementById('profileName');
+  if(!nameInput) return;
+  const profile = patientToProfile();
+  nameInput.value = profile.fullName;
+  document.getElementById('profileAge').value = profile.age || '';
+  document.getElementById('profileGender').value = profile.gender;
+  document.getElementById('profileVillage').value = profile.village;
+  document.getElementById('profileCity').value = profile.city;
+  document.getElementById('profilePhone').value = profile.phone;
+  document.getElementById('profileAccountEmail').textContent = authUser ? authUser.email : '';
+  renderSidebarAccount();
+}
+function showProfileValidation(message){
+  const box = document.getElementById('profileValidation');
+  if(!message){
+    box.hidden = true;
+    box.textContent = '';
+    return;
+  }
+  box.hidden = false;
+  box.textContent = message;
+}
+function readProfileForm(){
+  return {
+    fullName: document.getElementById('profileName').value.trim(),
+    age: Number(document.getElementById('profileAge').value) || 0,
+    gender: document.getElementById('profileGender').value,
+    village: document.getElementById('profileVillage').value.trim(),
+    city: document.getElementById('profileCity').value.trim(),
+    phone: document.getElementById('profilePhone').value.trim()
+  };
+}
+document.getElementById('saveProfileBtn').onclick = async ()=>{
+  const profile = readProfileForm();
+  if(!profile.fullName){
+    showProfileValidation(t('validationRequired').replace('{field}', t('fullNameLabel')));
+    return;
+  }
+  if(profile.age < 0 || profile.age > 120){
+    showProfileValidation(t('validationRange').replace('{field}', t('profileAge')).replace('{min}', '0').replace('{max}', '120'));
+    return;
+  }
+  showProfileValidation('');
+  try{
+    const data = await apiRequest('/api/profile', {method:'PUT', body:JSON.stringify({profile})});
+    applyAuthUser(data.user);
+    saveState();
+    refreshAllViews();
+    showToast(t('profileSavedToast'));
+  } catch(err){
+    showProfileValidation(err.message === 'Failed to fetch' ? t('authServerError') : err.message);
+  }
+};
+async function logoutFromApp(){
+  try{ await saveServerState(); } catch(err){}
+  try{ await apiRequest('/api/logout', {method:'POST', body:'{}'}); } catch(err){}
+  authUser = null;
+  try{ localStorage.removeItem(STORAGE_KEY); } catch(err){}
+  document.body.classList.add('auth-mode');
+  showAuthForm('login');
+  location.reload();
+}
+document.getElementById('logoutBtn').onclick = logoutFromApp;
 
 /* ================= MENTAL HEALTH ================= */
 function renderMentalHealth(){
@@ -2184,16 +2868,35 @@ function showTab(name){
   document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
   document.getElementById('view-'+name).classList.add('active');
   document.querySelectorAll('nav.tabs button').forEach(b=>b.classList.toggle('active', b.dataset.tab===name));
+  const accountTrigger = document.getElementById('accountTrigger');
+  if(accountTrigger) accountTrigger.classList.toggle('selected', name==='profile');
+  closeAccountMenu();
   if(name==='summary') renderHealthReview();
   if(name==='mental') renderMentalHealth();
   if(name==='trend') renderTrend();
   if(name==='clinics') updateClinicMap();
+  if(name==='profile') renderProfileForm();
 }
 document.querySelectorAll('nav.tabs button').forEach(btn=>{
   btn.onclick = ()=> showTab(btn.dataset.tab);
 });
 document.querySelectorAll('[data-tab-jump]').forEach(btn=>{
   btn.onclick = ()=> showTab(btn.dataset.tabJump);
+});
+document.getElementById('accountTrigger').onclick = e=>{
+  e.stopPropagation();
+  toggleAccountMenu();
+};
+document.getElementById('accountProfileBtn').onclick = ()=>{
+  showTab('profile');
+};
+document.getElementById('accountLogoutBtn').onclick = logoutFromApp;
+document.addEventListener('click', e=>{
+  const account = document.getElementById('sidebarAccount');
+  if(account && !account.contains(e.target)) closeAccountMenu();
+});
+document.addEventListener('keydown', e=>{
+  if(e.key === 'Escape') closeAccountMenu();
 });
 
 /* ================= LANGUAGE SWITCH ================= */
@@ -2209,6 +2912,7 @@ document.querySelectorAll('.lang-switch button').forEach(btn=>{
     renderHealthReview();
     renderTrend();
     updateClinicMap();
+    renderSidebarAccount();
     document.getElementById('summaryText').textContent = t('summaryPlaceholder');
     updateSyncBadge();
   };
@@ -2252,6 +2956,7 @@ renderHealthReview();
 renderTrend();
 updateClinicMap();
 updateSyncBadge();
+initAuth();
 </script>
 </body>
 </html>
