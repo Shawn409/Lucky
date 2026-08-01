@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -330,6 +330,18 @@ input[type=number]:focus{border-color:var(--teal); outline:none; background:#fff
 .trend-stat .num{font-family:'IBM Plex Mono',monospace; font-size:22px; font-weight:600; color:var(--teal-dark);}
 .trend-stat .lbl{font-size:12px; color:var(--ink-soft); margin-top:2px;}
 
+/* Clinic finder */
+.clinic-finder{display:grid; grid-template-columns:300px minmax(0,1fr); gap:16px; align-items:start;}
+.clinic-finder h3{margin:0 0 6px; font-size:17px;}
+.clinic-finder p{margin:0 0 18px; color:var(--ink-soft); font-size:13.5px; line-height:1.5;}
+.clinic-preferences{display:grid; gap:14px;}
+.clinic-preferences select{width:100%; padding:12px 14px; border:1.5px solid var(--border); border-radius:10px; background:#FBFCFA; color:var(--teal-dark); font:600 14px inherit;}
+.clinic-status{min-height:20px; color:var(--ink-soft); font-size:12.5px; line-height:1.45;}
+.clinic-map-wrap{overflow:hidden; border:1px solid var(--border); border-radius:14px; background:#E8EFEB; min-height:370px;}
+.clinic-map{display:block; width:100%; height:370px; border:0;}
+.clinic-disclaimer{margin-top:14px; font-size:12px; line-height:1.5; color:var(--ink-soft);}
+@media(max-width:760px){.clinic-finder{grid-template-columns:1fr;}.clinic-map-wrap,.clinic-map{min-height:320px;height:320px;}}
+
 /* Community */
 .patient-card{
   display:flex; align-items:center; justify-content:space-between; gap:12px; padding:16px; border-radius:14px;
@@ -409,6 +421,10 @@ input[type=number]:focus{border-color:var(--teal); outline:none; background:#fff
     <button data-tab="community">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="8" r="3"/><circle cx="17" cy="9" r="2.4"/><path d="M2 20c0-3.3 3.1-6 7-6s7 2.7 7 6M14.5 14.3c2.9.4 5.5 2.4 5.5 5.7"/></svg>
       <span data-i18n="tabCommunity">Community</span>
+    </button>
+    <button data-tab="clinics">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s7-5.3 7-11a7 7 0 1 0-14 0c0 5.7 7 11 7 11z"/><circle cx="12" cy="10" r="2"/></svg>
+      <span data-i18n="tabClinics">Find a clinic</span>
     </button>
   </nav>
 </header>
@@ -591,6 +607,18 @@ input[type=number]:focus{border-color:var(--teal); outline:none; background:#fff
     </div>
   </section>
 
+  <!-- ============ CLINIC FINDER ============ -->
+  <section class="view" id="view-clinics">
+    <div class="section-title"><div><h2 data-i18n="clinicFinderTitle">Find a nearby clinic</h2><div class="sub" data-i18n="clinicFinderSub">Choose your preference and use your location to search Google Maps.</div></div></div>
+    <div class="clinic-finder">
+      <div class="card"><h3 data-i18n="clinicPreferenceTitle">Clinic preference</h3><p data-i18n="clinicPreferenceSub">Select the type of clinic you would like to visit.</p>
+        <div class="clinic-preferences"><div><label class="field-label" for="clinicType" data-i18n="clinicTypeLabel">Clinic type</label><select id="clinicType"><option value="government" data-i18n="clinicGovernment">Government clinic</option><option value="private" data-i18n="clinicPrivate">Private clinic</option></select></div>
+          <button class="btn-primary" id="findClinicsBtn"><span data-i18n="findClinicsBtn">Use my location</span></button><div class="clinic-status" id="clinicStatus" aria-live="polite"></div><a class="btn-secondary" id="openGoogleMaps" href="https://www.google.com/maps/search/government+clinic+Sarawak" target="_blank" rel="noopener" data-i18n="openGoogleMaps">Open in Google Maps</a></div>
+      </div>
+      <div><div class="clinic-map-wrap"><iframe class="clinic-map" id="clinicMap" title="Nearby clinics in Google Maps" loading="lazy" src="https://www.google.com/maps?q=government%20clinic%20Sarawak&output=embed"></iframe></div><div class="clinic-disclaimer" data-i18n="clinicDisclaimer">Google Maps results are provided for convenience. Please call the clinic to confirm services, hours and availability.</div></div>
+    </div>
+  </section>
+
   <!-- ============ COMMUNITY ============ -->
   <section class="view" id="view-community">
     <div class="section-title">
@@ -631,7 +659,8 @@ const I18N = {
 en:{
   appName:"CareU", appTag:"AI-assisted hypertension & diabetes monitoring for rural communities",
   online:"Online · synced", offline:"Offline · will sync later",
-  tabDashboard:"Dashboard", tabEntry:"Daily Entry", tabSummary:"AI Summary", tabTrend:"Weekly Trend", tabCommunity:"Care Team",
+  tabDashboard:"Dashboard", tabEntry:"Daily Entry", tabSummary:"AI Summary", tabTrend:"Weekly Trend", tabCommunity:"Care Team", tabClinics:"Find a clinic",
+  clinicFinderTitle:"Find a nearby clinic", clinicFinderSub:"Choose your preference and use your location to search Google Maps.", clinicPreferenceTitle:"Clinic preference", clinicPreferenceSub:"Select the type of clinic you would like to visit.", clinicTypeLabel:"Clinic type", clinicGovernment:"Government clinic", clinicPrivate:"Private clinic", findClinicsBtn:"Use my location", openGoogleMaps:"Open in Google Maps", clinicReady:"Showing nearby", clinicLocating:"Finding your location…", clinicLocationDenied:"Location unavailable — showing clinics in Sarawak.", clinicDisclaimer:"Google Maps results are provided for convenience. Please call the clinic to confirm services, hours and availability.",
   dashTitle:"Patient Dashboard",
   statBP:"Blood Pressure", statGlucose:"Blood Glucose", statHR:"Heart Rate", statSleep:"Sleep", statRisk:"Risk Level",
   medAdherenceTitle:"Medication — Today", editEntry:"Edit today's entry",
@@ -688,7 +717,8 @@ en:{
 bm:{
   appName:"CareU", appTag:"Pemantauan tekanan darah tinggi & diabetes berbantukan AI untuk komuniti luar bandar",
   online:"Dalam talian · disegerak", offline:"Luar talian · akan disegerak kemudian",
-  tabDashboard:"Papan Pemuka", tabEntry:"Catatan Harian", tabSummary:"Ringkasan AI", tabTrend:"Trend Mingguan", tabCommunity:"Pasukan Jagaan",
+  tabDashboard:"Papan Pemuka", tabEntry:"Catatan Harian", tabSummary:"Ringkasan AI", tabTrend:"Trend Mingguan", tabCommunity:"Pasukan Jagaan", tabClinics:"Cari klinik",
+  clinicFinderTitle:"Cari klinik berdekatan", clinicFinderSub:"Pilih keutamaan anda dan gunakan lokasi anda untuk mencari di Google Maps.", clinicPreferenceTitle:"Keutamaan klinik", clinicPreferenceSub:"Pilih jenis klinik yang anda ingin lawati.", clinicTypeLabel:"Jenis klinik", clinicGovernment:"Klinik kerajaan", clinicPrivate:"Klinik swasta", findClinicsBtn:"Guna lokasi saya", openGoogleMaps:"Buka dalam Google Maps", clinicReady:"Memaparkan klinik berdekatan", clinicLocating:"Mencari lokasi anda…", clinicLocationDenied:"Lokasi tidak tersedia — memaparkan klinik di Sarawak.", clinicDisclaimer:"Keputusan Google Maps disediakan untuk kemudahan. Sila hubungi klinik untuk mengesahkan perkhidmatan, waktu dan ketersediaan.",
   dashTitle:"Papan Pemuka Pesakit",
   statBP:"Tekanan Darah", statGlucose:"Gula Darah", statHR:"Kadar Nadi", statSleep:"Tidur", statRisk:"Tahap Risiko",
   medAdherenceTitle:"Ubat — Hari Ini", editEntry:"Sunting catatan hari ini",
@@ -1448,11 +1478,34 @@ document.getElementById('communitySort').onchange = e=>{
   renderCommunity();
 };
 
+/* ================= CLINIC FINDER ================= */
+let clinicLocation = null;
+function updateClinicMap(){
+  const type = document.getElementById('clinicType').value;
+  const label = type === 'government' ? t('clinicGovernment') : t('clinicPrivate');
+  const place = clinicLocation ? `${clinicLocation.lat},${clinicLocation.lng}` : 'Sarawak';
+  const query = `${label} near ${place}`;
+  document.getElementById('clinicMap').src = `https://www.google.com/maps?q=${encodeURIComponent(query)}&output=embed`;
+  document.getElementById('openGoogleMaps').href = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
+  document.getElementById('clinicStatus').textContent = `${t('clinicReady')} ${document.getElementById('clinicType').selectedOptions[0].textContent.toLowerCase()}.`;
+}
+function findNearbyClinics(){
+  const status = document.getElementById('clinicStatus');
+  if(!navigator.geolocation){ clinicLocation=null; updateClinicMap(); status.textContent=t('clinicLocationDenied'); return; }
+  status.textContent = t('clinicLocating');
+  navigator.geolocation.getCurrentPosition(position=>{
+    clinicLocation={lat:position.coords.latitude,lng:position.coords.longitude}; updateClinicMap();
+  }, ()=>{ clinicLocation=null; updateClinicMap(); status.textContent=t('clinicLocationDenied'); }, {enableHighAccuracy:false,timeout:10000,maximumAge:300000});
+}
+document.getElementById('findClinicsBtn').onclick = findNearbyClinics;
+document.getElementById('clinicType').onchange = updateClinicMap;
+
 /* ================= NAV / TABS ================= */
 function showTab(name){
   document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
   document.getElementById('view-'+name).classList.add('active');
   document.querySelectorAll('nav.tabs button').forEach(b=>b.classList.toggle('active', b.dataset.tab===name));
+  if(name==='clinics') updateClinicMap();
 }
 document.querySelectorAll('nav.tabs button').forEach(btn=>{
   btn.onclick = ()=> showTab(btn.dataset.tab);
@@ -1472,6 +1525,7 @@ document.querySelectorAll('.lang-switch button').forEach(btn=>{
     renderEntryForm();
     renderTrend();
     renderCommunity();
+    updateClinicMap();
     document.getElementById('summaryText').textContent = t('summaryPlaceholder');
     updateSyncBadge();
   };
@@ -1512,6 +1566,7 @@ renderDashboard();
 renderEntryForm();
 renderTrend();
 renderCommunity();
+updateClinicMap();
 updateSyncBadge();
 </script>
 </body>
