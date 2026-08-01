@@ -1,0 +1,52 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": null,
+        "hooks": [
+          {
+            "type": "command",
+            "command": "C:\\Tools\\entire-ish\\entire-ish.exe hooks codex post-tool-use",
+            "timeout": 30
+          }
+        ]
+      }
+    ],
+    "SessionStart": [
+      {
+        "matcher": null,
+        "hooks": [
+          {
+            "type": "command",
+            "command": "C:\\Tools\\entire-ish\\entire-ish.exe hooks codex session-start",
+            "timeout": 30
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "matcher": null,
+        "hooks": [
+          {
+            "type": "command",
+            "command": "C:\\Tools\\entire-ish\\entire-ish.exe hooks codex stop",
+            "timeout": 30
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "matcher": null,
+        "hooks": [
+          {
+            "type": "command",
+            "command": "C:\\Tools\\entire-ish\\entire-ish.exe hooks codex user-prompt-submit",
+            "timeout": 30
+          }
+        ]
+      }
+    ]
+  }
+}
