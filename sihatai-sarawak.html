@@ -191,6 +191,32 @@ main{max-width:1180px; margin:0 auto; padding:36px 32px 80px;}
 .risk-banner .icon{width:38px;height:38px;border-radius:10px; flex-shrink:0; display:flex; align-items:center; justify-content:center; background:rgba(255,255,255,0.6);}
 .risk-banner h3{margin:0 0 4px; font-size:16px;}
 .risk-banner p{margin:0; font-size:13.5px; color:var(--ink); line-height:1.5;}
+.personal-review{
+  margin-top:16px;
+  display:grid;
+  gap:16px;
+}
+.review-head{display:flex; align-items:flex-start; justify-content:space-between; gap:16px; flex-wrap:wrap;}
+.review-head h3{margin:0 0 5px; font-size:17px;}
+.review-head p{margin:0; color:var(--ink); font-size:13.5px; line-height:1.55;}
+.review-grid{display:grid; grid-template-columns:minmax(180px,.7fr) minmax(0,1.3fr); gap:14px; align-items:stretch;}
+.review-score{
+  border:1px solid var(--border); background:#FBFCFA; border-radius:12px; padding:14px;
+}
+.review-score .label{font-size:11px; font-weight:800; text-transform:uppercase; letter-spacing:.06em; color:var(--ink-soft);}
+.review-score .value{font-family:'IBM Plex Mono', monospace; font-size:28px; font-weight:700; color:var(--teal-dark); margin-top:5px;}
+.review-domains{display:grid; grid-template-columns:repeat(3,1fr); gap:10px;}
+.review-domain{
+  border:1px solid var(--border); border-radius:12px; background:#FBFCFA; padding:12px;
+}
+.review-domain .name{font-size:11px; font-weight:800; text-transform:uppercase; letter-spacing:.04em; color:var(--ink-soft); margin-bottom:8px;}
+.review-domain .value{font-weight:800; color:var(--teal-dark); font-size:14px;}
+.review-actions{display:grid; gap:8px; margin:2px 0 0; padding:0; list-style:none;}
+.review-actions li{
+  border:1px solid var(--border); border-radius:10px; padding:10px 12px; background:#FBFCFA;
+  font-size:13px; line-height:1.45; color:var(--ink);
+}
+.review-note{font-size:12px; color:var(--ink-soft); line-height:1.5; margin-top:-2px;}
 .future-watch{
   display:grid; grid-template-columns:minmax(0,1.1fr) minmax(220px,.9fr); gap:16px; align-items:start;
   margin:16px 0 20px;
@@ -204,6 +230,7 @@ main{max-width:1180px; margin:0 auto; padding:36px 32px 80px;}
 .future-score .value{font-family:'IBM Plex Mono', monospace; font-size:26px; font-weight:700; color:var(--teal-dark); margin-top:5px;}
 .factor-list{display:flex; flex-wrap:wrap; gap:8px; margin-top:12px;}
 .factor-chip{font-size:12px; font-weight:700; color:var(--ink-soft); background:#F4F7F2; border:1px solid var(--border); border-radius:999px; padding:6px 10px;}
+@media(max-width:820px){.review-grid{grid-template-columns:1fr;}.review-domains{grid-template-columns:1fr;}}
 @media(max-width:760px){.future-watch{grid-template-columns:1fr;}}
 
 .med-row{display:flex; align-items:center; justify-content:space-between; margin-top:6px;}
@@ -222,7 +249,13 @@ input[type=number]{
   background:#FBFCFA;
 }
 input[type=number]:focus{border-color:var(--teal); outline:none; background:#fff;}
+input.is-invalid{border-color:var(--risk-high) !important; background:#FFF8F7 !important;}
 .field-hint{font-size:11.5px; color:var(--ink-soft); margin-top:5px;}
+.form-alert{
+  margin-top:16px; padding:12px 14px; border:1px solid #F0C7C3; border-radius:10px;
+  background:var(--risk-high-bg); color:var(--risk-high); font-size:12.5px; line-height:1.45; font-weight:700;
+}
+.form-alert[hidden]{display:none;}
 .bp-pair{display:flex; align-items:center; gap:10px;}
 .bp-pair .input-wrap{flex:1;}
 .bp-pair .sep{color:var(--ink-soft); font-weight:700; font-size:18px; margin-top:14px;}
@@ -333,6 +366,7 @@ input[type=number]:focus{border-color:var(--teal); outline:none; background:#fff
 
 /* Trend page */
 .chart-card canvas{max-height:260px;}
+.chart-fallback-note{font-size:12px; color:var(--ink-soft); margin-top:8px; line-height:1.45;}
 .trend-stats{display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-top:16px;}
 @media(max-width:640px){.trend-stats{grid-template-columns:1fr;}}
 .trend-stat{background:#FBFCFA; border:1px solid var(--border); border-radius:12px; padding:14px 16px;}
@@ -370,9 +404,23 @@ input[type=range]{width:100%; accent-color:var(--teal);}
 .test-card h3{margin:0; font-size:15px;}
 .test-card p{margin:0; color:var(--ink-soft); font-size:12.5px; line-height:1.45; flex:1;}
 .test-card .btn-secondary{width:100%;}
+.score-log-card{margin-top:16px;}
+.score-log-head{display:flex; align-items:flex-start; justify-content:space-between; gap:12px; flex-wrap:wrap; margin-bottom:16px;}
+.score-log-head h3{margin:0 0 4px; font-size:17px;}
+.score-log-head p{margin:0; color:var(--ink-soft); font-size:13px; line-height:1.45;}
+.score-form{display:grid; grid-template-columns:repeat(4,minmax(120px,1fr)); gap:12px; align-items:end;}
+.score-form .btn-primary{justify-content:center;}
+.score-list{list-style:none; padding:0; margin:14px 0 0; display:grid; gap:10px;}
+.score-row{display:flex; align-items:center; justify-content:space-between; gap:12px; border:1px solid var(--border); background:#FBFCFA; border-radius:12px; padding:12px 14px;}
+.score-row .date{font-weight:800; color:var(--teal-dark); font-size:13px;}
+.score-tags{display:flex; gap:7px; flex-wrap:wrap; justify-content:flex-end;}
+.score-tag{font-family:'IBM Plex Mono',monospace; font-size:11.5px; font-weight:700; color:var(--ink-soft); background:#fff; border:1px solid var(--border); border-radius:999px; padding:5px 8px;}
+.score-empty{border:1px dashed var(--border); border-radius:12px; padding:16px; color:var(--ink-soft); font-size:13px; background:#FBFCFA;}
 @media(max-width:980px){.test-grid{grid-template-columns:repeat(2,1fr);}}
 @media(max-width:760px){.mental-layout{grid-template-columns:1fr;}}
+@media(max-width:760px){.score-form{grid-template-columns:repeat(2,minmax(120px,1fr));}}
 @media(max-width:520px){.test-grid{grid-template-columns:1fr;}}
+@media(max-width:520px){.score-form{grid-template-columns:1fr;}.score-row{align-items:flex-start; flex-direction:column;}.score-tags{justify-content:flex-start;}}
 
 /* Community */
 .patient-card{
@@ -401,7 +449,7 @@ input[type=range]{width:100%; accent-color:var(--teal);}
   .print-report h2{font-family:Arial, sans-serif; font-size:15px; margin:22px 0 8px; color:#111;}
   .print-report p{margin:3px 0; font-size:12px; line-height:1.45;}
   .report-kicker{font-size:11px; text-transform:uppercase; letter-spacing:.08em; font-weight:700; color:#555;}
-  .print-summary-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin:18px 0;}
+  .print-summary-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(120px,1fr)); gap:8px; margin:18px 0;}
   .print-summary-grid div{border:1px solid #ccc; border-radius:8px; padding:10px;}
   .print-summary-grid strong{display:block; font-size:15px; margin-bottom:3px;}
   .print-report table{width:100%; border-collapse:collapse; font-size:11px;}
@@ -485,8 +533,6 @@ input[type=range]{width:100%; accent-color:var(--teal);}
       </div>
     </div>
 
-    <div id="futureRiskHost"></div>
-
     <div class="card reminder-card" style="margin-top:16px;">
       <div class="reminder-head">
         <div>
@@ -558,6 +604,8 @@ input[type=range]{width:100%; accent-color:var(--teal);}
         <div class="symptom-grid" id="symptomChips"></div>
       </div>
 
+      <div class="form-alert" id="entryValidation" hidden></div>
+
       <div style="margin-top:22px; display:flex; align-items:center; gap:12px; flex-wrap:wrap;">
         <button class="btn-primary" id="saveEntryBtn">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg>
@@ -615,6 +663,37 @@ input[type=range]{width:100%; accent-color:var(--teal);}
       <div class="card" id="mentalWatchCard"></div>
     </div>
 
+    <div class="card score-log-card">
+      <div class="score-log-head">
+        <div>
+          <h3 data-i18n="mentalScoresTitle">Official test score log</h3>
+          <p data-i18n="mentalScoresSub">After completing a MENTARI test, enter the score here so CareU can keep a simple trend.</p>
+        </div>
+        <span class="risk-pill normal" id="mentalScorePill"><span class="dot"></span><span data-i18n="mentalScoreReady">Ready</span></span>
+      </div>
+      <div class="score-form">
+        <div>
+          <label class="field-label" for="scorePhq">PHQ-9</label>
+          <input type="number" id="scorePhq" min="0" max="27" placeholder="0-27">
+        </div>
+        <div>
+          <label class="field-label" for="scoreDass">DASS</label>
+          <input type="number" id="scoreDass" min="0" max="126" placeholder="0-126">
+        </div>
+        <div>
+          <label class="field-label" for="scoreCbi">CBI</label>
+          <input type="number" id="scoreCbi" min="0" max="100" placeholder="0-100">
+        </div>
+        <div>
+          <label class="field-label" for="scoreWhodas">WHODAS</label>
+          <input type="number" id="scoreWhodas" min="0" max="100" placeholder="0-100">
+        </div>
+        <button class="btn-primary" id="saveMentalScoreBtn" data-i18n="saveMentalScore">Save score</button>
+      </div>
+      <div class="form-alert" id="mentalScoreValidation" hidden></div>
+      <ul class="score-list" id="mentalScoreList"></ul>
+    </div>
+
     <div class="section-title" style="margin-top:24px;">
       <div>
         <h2 data-i18n="mentariTitle">MENTARI official self-tests</h2>
@@ -657,6 +736,8 @@ input[type=range]{width:100%; accent-color:var(--teal);}
         <span data-i18n="disclaimer">This summary highlights unusual patterns only — it is not a diagnosis. Please consult a healthcare professional for medical advice.</span>
       </div>
     </div>
+
+    <div id="healthReviewHost"></div>
   </section>
 
   <!-- ============ WEEKLY TREND ============ -->
@@ -718,7 +799,7 @@ input[type=range]{width:100%; accent-color:var(--teal);}
 
 <section class="print-report" id="printReport" aria-hidden="true"></section>
 
-<div class="footer-note" data-i18n="footerNote">Prototype for demonstration only. Uses simulated data — not connected to real medical devices or hospital systems.</div>
+<div class="footer-note" data-i18n="footerNote">Prototype for demonstration only. Starts with demo data and saves changes locally — not connected to real medical devices or hospital systems.</div>
 
 <div class="toast" id="toast"></div>
 
@@ -727,7 +808,7 @@ input[type=range]{width:100%; accent-color:var(--teal);}
 const I18N = {
 en:{
   appName:"CareU", appTag:"AI-assisted hypertension & diabetes monitoring for rural communities",
-  online:"Online · synced", offline:"Offline · will sync later",
+  online:"Online · saved locally", offline:"Offline · saved locally",
   tabDashboard:"Dashboard", tabEntry:"Daily Entry", tabSummary:"AI Summary", tabMental:"Mental Health", tabTrend:"Weekly Trend", tabClinics:"Find a clinic",
   clinicFinderTitle:"Find a nearby clinic", clinicFinderSub:"Choose your preference and use your location to search Google Maps.", clinicPreferenceTitle:"Clinic preference", clinicPreferenceSub:"Select the type of clinic you would like to visit.", clinicTypeLabel:"Clinic type", clinicGovernment:"Government clinic", clinicPrivate:"Private clinic", findClinicsBtn:"Use my location", openGoogleMaps:"Open in Google Maps", clinicReady:"Showing nearby", clinicLocating:"Finding your location…", clinicLocationDenied:"Location unavailable — showing clinics in Sarawak.", clinicDisclaimer:"Google Maps results are provided for convenience. Please call the clinic to confirm services, hours and availability.",
   dashTitle:"Patient Dashboard",
@@ -741,29 +822,47 @@ en:{
   medLabel:"Medication taken today?", yes:"Yes", no:"No",
   symptomLabel:"Symptoms today",
   saveBtn:"Save today's entry",
-  mentalTitle:"Mental Health Check-in", mentalSub:"A short wellbeing check connected to sleep, symptoms and medication patterns",
+  mentalTitle:"Mental Health Check-in", mentalSub:"A wellbeing check linked with today's BP, glucose, heart rate, sleep, medication and symptoms",
   moodCheckTitle:"Quick mood check", moodCheckSub:"Record how you feel today without replacing official screening tests.",
   moodLabel:"Mood today", moodLow:"Low", moodHigh:"Good", stressLabel:"Stress level", anxietyLabel:"Anxiety level",
   sleepQualityLabel:"Sleep quality", sleepGood:"Good", sleepOkay:"Okay", sleepPoor:"Poor",
   supportLabel:"Someone to talk to today?", supportYes:"Yes", supportNo:"No",
   mentalWatchTitle:"Mental Health Watch", mentalWatchScore:"Wellbeing watch", mentalWatchLow:"Low", mentalWatchModerate:"Moderate", mentalWatchHigh:"High",
-  mentalWatchLowMsg:"Today's wellbeing check looks relatively steady. Keep tracking mood, sleep and symptoms.",
-  mentalWatchModerateMsg:"CareU sees a moderate wellbeing watch pattern today. Short sleep, stress or symptoms may be affecting self-care.",
-  mentalWatchHighMsg:"CareU sees a high wellbeing watch pattern today. Consider talking to a trusted person or healthcare professional soon.",
-  mentalFactorLowMood:"low mood", mentalFactorStress:"high stress", mentalFactorAnxiety:"high anxiety", mentalFactorPoorSleep:"poor sleep quality", mentalFactorShortSleep:"short sleep duration", mentalFactorNoSupport:"limited support", mentalFactorSymptoms:"physical symptoms", mentalFactorStable:"steady wellbeing pattern",
+  mentalWatchLowMsg:"Today's wellbeing check looks relatively steady when combined with physical readings and self-care patterns.",
+  mentalWatchModerateMsg:"CareU sees a moderate wellbeing watch pattern after linking mood, sleep, physical readings and medication routine.",
+  mentalWatchHighMsg:"CareU sees a high wellbeing watch pattern across mental, physical and self-care signals. Consider talking to a trusted person or healthcare professional soon.",
+  mentalFactorLowMood:"low mood", mentalFactorStress:"high stress", mentalFactorAnxiety:"high anxiety", mentalFactorPoorSleep:"poor sleep quality", mentalFactorShortSleep:"short sleep duration", mentalFactorNoSupport:"limited support", mentalFactorSymptoms:"physical symptoms", mentalFactorOfficialScore:"official test score", mentalFactorBp:"blood pressure context", mentalFactorGlucose:"glucose context", mentalFactorHr:"heart rate context", mentalFactorMedToday:"medication missed today", mentalFactorMedWeek:"missed medication this week", mentalFactorStable:"steady wellbeing pattern",
   mentariTitle:"MENTARI official self-tests", mentariSub:"Open MOH MENTARI screening tools when you want a fuller self-test.",
   phqDesc:"Screens depression symptoms and severity.", dassDesc:"Screens depression, anxiety and stress.", cbiDesc:"Screens burnout and prolonged exhaustion.", whodasDesc:"Screens difficulties in daily functioning.",
   takeOfficialTest:"Take official test",
   mentalDisclaimer:"Mental health self-checks are not a diagnosis. If you feel unsafe, at risk of harming yourself, or unable to cope, seek urgent help from local emergency services or a healthcare professional.",
   summaryTitle:"AI Health Summary", summarySub:"A plain-language recap of this week's readings",
-  genBtn:"Generate summary", aiTag:"AI-generated summary",
+  genBtn:"Generate summary", aiTag:"Free rule-based summary",
   summaryPlaceholder:"Tap \"Generate summary\" to create this week's health recap.",
   disclaimer:"This summary highlights unusual patterns only — it is not a diagnosis. Please consult a healthcare professional for medical advice.",
+  healthReviewTitle:"Personal Health Review", healthReviewSub:"CareU reviews physical readings, mental wellbeing and self-care patterns together.",
+  healthReviewScore:"Review level", healthReviewNormalMsg:"Today's overall pattern looks steady. Keep daily logging and routine self-care.",
+  healthReviewAttentionMsg:"CareU sees signals that need closer watching today. Review the linked factors below.",
+  healthReviewHighMsg:"CareU sees several linked health signals today. Consider contacting a healthcare professional if this persists or feels concerning.",
+  reviewPhysical:"Physical readings", reviewMental:"Mental wellbeing", reviewSelfCare:"Self-care", reviewLinkedSignals:"Linked signals", reviewActions:"Suggested next steps",
+  reviewNote:"This is a personal review tool, not a diagnosis. Physical readings are used as context for wellbeing monitoring, not as proof of a mental health condition.",
+  actionRecheckBp:"Recheck blood pressure after resting, especially if today's number feels unusual.",
+  actionWatchGlucose:"Review meal timing and monitor glucose again if symptoms continue.",
+  actionRestBreathing:"Pause, rest and check heart rate again if the fast pulse continues.",
+  actionSleep:"Protect sleep tonight and keep tracking sleep duration and quality.",
+  actionMedication:"Confirm today's medication routine and mark the dose after taking it.",
+  actionMentalSupport:"Use the mental health check-in and talk to a trusted person if stress or anxiety stays high.",
+  actionMentari:"Complete or update a MENTARI self-test score for fuller wellbeing context.",
+  actionClinic:"Prepare the report and consider contacting a clinic if high-risk readings persist.",
+  actionRoutine:"Continue daily logging and maintain the current routine.",
+  mentalScoresTitle:"Official test score log", mentalScoresSub:"After completing a MENTARI test, enter the score here so CareU can keep a simple trend.",
+  mentalScoreReady:"Ready", saveMentalScore:"Save score", mentalScoreEmpty:"No official test scores saved yet.",
+  mentalScoreSavedToast:"Mental health score saved on this device.", mentalScoreValidationEmpty:"Enter at least one official test score before saving.", mentalScoreValidationRange:"Scores must stay within the range shown in each field.",
   trendTitle:"Weekly Trend", trendSub:"Last 7 days",
   bpChartTitle:"Blood Pressure (mmHg)", glucoseChartTitle:"Blood Glucose (mg/dL)",
   abnormalLabel:"Abnormal readings this week", adherenceLabel:"Medication adherence", directionLabel:"Overall BP direction", avgSleepLabel:"Average sleep",
   dailyLogTitle:"Daily log",
-  footerNote:"Prototype for demonstration only. Uses simulated data — not connected to real medical devices or hospital systems.",
+  footerNote:"Prototype for demonstration only. Starts with demo data and saves changes locally — not connected to real medical devices or hospital systems.",
   riskNormal:"Normal", riskAttention:"Needs Attention", riskHigh:"High Risk",
   riskNormalMsg:"Today's readings are within the patient's usual healthy range. Keep up the daily logging.",
   riskAttentionMsg:"One or more readings today are outside the usual range. Continue monitoring closely over the next few days.",
@@ -788,17 +887,21 @@ en:{
   reportTitle:"Clinic report", reportRange:"Report range", reportGenerated:"Generated", reportPatient:"Patient", reportLatestRisk:"Latest risk",
   reportAbnormal:"Abnormal days", reportAdherence:"Medication adherence", reportBpDirection:"BP direction", reportDate:"Date",
   reportSystolic:"Systolic", reportDiastolic:"Diastolic", reportGlucose:"Glucose", reportHeartRate:"Heart rate",
-  reportMedication:"Medication", reportSymptoms:"Symptoms", reportSleep:"Sleep", reportRisk:"Risk",
+  reportMedication:"Medication", reportSymptoms:"Symptoms", reportSleep:"Sleep", reportRisk:"Risk", reportPersonalReview:"Personal review", reportMentalWatch:"Mental watch",
   futureWatchLabel:"Future watch", followupToday:"Check in today", followupThisWeek:"Review this week", noFollowup:"Routine monitoring",
-  loadingSummary:"Generating summary with Claude…",
+  loadingSummary:"Generating local summary…",
   savedToast:"Saved — today's entry updated",
-  offlineEntryNote:"You're offline. This entry will sync once you're back online.",
-  generatingErr:"Couldn't reach the AI service — showing a rule-based summary instead.",
+  savedLocalToast:"Saved on this device.",
+  offlineEntryNote:"You're offline. Entries are saved on this device.",
+  generatingErr:"CareU is using the free rule-based summary mode.",
+  validationRequired:"{field} is required.",
+  validationRange:"{field} must be between {min} and {max}.",
+  chartFallback:"Charts are drawn locally because Chart.js is unavailable.",
   langName:"English"
 },
 bm:{
   appName:"CareU", appTag:"Pemantauan tekanan darah tinggi & diabetes berbantukan AI untuk komuniti luar bandar",
-  online:"Dalam talian · disegerak", offline:"Luar talian · akan disegerak kemudian",
+  online:"Dalam talian · disimpan setempat", offline:"Luar talian · disimpan setempat",
   tabDashboard:"Papan Pemuka", tabEntry:"Catatan Harian", tabSummary:"Ringkasan AI", tabMental:"Kesihatan Mental", tabTrend:"Trend Mingguan", tabClinics:"Cari klinik",
   clinicFinderTitle:"Cari klinik berdekatan", clinicFinderSub:"Pilih keutamaan anda dan gunakan lokasi anda untuk mencari di Google Maps.", clinicPreferenceTitle:"Keutamaan klinik", clinicPreferenceSub:"Pilih jenis klinik yang anda ingin lawati.", clinicTypeLabel:"Jenis klinik", clinicGovernment:"Klinik kerajaan", clinicPrivate:"Klinik swasta", findClinicsBtn:"Guna lokasi saya", openGoogleMaps:"Buka dalam Google Maps", clinicReady:"Memaparkan klinik berdekatan", clinicLocating:"Mencari lokasi anda…", clinicLocationDenied:"Lokasi tidak tersedia — memaparkan klinik di Sarawak.", clinicDisclaimer:"Keputusan Google Maps disediakan untuk kemudahan. Sila hubungi klinik untuk mengesahkan perkhidmatan, waktu dan ketersediaan.",
   dashTitle:"Papan Pemuka Pesakit",
@@ -812,29 +915,47 @@ bm:{
   medLabel:"Sudah ambil ubat hari ini?", yes:"Ya", no:"Tidak",
   symptomLabel:"Simptom hari ini",
   saveBtn:"Simpan catatan hari ini",
-  mentalTitle:"Semakan Kesihatan Mental", mentalSub:"Semakan kesejahteraan ringkas yang dikaitkan dengan tidur, simptom dan corak ubat",
+  mentalTitle:"Semakan Kesihatan Mental", mentalSub:"Semakan kesejahteraan yang dikaitkan dengan tekanan darah, gula, nadi, tidur, ubat dan simptom hari ini",
   moodCheckTitle:"Semakan mood ringkas", moodCheckSub:"Rekod perasaan hari ini tanpa menggantikan ujian saringan rasmi.",
   moodLabel:"Mood hari ini", moodLow:"Rendah", moodHigh:"Baik", stressLabel:"Tahap tekanan", anxietyLabel:"Tahap keresahan",
   sleepQualityLabel:"Kualiti tidur", sleepGood:"Baik", sleepOkay:"Sederhana", sleepPoor:"Lemah",
   supportLabel:"Ada seseorang untuk bercakap hari ini?", supportYes:"Ya", supportNo:"Tidak",
   mentalWatchTitle:"Pemantauan Kesihatan Mental", mentalWatchScore:"Pemantauan kesejahteraan", mentalWatchLow:"Rendah", mentalWatchModerate:"Sederhana", mentalWatchHigh:"Tinggi",
-  mentalWatchLowMsg:"Semakan kesejahteraan hari ini kelihatan agak stabil. Teruskan menjejak mood, tidur dan simptom.",
-  mentalWatchModerateMsg:"CareU melihat corak pemantauan kesejahteraan sederhana hari ini. Tidur pendek, tekanan atau simptom mungkin menjejaskan penjagaan diri.",
-  mentalWatchHighMsg:"CareU melihat corak pemantauan kesejahteraan tinggi hari ini. Pertimbangkan untuk bercakap dengan orang dipercayai atau profesional kesihatan.",
-  mentalFactorLowMood:"mood rendah", mentalFactorStress:"tekanan tinggi", mentalFactorAnxiety:"keresahan tinggi", mentalFactorPoorSleep:"kualiti tidur lemah", mentalFactorShortSleep:"tempoh tidur pendek", mentalFactorNoSupport:"sokongan terhad", mentalFactorSymptoms:"simptom fizikal", mentalFactorStable:"corak kesejahteraan stabil",
+  mentalWatchLowMsg:"Semakan kesejahteraan hari ini kelihatan agak stabil apabila digabungkan dengan bacaan fizikal dan corak penjagaan diri.",
+  mentalWatchModerateMsg:"CareU melihat corak kesejahteraan sederhana selepas mengaitkan mood, tidur, bacaan fizikal dan rutin ubat.",
+  mentalWatchHighMsg:"CareU melihat corak kesejahteraan tinggi merentas isyarat mental, fizikal dan penjagaan diri. Pertimbangkan untuk bercakap dengan orang dipercayai atau profesional kesihatan.",
+  mentalFactorLowMood:"mood rendah", mentalFactorStress:"tekanan tinggi", mentalFactorAnxiety:"keresahan tinggi", mentalFactorPoorSleep:"kualiti tidur lemah", mentalFactorShortSleep:"tempoh tidur pendek", mentalFactorNoSupport:"sokongan terhad", mentalFactorSymptoms:"simptom fizikal", mentalFactorOfficialScore:"skor ujian rasmi", mentalFactorBp:"konteks tekanan darah", mentalFactorGlucose:"konteks gula darah", mentalFactorHr:"konteks kadar nadi", mentalFactorMedToday:"ubat tertinggal hari ini", mentalFactorMedWeek:"ubat tertinggal minggu ini", mentalFactorStable:"corak kesejahteraan stabil",
   mentariTitle:"Ujian kendiri rasmi MENTARI", mentariSub:"Buka alat saringan MOH MENTARI apabila anda mahukan ujian kendiri yang lebih lengkap.",
   phqDesc:"Menyaring simptom dan keterukan kemurungan.", dassDesc:"Menyaring kemurungan, keresahan dan tekanan.", cbiDesc:"Menyaring kelesuan dan keletihan berpanjangan.", whodasDesc:"Menyaring kesukaran dalam fungsi harian.",
   takeOfficialTest:"Ambil ujian rasmi",
   mentalDisclaimer:"Semakan kendiri kesihatan mental bukan diagnosis. Jika anda berasa tidak selamat, berisiko mencederakan diri, atau tidak mampu mengawal keadaan, dapatkan bantuan segera daripada perkhidmatan kecemasan tempatan atau profesional kesihatan.",
   summaryTitle:"Ringkasan Kesihatan AI", summarySub:"Ringkasan mudah faham bacaan minggu ini",
-  genBtn:"Jana ringkasan", aiTag:"Ringkasan dijana AI",
+  genBtn:"Jana ringkasan", aiTag:"Ringkasan percuma berasaskan peraturan",
   summaryPlaceholder:"Tekan \"Jana ringkasan\" untuk hasilkan ringkasan kesihatan minggu ini.",
   disclaimer:"Ringkasan ini hanya menonjolkan corak luar biasa — ia bukan diagnosis. Sila rujuk profesional kesihatan untuk nasihat perubatan.",
+  healthReviewTitle:"Semakan Kesihatan Peribadi", healthReviewSub:"CareU menyemak bacaan fizikal, kesejahteraan mental dan corak penjagaan diri secara bersama.",
+  healthReviewScore:"Tahap semakan", healthReviewNormalMsg:"Corak keseluruhan hari ini kelihatan stabil. Teruskan catatan harian dan rutin penjagaan diri.",
+  healthReviewAttentionMsg:"CareU melihat isyarat yang perlu diperhatikan dengan lebih rapi hari ini. Semak faktor yang dikaitkan di bawah.",
+  healthReviewHighMsg:"CareU melihat beberapa isyarat kesihatan yang berkait hari ini. Pertimbangkan untuk menghubungi profesional kesihatan jika ia berterusan atau membimbangkan.",
+  reviewPhysical:"Bacaan fizikal", reviewMental:"Kesejahteraan mental", reviewSelfCare:"Penjagaan diri", reviewLinkedSignals:"Isyarat berkait", reviewActions:"Langkah seterusnya dicadangkan",
+  reviewNote:"Ini ialah alat semakan peribadi, bukan diagnosis. Bacaan fizikal digunakan sebagai konteks pemantauan kesejahteraan, bukan bukti keadaan kesihatan mental.",
+  actionRecheckBp:"Semak semula tekanan darah selepas berehat, terutama jika bacaan hari ini luar biasa.",
+  actionWatchGlucose:"Semak masa makan dan pantau gula semula jika simptom berterusan.",
+  actionRestBreathing:"Berehat dan semak nadi semula jika denyutan laju berterusan.",
+  actionSleep:"Utamakan tidur malam ini dan terus rekod tempoh serta kualiti tidur.",
+  actionMedication:"Sahkan rutin ubat hari ini dan tanda dos selepas mengambilnya.",
+  actionMentalSupport:"Gunakan semakan mental dan bercakap dengan orang dipercayai jika tekanan atau keresahan kekal tinggi.",
+  actionMentari:"Lengkapkan atau kemas kini skor ujian kendiri MENTARI untuk konteks kesejahteraan yang lebih lengkap.",
+  actionClinic:"Sediakan laporan dan pertimbangkan menghubungi klinik jika bacaan risiko tinggi berterusan.",
+  actionRoutine:"Teruskan catatan harian dan kekalkan rutin semasa.",
+  mentalScoresTitle:"Log skor ujian rasmi", mentalScoresSub:"Selepas melengkapkan ujian MENTARI, masukkan skor di sini supaya CareU boleh menyimpan trend ringkas.",
+  mentalScoreReady:"Sedia", saveMentalScore:"Simpan skor", mentalScoreEmpty:"Belum ada skor ujian rasmi disimpan.",
+  mentalScoreSavedToast:"Skor kesihatan mental disimpan pada peranti ini.", mentalScoreValidationEmpty:"Masukkan sekurang-kurangnya satu skor ujian rasmi sebelum menyimpan.", mentalScoreValidationRange:"Skor mesti berada dalam julat yang ditunjukkan pada setiap medan.",
   trendTitle:"Trend Mingguan", trendSub:"7 hari terakhir",
   bpChartTitle:"Tekanan Darah (mmHg)", glucoseChartTitle:"Gula Darah (mg/dL)",
   abnormalLabel:"Bacaan luar biasa minggu ini", adherenceLabel:"Pematuhan ubat", directionLabel:"Arah tekanan darah keseluruhan", avgSleepLabel:"Purata tidur",
   dailyLogTitle:"Log harian",
-  footerNote:"Prototaip untuk tujuan demonstrasi sahaja. Menggunakan data simulasi — tidak disambungkan kepada peranti perubatan atau sistem hospital sebenar.",
+  footerNote:"Prototaip untuk tujuan demonstrasi sahaja. Bermula dengan data demo dan menyimpan perubahan setempat — tidak disambungkan kepada peranti perubatan atau sistem hospital sebenar.",
   riskNormal:"Normal", riskAttention:"Perlu Perhatian", riskHigh:"Risiko Tinggi",
   riskNormalMsg:"Bacaan hari ini berada dalam julat sihat biasa pesakit. Teruskan catatan harian.",
   riskAttentionMsg:"Satu atau lebih bacaan hari ini di luar julat biasa. Teruskan pemantauan rapi dalam beberapa hari akan datang.",
@@ -859,17 +980,21 @@ bm:{
   reportTitle:"Laporan klinik", reportRange:"Julat laporan", reportGenerated:"Dijana", reportPatient:"Pesakit", reportLatestRisk:"Risiko terkini",
   reportAbnormal:"Hari luar biasa", reportAdherence:"Pematuhan ubat", reportBpDirection:"Arah tekanan darah", reportDate:"Tarikh",
   reportSystolic:"Sistolik", reportDiastolic:"Diastolik", reportGlucose:"Gula darah", reportHeartRate:"Kadar nadi",
-  reportMedication:"Ubat", reportSymptoms:"Simptom", reportSleep:"Tidur", reportRisk:"Risiko",
+  reportMedication:"Ubat", reportSymptoms:"Simptom", reportSleep:"Tidur", reportRisk:"Risiko", reportPersonalReview:"Semakan peribadi", reportMentalWatch:"Pemantauan mental",
   futureWatchLabel:"Pemantauan masa depan", followupToday:"Semak hari ini", followupThisWeek:"Semak minggu ini", noFollowup:"Pemantauan rutin",
-  loadingSummary:"Menjana ringkasan dengan Claude…",
+  loadingSummary:"Menjana ringkasan setempat…",
   savedToast:"Disimpan — catatan hari ini dikemas kini",
-  offlineEntryNote:"Anda luar talian. Catatan ini akan disegerak apabila anda kembali dalam talian.",
-  generatingErr:"Tidak dapat menghubungi perkhidmatan AI — memaparkan ringkasan berasaskan peraturan.",
+  savedLocalToast:"Disimpan pada peranti ini.",
+  offlineEntryNote:"Anda luar talian. Catatan disimpan pada peranti ini.",
+  generatingErr:"CareU menggunakan mod ringkasan percuma berasaskan peraturan.",
+  validationRequired:"{field} diperlukan.",
+  validationRange:"{field} mesti antara {min} dan {max}.",
+  chartFallback:"Carta dilukis secara setempat kerana Chart.js tidak tersedia.",
   langName:"Bahasa Melayu"
 },
 zh:{
   appName:"CareU", appTag:"AI 辅助高血压与糖尿病健康监测 · 服务乡区社区",
-  online:"在线 · 已同步", offline:"离线 · 恢复网络后同步",
+  online:"在线 · 已本地保存", offline:"离线 · 已本地保存",
   tabDashboard:"健康仪表板", tabEntry:"每日记录", tabSummary:"AI 健康摘要", tabMental:"心理健康", tabTrend:"每周趋势", tabClinics:"寻找诊所",
   clinicFinderTitle:"寻找附近诊所", clinicFinderSub:"选择偏好的诊所类型，并使用你的位置在 Google Maps 搜索。", clinicPreferenceTitle:"诊所偏好", clinicPreferenceSub:"选择你想前往的诊所类型。", clinicTypeLabel:"诊所类型", clinicGovernment:"政府诊所", clinicPrivate:"私人诊所", findClinicsBtn:"使用我的位置", openGoogleMaps:"在 Google Maps 打开", clinicReady:"正在显示附近", clinicLocating:"正在寻找你的位置…", clinicLocationDenied:"无法取得位置 — 显示砂拉越诊所。", clinicDisclaimer:"Google Maps 结果仅供方便参考。请致电诊所确认服务、营业时间和可用性。",
   dashTitle:"患者仪表板",
@@ -883,29 +1008,47 @@ zh:{
   medLabel:"今天是否已服药？", yes:"是", no:"否",
   symptomLabel:"今日症状",
   saveBtn:"保存今日记录",
-  mentalTitle:"心理健康记录", mentalSub:"结合睡眠、症状和服药模式的简短身心状态记录",
+  mentalTitle:"心理健康记录", mentalSub:"结合今日血压、血糖、心率、睡眠、服药和症状的身心状态记录",
   moodCheckTitle:"快速心情记录", moodCheckSub:"记录今天的感受，但不取代官方筛查测试。",
   moodLabel:"今日心情", moodLow:"低落", moodHigh:"良好", stressLabel:"压力程度", anxietyLabel:"焦虑程度",
   sleepQualityLabel:"睡眠质量", sleepGood:"良好", sleepOkay:"普通", sleepPoor:"较差",
   supportLabel:"今天有人可以倾诉吗？", supportYes:"有", supportNo:"没有",
   mentalWatchTitle:"心理健康观察", mentalWatchScore:"身心状态观察", mentalWatchLow:"低", mentalWatchModerate:"中等", mentalWatchHigh:"高",
-  mentalWatchLowMsg:"今天的身心状态相对稳定，请继续记录心情、睡眠和症状。",
-  mentalWatchModerateMsg:"CareU 看到今天有中等程度的身心观察信号。睡眠不足、压力或症状可能影响自我照护。",
-  mentalWatchHighMsg:"CareU 看到今天有较高的身心观察信号。建议尽快和可信任的人或医护专业人员谈谈。",
-  mentalFactorLowMood:"心情低落", mentalFactorStress:"压力较高", mentalFactorAnxiety:"焦虑较高", mentalFactorPoorSleep:"睡眠质量较差", mentalFactorShortSleep:"睡眠时长不足", mentalFactorNoSupport:"支持较少", mentalFactorSymptoms:"有身体症状", mentalFactorStable:"身心状态稳定",
+  mentalWatchLowMsg:"结合身体数据和自我照护模式后，今天的身心状态相对稳定。",
+  mentalWatchModerateMsg:"CareU 将心情、睡眠、身体数据和服药习惯连起来后，看到中等程度的身心观察信号。",
+  mentalWatchHighMsg:"CareU 在心理、身体和自我照护信号中看到较高观察等级。建议尽快和可信任的人或医护专业人员谈谈。",
+  mentalFactorLowMood:"心情低落", mentalFactorStress:"压力较高", mentalFactorAnxiety:"焦虑较高", mentalFactorPoorSleep:"睡眠质量较差", mentalFactorShortSleep:"睡眠时长不足", mentalFactorNoSupport:"支持较少", mentalFactorSymptoms:"有身体症状", mentalFactorOfficialScore:"官方测试分数", mentalFactorBp:"血压背景", mentalFactorGlucose:"血糖背景", mentalFactorHr:"心率背景", mentalFactorMedToday:"今日未服药", mentalFactorMedWeek:"本周有漏服药", mentalFactorStable:"身心状态稳定",
   mentariTitle:"MENTARI 官方自我筛查", mentariSub:"需要更完整的自我筛查时，可打开 MOH MENTARI 官方工具。",
   phqDesc:"筛查抑郁症状和严重程度。", dassDesc:"筛查抑郁、焦虑和压力。", cbiDesc:"筛查倦怠和长期疲惫。", whodasDesc:"筛查日常功能困难。",
   takeOfficialTest:"打开官方测试",
   mentalDisclaimer:"心理健康自我记录不是诊断。如果你感到不安全、有伤害自己的风险，或已经无法应对，请立即向本地紧急服务或医护专业人员求助。",
   summaryTitle:"AI 健康摘要", summarySub:"以简单语言总结本周健康数据",
-  genBtn:"生成摘要", aiTag:"AI 生成摘要",
+  genBtn:"生成摘要", aiTag:"免费规则式摘要",
   summaryPlaceholder:"点击「生成摘要」以创建本周健康总结。",
   disclaimer:"此摘要仅用于标示异常趋势，并非诊断结果。如有需要，请咨询医护专业人员。",
+  healthReviewTitle:"个人健康审查", healthReviewSub:"CareU 会把身体数据、心理状态和自我照护模式放在一起审查。",
+  healthReviewScore:"审查等级", healthReviewNormalMsg:"今天整体模式相对稳定，请继续每日记录和维持照护习惯。",
+  healthReviewAttentionMsg:"CareU 看到今天有一些需要留意的信号，请查看下方已连接的因素。",
+  healthReviewHighMsg:"CareU 看到今天有多个健康信号互相关联；如果持续或让你担心，请考虑联系医护专业人员。",
+  reviewPhysical:"身体数据", reviewMental:"心理状态", reviewSelfCare:"自我照护", reviewLinkedSignals:"已连接信号", reviewActions:"建议下一步",
+  reviewNote:"这是个人健康审查工具，不是诊断。身体数据只作为身心观察背景，不代表证明有心理健康疾病。",
+  actionRecheckBp:"休息后重新测量血压，尤其是今天读数看起来不寻常时。",
+  actionWatchGlucose:"留意用餐时间；如果症状持续，请再次观察血糖。",
+  actionRestBreathing:"先休息，如果心跳偏快持续，再重新检查心率。",
+  actionSleep:"今晚优先保证睡眠，并继续记录睡眠时长和质量。",
+  actionMedication:"确认今日服药安排，服药后记得标记完成。",
+  actionMentalSupport:"使用心理健康记录；如果压力或焦虑持续偏高，和可信任的人谈谈。",
+  actionMentari:"完成或更新 MENTARI 自我测试分数，让身心状态背景更完整。",
+  actionClinic:"准备报告；如果高风险读数持续，请考虑联系诊所。",
+  actionRoutine:"继续每日记录，并维持目前的健康习惯。",
+  mentalScoresTitle:"官方测试分数记录", mentalScoresSub:"完成 MENTARI 测试后，可在这里输入分数，让 CareU 保存简单趋势。",
+  mentalScoreReady:"可记录", saveMentalScore:"保存分数", mentalScoreEmpty:"尚未保存官方测试分数。",
+  mentalScoreSavedToast:"心理健康分数已保存在本设备。", mentalScoreValidationEmpty:"保存前请至少输入一个官方测试分数。", mentalScoreValidationRange:"分数必须在每个栏位显示的范围内。",
   trendTitle:"每周趋势", trendSub:"最近 7 天",
   bpChartTitle:"血压 (mmHg)", glucoseChartTitle:"血糖 (mg/dL)",
   abnormalLabel:"本周异常记录次数", adherenceLabel:"服药依从率", directionLabel:"整体血压走势", avgSleepLabel:"平均睡眠",
   dailyLogTitle:"每日记录",
-  footerNote:"此为演示原型，使用模拟数据，未连接真实医疗设备或医院系统。",
+  footerNote:"此为演示原型，初始使用 demo 数据，并会把修改保存在本设备，未连接真实医疗设备或医院系统。",
   riskNormal:"正常", riskAttention:"需要注意", riskHigh:"高风险",
   riskNormalMsg:"今日数据处于患者平常的健康范围内，请继续每日记录。",
   riskAttentionMsg:"今日有一项或多项数据超出平常范围，请在接下来几天密切留意。",
@@ -930,12 +1073,16 @@ zh:{
   reportTitle:"诊所报告", reportRange:"报告范围", reportGenerated:"生成时间", reportPatient:"病人", reportLatestRisk:"最新风险",
   reportAbnormal:"异常天数", reportAdherence:"服药依从率", reportBpDirection:"血压方向", reportDate:"日期",
   reportSystolic:"收缩压", reportDiastolic:"舒张压", reportGlucose:"血糖", reportHeartRate:"心率",
-  reportMedication:"服药", reportSymptoms:"症状", reportSleep:"睡眠", reportRisk:"风险",
+  reportMedication:"服药", reportSymptoms:"症状", reportSleep:"睡眠", reportRisk:"风险", reportPersonalReview:"个人审查", reportMentalWatch:"心理观察",
   futureWatchLabel:"未来观察", followupToday:"今日跟进", followupThisWeek:"本周复查", noFollowup:"常规监测",
-  loadingSummary:"正在使用 Claude 生成摘要…",
+  loadingSummary:"正在生成本地摘要…",
   savedToast:"已保存 — 今日记录已更新",
-  offlineEntryNote:"您目前处于离线状态，恢复网络后本记录将自动同步。",
-  generatingErr:"无法连接 AI 服务，改为显示规则生成的摘要。",
+  savedLocalToast:"已保存在本设备。",
+  offlineEntryNote:"您目前处于离线状态，记录会保存在本设备。",
+  generatingErr:"CareU 正在使用免费的规则式摘要模式。",
+  validationRequired:"{field} 为必填。",
+  validationRange:"{field} 必须介于 {min} 到 {max} 之间。",
+  chartFallback:"由于 Chart.js 不可用，图表已改用本地绘制。",
   langName:"中文"
 }
 };
@@ -968,7 +1115,7 @@ function makeDateSeries(n){
 }
 const dateSeries = makeDateSeries(7);
 
-const patientProfile = {
+let patientProfile = {
   name:{en:'Bakar anak Jalong', bm:'Bakar anak Jalong', zh:'巴卡尔先生'},
   age:67,
   gender:'male',
@@ -996,6 +1143,65 @@ let history = dateSeries.map((d,i)=>({
 let draftEntry = null; // holds in-progress form state for today
 let medicationReminder = {enabled:false, time:'08:00', lastFiredDate:null};
 let mentalCheck = {mood:3, stress:4, anxiety:3, sleepQuality:'okay', support:'yes'};
+let mentalScores = [];
+
+const STORAGE_KEY = 'careu-local-state-v2';
+function serialiseEntry(entry){
+  return {
+    date: entry.date,
+    systolic: entry.systolic,
+    diastolic: entry.diastolic,
+    glucose: entry.glucose,
+    hr: entry.hr,
+    sleep: entry.sleep,
+    med: entry.med,
+    symptoms: Array.isArray(entry.symptoms) ? entry.symptoms : ['none']
+  };
+}
+function saveState(){
+  try{
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({
+      patientProfile,
+      history: history.map(serialiseEntry),
+      medicationReminder,
+      mentalCheck,
+      mentalScores
+    }));
+  } catch(err){}
+}
+function loadState(){
+  try{
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if(!raw) return;
+    const saved = JSON.parse(raw);
+    if(saved.patientProfile && typeof saved.patientProfile === 'object'){
+      patientProfile = {...patientProfile, ...saved.patientProfile};
+    }
+    if(Array.isArray(saved.history)){
+      const savedByDate = new Map(saved.history.map(entry => [entry.date, entry]));
+      history = history.map(entry => {
+        const savedEntry = savedByDate.get(entry.date);
+        if(!savedEntry) return entry;
+        return {
+          ...entry,
+          ...savedEntry,
+          dateObj: entry.dateObj,
+          symptoms: Array.isArray(savedEntry.symptoms) && savedEntry.symptoms.length ? savedEntry.symptoms : ['none']
+        };
+      });
+    }
+    if(saved.medicationReminder && typeof saved.medicationReminder === 'object'){
+      medicationReminder = {...medicationReminder, ...saved.medicationReminder};
+    }
+    if(saved.mentalCheck && typeof saved.mentalCheck === 'object'){
+      mentalCheck = {...mentalCheck, ...saved.mentalCheck};
+    }
+    if(Array.isArray(saved.mentalScores)){
+      mentalScores = saved.mentalScores.filter(item => item && item.date).slice(0,30);
+    }
+  } catch(err){}
+}
+loadState();
 
 /* ================= RISK ENGINE ================= */
 function assessBP(sys,dia){
@@ -1068,23 +1274,153 @@ function futureRiskWatch(){
   if(score >= 2) return {level:'moderate', cls:'attention', score, factors, message:t('futureRiskModerateMsg')};
   return {level:'low', cls:'normal', score, factors, message:t('futureRiskLowMsg')};
 }
+function latestMentalScore(){
+  return mentalScores.slice().sort((a,b)=>(b.createdAt||0)-(a.createdAt||0))[0] || null;
+}
+function mentalScoreLevel(score){
+  if(!score) return {level:'normal'};
+  const high = (score.phq != null && score.phq >= 20) ||
+    (score.dass != null && score.dass >= 60) ||
+    (score.cbi != null && score.cbi >= 75) ||
+    (score.whodas != null && score.whodas >= 75);
+  const attention = (score.phq != null && score.phq >= 10) ||
+    (score.dass != null && score.dass >= 30) ||
+    (score.cbi != null && score.cbi >= 50) ||
+    (score.whodas != null && score.whodas >= 50);
+  if(high) return {level:'high'};
+  if(attention) return {level:'attention'};
+  return {level:'normal'};
+}
+function addUnique(list, item){
+  if(item && !list.includes(item)) list.push(item);
+}
 function mentalHealthWatch(){
   const today = history[history.length-1];
+  const scoreWatch = mentalScoreLevel(latestMentalScore());
+  const bpLevel = assessBP(today.systolic,today.diastolic);
+  const glucoseLevel = assessGlucose(today.glucose);
+  const hrLevel = assessHR(today.hr);
+  const missedThisWeek = history.filter(e=>!e.med).length;
   const factors = [];
   let score = 0;
 
-  if(mentalCheck.mood <= 2){ score += 1; factors.push(t('mentalFactorLowMood')); }
-  if(mentalCheck.stress >= 7){ score += 1; factors.push(t('mentalFactorStress')); }
-  if(mentalCheck.anxiety >= 7){ score += 1; factors.push(t('mentalFactorAnxiety')); }
-  if(mentalCheck.sleepQuality === 'poor'){ score += 1; factors.push(t('mentalFactorPoorSleep')); }
-  if(today.sleep < 6){ score += 1; factors.push(t('mentalFactorShortSleep')); }
-  if(mentalCheck.support === 'no'){ score += 1; factors.push(t('mentalFactorNoSupport')); }
-  if(today.symptoms.some(s=>s!=='none')){ score += 1; factors.push(t('mentalFactorSymptoms')); }
-  if(!factors.length) factors.push(t('mentalFactorStable'));
+  if(mentalCheck.mood <= 2){ score += 1; addUnique(factors, t('mentalFactorLowMood')); }
+  if(mentalCheck.stress >= 7){ score += 1; addUnique(factors, t('mentalFactorStress')); }
+  if(mentalCheck.anxiety >= 7){ score += 1; addUnique(factors, t('mentalFactorAnxiety')); }
+  if(mentalCheck.sleepQuality === 'poor'){ score += 1; addUnique(factors, t('mentalFactorPoorSleep')); }
+  if(today.sleep < 6){ score += 1; addUnique(factors, t('mentalFactorShortSleep')); }
+  if(mentalCheck.support === 'no'){ score += 1; addUnique(factors, t('mentalFactorNoSupport')); }
+  if(today.symptoms.some(s=>s!=='none')){ score += 1; addUnique(factors, t('mentalFactorSymptoms')); }
+  if(bpLevel !== 'normal'){ score += bpLevel === 'high' ? 1 : 0.5; addUnique(factors, t('mentalFactorBp')); }
+  if(glucoseLevel !== 'normal'){ score += glucoseLevel === 'high' ? 1 : 0.5; addUnique(factors, t('mentalFactorGlucose')); }
+  if(hrLevel !== 'normal'){ score += 1; addUnique(factors, t('mentalFactorHr')); }
+  if(!today.med){ score += 1; addUnique(factors, t('mentalFactorMedToday')); }
+  if(missedThisWeek >= 2){ score += 1; addUnique(factors, t('mentalFactorMedWeek')); }
+  if(scoreWatch.level === 'high'){ score += 2; addUnique(factors, t('mentalFactorOfficialScore')); }
+  else if(scoreWatch.level === 'attention'){ score += 1; addUnique(factors, t('mentalFactorOfficialScore')); }
+  if(!factors.length) addUnique(factors, t('mentalFactorStable'));
 
-  if(score >= 5) return {level:'high', cls:'high', factors, message:t('mentalWatchHighMsg')};
-  if(score >= 2) return {level:'moderate', cls:'attention', factors, message:t('mentalWatchModerateMsg')};
+  if(score >= 6) return {level:'high', cls:'high', score, factors, message:t('mentalWatchHighMsg')};
+  if(score >= 3) return {level:'moderate', cls:'attention', score, factors, message:t('mentalWatchModerateMsg')};
   return {level:'low', cls:'normal', factors, message:t('mentalWatchLowMsg')};
+}
+function levelFromScore(score, attentionAt, highAt){
+  if(score >= highAt) return 'high';
+  if(score >= attentionAt) return 'attention';
+  return 'normal';
+}
+function reviewMessage(level){
+  return t('healthReview'+cap(level)+'Msg');
+}
+function personalHealthReview(){
+  const today = history[history.length-1];
+  const bpLevel = assessBP(today.systolic,today.diastolic);
+  const glucoseLevel = assessGlucose(today.glucose);
+  const hrLevel = assessHR(today.hr);
+  const sleepLevel = assessSleep(today.sleep);
+  const mentalWatch = mentalHealthWatch();
+  const latestScore = latestMentalScore();
+  const scoreWatch = mentalScoreLevel(latestScore);
+  const missedThisWeek = history.filter(e=>!e.med).length;
+  const hasSymptoms = today.symptoms.some(s=>s!=='none');
+  const factors = [];
+  const actions = [];
+  let physicalScore = 0;
+  let mentalScore = 0;
+  let selfCareScore = 0;
+
+  if(bpLevel !== 'normal'){
+    physicalScore += bpLevel === 'high' ? 3 : 1;
+    addUnique(factors, `${t('statBP')}: ${t('risk'+cap(bpLevel))}`);
+    addUnique(actions, bpLevel === 'high' ? t('actionClinic') : t('actionRecheckBp'));
+  }
+  if(persistentElevatedTrend(history)){
+    physicalScore += 2;
+    addUnique(factors, t('factorPersistentBP'));
+    addUnique(actions, t('actionClinic'));
+  }
+  if(glucoseLevel !== 'normal'){
+    physicalScore += glucoseLevel === 'high' ? 2 : 1;
+    addUnique(factors, `${t('statGlucose')}: ${t('risk'+cap(glucoseLevel))}`);
+    addUnique(actions, t('actionWatchGlucose'));
+  }
+  if(hrLevel !== 'normal'){
+    physicalScore += hrLevel === 'high' ? 2 : 1;
+    addUnique(factors, `${t('statHR')}: ${t('risk'+cap(hrLevel))}`);
+    addUnique(actions, t('actionRestBreathing'));
+  }
+  if(sleepLevel !== 'normal'){
+    physicalScore += sleepLevel === 'high' ? 2 : 1;
+    selfCareScore += 1;
+    addUnique(factors, `${t('statSleep')}: ${t('risk'+cap(sleepLevel))}`);
+    addUnique(actions, t('actionSleep'));
+  }
+  if(hasSymptoms){
+    physicalScore += 1;
+    addUnique(factors, t('factorSymptoms'));
+  }
+  if(!today.med){
+    selfCareScore += 2;
+    addUnique(factors, t('mentalFactorMedToday'));
+    addUnique(actions, t('actionMedication'));
+  }
+  if(missedThisWeek >= 2){
+    selfCareScore += 1;
+    addUnique(factors, t('factorMissedMed'));
+    addUnique(actions, t('actionMedication'));
+  }
+  if(mentalWatch.level === 'high'){
+    mentalScore += 3;
+    addUnique(factors, `${t('mentalWatchTitle')}: ${t('mentalWatchHigh')}`);
+    addUnique(actions, t('actionMentalSupport'));
+  } else if(mentalWatch.level === 'moderate'){
+    mentalScore += 1;
+    addUnique(factors, `${t('mentalWatchTitle')}: ${t('mentalWatchModerate')}`);
+    addUnique(actions, t('actionMentalSupport'));
+  }
+  if(scoreWatch.level !== 'normal'){
+    mentalScore += scoreWatch.level === 'high' ? 2 : 1;
+    addUnique(factors, t('mentalFactorOfficialScore'));
+  }
+  if(!latestScore) addUnique(actions, t('actionMentari'));
+  if(!actions.length) addUnique(actions, t('actionRoutine'));
+  if(!factors.length) addUnique(factors, t('factorStable'));
+
+  const totalScore = physicalScore + mentalScore + selfCareScore;
+  const level = levelFromScore(totalScore, 3, 7);
+  return {
+    level,
+    cls:level,
+    score:totalScore,
+    message:reviewMessage(level),
+    factors,
+    actions:actions.slice(0,4),
+    domains:[
+      {label:t('reviewPhysical'), level:levelFromScore(physicalScore, 2, 5)},
+      {label:t('reviewMental'), level:mentalWatch.level === 'high' ? 'high' : mentalWatch.level === 'moderate' ? 'attention' : levelFromScore(mentalScore, 1, 3)},
+      {label:t('reviewSelfCare'), level:levelFromScore(selfCareScore, 1, 3)}
+    ]
+  };
 }
 
 /* ================= RENDER: DASHBOARD ================= */
@@ -1112,21 +1448,6 @@ function renderDashboard(){
       <div>
         <h3>${t('risk'+cap(risk))}</h3>
         <p>${t(msgKey)}${extra}</p>
-      </div>
-    </div>`;
-
-  const watch = futureRiskWatch();
-  document.getElementById('futureRiskHost').innerHTML = `
-    <div class="card future-watch">
-      <div>
-        <h3>${t('futureRiskTitle')}</h3>
-        <p>${watch.message}</p>
-        <div class="factor-list">${watch.factors.map(f=>`<span class="factor-chip">${escapeHtml(f)}</span>`).join('')}</div>
-      </div>
-      <div class="future-score">
-        <div class="label">${t('futureRiskScore')}</div>
-        <div class="value">${t('futureRisk'+cap(watch.level))}</div>
-        <div style="margin-top:8px;"><span class="risk-pill ${watch.cls}"><span class="dot"></span>${t('futureRisk'+cap(watch.level))}</span></div>
       </div>
     </div>`;
 
@@ -1159,6 +1480,47 @@ function renderDashboard(){
   medHost.innerHTML = `${today.med ? '💊' : '⛔'} ${today.med ? t('medYes') : t('medNo')}`;
 }
 function cap(s){ return s.charAt(0).toUpperCase()+s.slice(1); }
+function riskLabel(level){
+  return t('risk'+cap(level));
+}
+function renderHealthReview(){
+  const host = document.getElementById('healthReviewHost');
+  if(!host) return;
+  const review = personalHealthReview();
+  host.innerHTML = `
+    <div class="card personal-review">
+      <div class="review-head">
+        <div>
+          <h3>${t('healthReviewTitle')}</h3>
+          <p>${review.message}</p>
+        </div>
+        <span class="risk-pill ${review.cls}"><span class="dot"></span>${riskLabel(review.level)}</span>
+      </div>
+      <div class="review-grid">
+        <div class="review-score">
+          <div class="label">${t('healthReviewScore')}</div>
+          <div class="value">${riskLabel(review.level)}</div>
+        </div>
+        <div class="review-domains">
+          ${review.domains.map(domain=>`
+            <div class="review-domain">
+              <div class="name">${escapeHtml(domain.label)}</div>
+              <div class="value"><span class="risk-pill ${domain.level}"><span class="dot"></span>${riskLabel(domain.level)}</span></div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+      <div>
+        <label class="field-label">${t('reviewLinkedSignals')}</label>
+        <div class="factor-list">${review.factors.map(f=>`<span class="factor-chip">${escapeHtml(f)}</span>`).join('')}</div>
+      </div>
+      <div>
+        <label class="field-label">${t('reviewActions')}</label>
+        <ul class="review-actions">${review.actions.map(action=>`<li>${escapeHtml(action)}</li>`).join('')}</ul>
+      </div>
+      <div class="review-note">${t('reviewNote')}</div>
+    </div>`;
+}
 
 /* ================= MENTAL HEALTH ================= */
 function renderMentalHealth(){
@@ -1189,24 +1551,125 @@ function renderMentalHealth(){
     </div>
     <div class="factor-list">${watch.factors.map(f=>`<span class="factor-chip">${escapeHtml(f)}</span>`).join('')}</div>
   `;
+  renderMentalScores();
 }
+const MENTAL_SCORE_FIELDS = [
+  {id:'scorePhq', key:'phq', label:'PHQ-9', min:0, max:27},
+  {id:'scoreDass', key:'dass', label:'DASS', min:0, max:126},
+  {id:'scoreCbi', key:'cbi', label:'CBI', min:0, max:100},
+  {id:'scoreWhodas', key:'whodas', label:'WHODAS', min:0, max:100}
+];
+function renderMentalScores(){
+  const list = document.getElementById('mentalScoreList');
+  const pill = document.getElementById('mentalScorePill');
+  if(!list || !pill) return;
+  const latest = latestMentalScore();
+  const level = mentalScoreLevel(latest).level;
+  pill.className = `risk-pill ${level}`;
+  pill.innerHTML = `<span class="dot"></span>${latest ? t('risk'+cap(level)) : t('mentalScoreReady')}`;
+  if(!mentalScores.length){
+    list.innerHTML = `<li class="score-empty">${t('mentalScoreEmpty')}</li>`;
+    return;
+  }
+  const sorted = mentalScores.slice().sort((a,b)=>(b.createdAt||0)-(a.createdAt||0));
+  list.innerHTML = sorted.slice(0,6).map(item=>{
+    const tags = MENTAL_SCORE_FIELDS
+      .filter(field=>item[field.key] != null)
+      .map(field=>`<span class="score-tag">${field.label}: ${escapeHtml(item[field.key])}</span>`)
+      .join('');
+    const itemLevel = mentalScoreLevel(item).level;
+    return `<li class="score-row">
+      <div>
+        <div class="date">${escapeHtml(item.date)}</div>
+        <div style="margin-top:6px;"><span class="risk-pill ${itemLevel}"><span class="dot"></span>${t('risk'+cap(itemLevel))}</span></div>
+      </div>
+      <div class="score-tags">${tags}</div>
+    </li>`;
+  }).join('');
+}
+function setMentalScoreValidation(message, invalidIds=[]){
+  const box = document.getElementById('mentalScoreValidation');
+  MENTAL_SCORE_FIELDS.forEach(field=>{
+    document.getElementById(field.id).classList.toggle('is-invalid', invalidIds.includes(field.id));
+  });
+  if(!message){
+    box.hidden = true;
+    box.textContent = '';
+    return;
+  }
+  box.hidden = false;
+  box.textContent = message;
+}
+function readMentalScoreForm(){
+  const score = {};
+  const invalidIds = [];
+  let hasValue = false;
+  MENTAL_SCORE_FIELDS.forEach(field=>{
+    const input = document.getElementById(field.id);
+    const raw = input.value.trim();
+    if(raw === '') return;
+    const value = Number(raw);
+    hasValue = true;
+    if(Number.isNaN(value) || value < field.min || value > field.max){
+      invalidIds.push(field.id);
+    } else {
+      score[field.key] = value;
+    }
+  });
+  if(!hasValue) return {ok:false, message:t('mentalScoreValidationEmpty'), invalidIds:[]};
+  if(invalidIds.length) return {ok:false, message:t('mentalScoreValidationRange'), invalidIds};
+  return {ok:true, score};
+}
+document.getElementById('saveMentalScoreBtn').onclick = ()=>{
+  const result = readMentalScoreForm();
+  if(!result.ok){
+    setMentalScoreValidation(result.message, result.invalidIds);
+    showToast(result.message);
+    return;
+  }
+  const todayKey = localDateKey(new Date());
+  mentalScores = mentalScores.filter(item=>item.date !== todayKey);
+  mentalScores.push({...result.score, date:todayKey, createdAt:Date.now()});
+  mentalScores = mentalScores.slice().sort((a,b)=>(b.createdAt||0)-(a.createdAt||0)).slice(0,30);
+  MENTAL_SCORE_FIELDS.forEach(field=>document.getElementById(field.id).value='');
+  setMentalScoreValidation('');
+  saveState();
+  renderMentalHealth();
+  renderDashboard();
+  renderHealthReview();
+  showToast(t('mentalScoreSavedToast'));
+};
+MENTAL_SCORE_FIELDS.forEach(field=>{
+  document.getElementById(field.id).addEventListener('input', e=>{
+    e.target.classList.remove('is-invalid');
+  });
+});
 ['mhMood','mhStress','mhAnxiety'].forEach(id=>{
   document.getElementById(id).addEventListener('input', e=>{
     const key = id==='mhMood' ? 'mood' : id==='mhStress' ? 'stress' : 'anxiety';
     mentalCheck[key] = Number(e.target.value);
+    saveState();
     renderMentalHealth();
+    renderDashboard();
+    renderHealthReview();
   });
 });
 document.querySelectorAll('[data-mental-sleep]').forEach(btn=>{
   btn.onclick = ()=>{
     mentalCheck.sleepQuality = btn.dataset.mentalSleep;
+    saveState();
     renderMentalHealth();
+    renderDashboard();
+    renderHealthReview();
   };
 });
 document.querySelectorAll('[data-mental-support]').forEach(btn=>{
   btn.onclick = ()=>{
     mentalCheck.support = btn.dataset.mentalSupport;
+    saveState();
     renderMentalHealth();
+    renderDashboard();
+    renderHealthReview();
   };
 });
 
@@ -1260,18 +1723,21 @@ function checkMedicationReminder(){
   const todayKey = localDateKey(now);
   if(clockTime(now) === medicationReminder.time && medicationReminder.lastFiredDate !== todayKey){
     sendMedicationReminder(false);
+    saveState();
   }
 }
 
 document.getElementById('enableReminderBtn').onclick = async ()=>{
   const value = document.getElementById('reminderTime').value || '08:00';
   medicationReminder = {enabled:true, time:value, lastFiredDate:null};
+  saveState();
   renderMedicationReminder();
   const canNotify = await requestNotificationPermission();
   showToast(canNotify ? t('reminderSavedToast') : t('reminderPermissionToast'));
 };
 document.getElementById('disableReminderBtn').onclick = ()=>{
   medicationReminder.enabled = false;
+  saveState();
   renderMedicationReminder();
   showToast(t('reminderDisabledToast'));
 };
@@ -1279,12 +1745,52 @@ document.getElementById('testReminderBtn').onclick = ()=> sendMedicationReminder
 document.getElementById('reminderTime').onchange = e=>{
   medicationReminder.time = e.target.value || '08:00';
   medicationReminder.lastFiredDate = null;
+  saveState();
   renderMedicationReminder();
   if(medicationReminder.enabled) showToast(t('reminderUpdatedToast'));
 };
 setInterval(checkMedicationReminder, 15000);
 
 /* ================= RENDER: ENTRY FORM ================= */
+const ENTRY_VALIDATION_FIELDS = [
+  {id:'in-systolic', key:'systolic', labelKey:'reportSystolic', min:60, max:260},
+  {id:'in-diastolic', key:'diastolic', labelKey:'reportDiastolic', min:40, max:160},
+  {id:'in-glucose', key:'glucose', labelKey:'reportGlucose', min:30, max:500},
+  {id:'in-hr', key:'hr', labelKey:'reportHeartRate', min:30, max:220},
+  {id:'in-sleep', key:'sleep', labelKey:'reportSleep', min:0, max:16}
+];
+function interpolate(template, values){
+  return Object.entries(values).reduce((text,[key,value])=>text.replaceAll(`{${key}}`, value), template);
+}
+function showEntryValidation(errors, invalidIds=[]){
+  const box = document.getElementById('entryValidation');
+  ENTRY_VALIDATION_FIELDS.forEach(field=>{
+    document.getElementById(field.id).classList.toggle('is-invalid', invalidIds.includes(field.id));
+  });
+  if(!errors.length){
+    box.hidden = true;
+    box.innerHTML = '';
+    return;
+  }
+  box.hidden = false;
+  box.innerHTML = errors.map(escapeHtml).join('<br>');
+}
+function validateEntry(){
+  const errors = [];
+  const invalidIds = [];
+  ENTRY_VALIDATION_FIELDS.forEach(field=>{
+    const value = draftEntry[field.key];
+    const label = t(field.labelKey);
+    if(value == null || Number.isNaN(value)){
+      errors.push(interpolate(t('validationRequired'), {field:label}));
+      invalidIds.push(field.id);
+    } else if(value < field.min || value > field.max){
+      errors.push(interpolate(t('validationRange'), {field:label, min:field.min, max:field.max}));
+      invalidIds.push(field.id);
+    }
+  });
+  return {ok:errors.length===0, errors, invalidIds};
+}
 function initDraft(){
   const today = history[history.length-1];
   draftEntry = {systolic:today.systolic, diastolic:today.diastolic, glucose:today.glucose, hr:today.hr, sleep:today.sleep, med:today.med, symptoms:[...today.symptoms]};
@@ -1326,42 +1832,134 @@ document.getElementById('medNoBtn').onclick = ()=>{ draftEntry.med = false; rend
   document.getElementById(id).addEventListener('input', e=>{
     const key = id.replace('in-','');
     draftEntry[key] = e.target.value === '' ? null : Number(e.target.value);
+    document.getElementById(id).classList.remove('is-invalid');
   });
 });
 document.getElementById('saveEntryBtn').onclick = ()=>{
+  const validation = validateEntry();
+  if(!validation.ok){
+    showEntryValidation(validation.errors, validation.invalidIds);
+    showToast(validation.errors[0]);
+    return;
+  }
   const today = history[history.length-1];
   Object.assign(today, draftEntry);
-  showToast(t('savedToast'));
+  showEntryValidation([]);
+  saveState();
+  showToast(`${t('savedToast')}. ${t('savedLocalToast')}`);
   renderDashboard();
+  renderHealthReview();
   renderTrend();
+  renderMentalHealth();
   showTab('dashboard');
 };
 
 /* ================= RENDER: WEEKLY TREND ================= */
 let bpChartInstance=null, glucoseChartInstance=null;
+function ensureChartFallbackNote(show){
+  document.querySelectorAll('.chart-card').forEach(card=>{
+    let note = card.querySelector('.chart-fallback-note');
+    if(show && !note){
+      note = document.createElement('div');
+      note.className = 'chart-fallback-note';
+      card.appendChild(note);
+    }
+    if(note) note.textContent = t('chartFallback');
+    if(!show && note) note.remove();
+  });
+}
+function drawFallbackLineChart(canvas, labels, datasets){
+  const parent = canvas.closest('.chart-card');
+  const cssWidth = Math.max(280, (parent ? parent.clientWidth - 40 : canvas.clientWidth) || 520);
+  const cssHeight = 260;
+  const ratio = window.devicePixelRatio || 1;
+  canvas.width = cssWidth * ratio;
+  canvas.height = cssHeight * ratio;
+  canvas.style.width = cssWidth + 'px';
+  canvas.style.height = cssHeight + 'px';
+  const ctx = canvas.getContext('2d');
+  ctx.setTransform(ratio,0,0,ratio,0,0);
+  ctx.clearRect(0,0,cssWidth,cssHeight);
+  const pad = {left:42, right:18, top:18, bottom:38};
+  const values = datasets.flatMap(set=>set.data).filter(value=>Number.isFinite(value));
+  const minValue = Math.min(...values);
+  const maxValue = Math.max(...values);
+  const range = Math.max(1, maxValue - minValue);
+  const yMin = Math.max(0, Math.floor(minValue - range * 0.15));
+  const yMax = Math.ceil(maxValue + range * 0.15);
+  const xFor = index => pad.left + (labels.length === 1 ? 0 : index * (cssWidth - pad.left - pad.right) / (labels.length - 1));
+  const yFor = value => pad.top + (yMax - value) * (cssHeight - pad.top - pad.bottom) / (yMax - yMin);
+
+  ctx.font = '11px Public Sans, sans-serif';
+  ctx.lineWidth = 1;
+  ctx.strokeStyle = '#EEF1EB';
+  ctx.fillStyle = '#54655F';
+  for(let i=0;i<4;i++){
+    const y = pad.top + i * (cssHeight - pad.top - pad.bottom) / 3;
+    ctx.beginPath();
+    ctx.moveTo(pad.left, y);
+    ctx.lineTo(cssWidth - pad.right, y);
+    ctx.stroke();
+    const label = Math.round(yMax - i * (yMax - yMin) / 3);
+    ctx.fillText(String(label), 6, y + 4);
+  }
+  ctx.fillText(labels[0] || '', pad.left, cssHeight - 12);
+  ctx.fillText(labels[labels.length-1] || '', Math.max(pad.left, cssWidth - pad.right - 58), cssHeight - 12);
+
+  datasets.forEach(set=>{
+    ctx.strokeStyle = set.color;
+    ctx.fillStyle = set.color;
+    ctx.lineWidth = 2.5;
+    ctx.beginPath();
+    set.data.forEach((value,index)=>{
+      const x = xFor(index);
+      const y = yFor(value);
+      if(index===0) ctx.moveTo(x,y);
+      else ctx.lineTo(x,y);
+    });
+    ctx.stroke();
+    set.data.forEach((value,index)=>{
+      ctx.beginPath();
+      ctx.arc(xFor(index), yFor(value), 3, 0, Math.PI*2);
+      ctx.fill();
+    });
+  });
+}
 function renderTrend(){
   const labels = history.map(e=>fmtDate(e.dateObj));
 
   const bpCtx = document.getElementById('bpChart').getContext('2d');
-  if(bpChartInstance) bpChartInstance.destroy();
-  bpChartInstance = new Chart(bpCtx, {
-    type:'line',
-    data:{ labels, datasets:[
-      {label:'Systolic', data:history.map(e=>e.systolic), borderColor:'#1E5C55', backgroundColor:'rgba(30,92,85,0.08)', tension:0.4, fill:true, pointRadius:3, borderWidth:2.5},
-      {label:'Diastolic', data:history.map(e=>e.diastolic), borderColor:'#E0A94A', backgroundColor:'rgba(224,169,74,0.08)', tension:0.4, fill:true, pointRadius:3, borderWidth:2.5},
-    ]},
-    options:{ responsive:true, plugins:{legend:{position:'bottom', labels:{boxWidth:10,font:{size:11}}}}, scales:{y:{grid:{color:'#EEF1EB'}}, x:{grid:{display:false}}} }
-  });
-
   const gCtx = document.getElementById('glucoseChart').getContext('2d');
-  if(glucoseChartInstance) glucoseChartInstance.destroy();
-  glucoseChartInstance = new Chart(gCtx, {
-    type:'line',
-    data:{ labels, datasets:[
-      {label:'Glucose', data:history.map(e=>e.glucose), borderColor:'#4FA8A0', backgroundColor:'rgba(79,168,160,0.12)', tension:0.4, fill:true, pointRadius:3, borderWidth:2.5},
-    ]},
-    options:{ responsive:true, plugins:{legend:{display:false}}, scales:{y:{grid:{color:'#EEF1EB'}}, x:{grid:{display:false}}} }
-  });
+  if(window.Chart){
+    ensureChartFallbackNote(false);
+    if(bpChartInstance) bpChartInstance.destroy();
+    bpChartInstance = new Chart(bpCtx, {
+      type:'line',
+      data:{ labels, datasets:[
+        {label:'Systolic', data:history.map(e=>e.systolic), borderColor:'#1E5C55', backgroundColor:'rgba(30,92,85,0.08)', tension:0.4, fill:true, pointRadius:3, borderWidth:2.5},
+        {label:'Diastolic', data:history.map(e=>e.diastolic), borderColor:'#E0A94A', backgroundColor:'rgba(224,169,74,0.08)', tension:0.4, fill:true, pointRadius:3, borderWidth:2.5},
+      ]},
+      options:{ responsive:true, plugins:{legend:{position:'bottom', labels:{boxWidth:10,font:{size:11}}}}, scales:{y:{grid:{color:'#EEF1EB'}}, x:{grid:{display:false}}} }
+    });
+
+    if(glucoseChartInstance) glucoseChartInstance.destroy();
+    glucoseChartInstance = new Chart(gCtx, {
+      type:'line',
+      data:{ labels, datasets:[
+        {label:'Glucose', data:history.map(e=>e.glucose), borderColor:'#4FA8A0', backgroundColor:'rgba(79,168,160,0.12)', tension:0.4, fill:true, pointRadius:3, borderWidth:2.5},
+      ]},
+      options:{ responsive:true, plugins:{legend:{display:false}}, scales:{y:{grid:{color:'#EEF1EB'}}, x:{grid:{display:false}}} }
+    });
+  } else {
+    ensureChartFallbackNote(true);
+    drawFallbackLineChart(document.getElementById('bpChart'), labels, [
+      {label:'Systolic', data:history.map(e=>e.systolic), color:'#1E5C55'},
+      {label:'Diastolic', data:history.map(e=>e.diastolic), color:'#E0A94A'}
+    ]);
+    drawFallbackLineChart(document.getElementById('glucoseChart'), labels, [
+      {label:'Glucose', data:history.map(e=>e.glucose), color:'#4FA8A0'}
+    ]);
+  }
 
   const abnormal = history.filter(e=>overallRisk(e)!=='normal').length;
   document.getElementById('abnormalCount').textContent = abnormal;
@@ -1402,7 +2000,9 @@ function clinicMetrics(){
   const abnormal = history.filter(e=>overallRisk(e)!=='normal').length;
   const adherence = Math.round(100*history.filter(e=>e.med).length/history.length);
   const direction = bpDirection(history);
-  return {latest, abnormal, adherence, direction};
+  const review = personalHealthReview();
+  const mental = mentalHealthWatch();
+  return {latest, abnormal, adherence, direction, review, mental};
 }
 function buildClinicReport(){
   const metrics = clinicMetrics();
@@ -1436,6 +2036,8 @@ function buildClinicReport(){
       <div><strong>${escapeHtml(metrics.abnormal)}</strong><span>${escapeHtml(t('reportAbnormal'))}</span></div>
       <div><strong>${escapeHtml(metrics.adherence)}%</strong><span>${escapeHtml(t('reportAdherence'))}</span></div>
       <div><strong>${escapeHtml(bpDirectionText(metrics.direction))}</strong><span>${escapeHtml(t('reportBpDirection'))}</span></div>
+      <div><strong>${escapeHtml(riskLabel(metrics.review.level))}</strong><span>${escapeHtml(t('reportPersonalReview'))}</span></div>
+      <div><strong>${escapeHtml(t('mentalWatch'+cap(metrics.mental.level)))}</strong><span>${escapeHtml(t('reportMentalWatch'))}</span></div>
     </div>
 
     <h2>${escapeHtml(t('dailyLogTitle'))}</h2>
@@ -1464,7 +2066,9 @@ function csvCell(value){
   return `"${safe.replace(/"/g,'""')}"`;
 }
 function exportClinicCsv(){
-  const headers = [t('reportDate'), t('reportSystolic'), t('reportDiastolic'), t('reportGlucose'), t('reportHeartRate'), t('reportSleep'), t('reportMedication'), t('reportSymptoms'), t('reportRisk')];
+  const review = personalHealthReview();
+  const mental = mentalHealthWatch();
+  const headers = [t('reportDate'), t('reportSystolic'), t('reportDiastolic'), t('reportGlucose'), t('reportHeartRate'), t('reportSleep'), t('reportMedication'), t('reportSymptoms'), t('reportRisk'), t('reportPersonalReview'), t('reportMentalWatch')];
   const rows = history.map(e=>[
     e.date,
     e.systolic,
@@ -1474,7 +2078,9 @@ function exportClinicCsv(){
     e.sleep,
     medicationLabel(e.med),
     symptomLabels(e.symptoms),
-    t('risk'+cap(overallRisk(e)))
+    t('risk'+cap(overallRisk(e))),
+    riskLabel(review.level),
+    t('mentalWatch'+cap(mental.level))
   ]);
   const csv = [headers, ...rows].map(row=>row.map(csvCell).join(',')).join('\r\n');
   const blob = new Blob(['\uFEFF'+csv], {type:'text/csv;charset=utf-8;'});
@@ -1502,15 +2108,19 @@ function ruleBasedSummary(){
   const abnormalDays = history.filter(e=>overallRisk(e)!=='normal').length;
   const missed = history.filter(e=>!e.med).length;
   const dir = bpDirection(history);
-  const watch = futureRiskWatch();
   const sleepAvg = averageSleep(history).toFixed(1);
+  const latestScore = latestMentalScore();
+  const latestScoreLevel = mentalScoreLevel(latestScore).level;
+  const review = personalHealthReview();
 
   if(currentLang==='zh'){
     let s = `本周共有 ${abnormalDays} 天记录到血压、血糖或心率超出平常范围。`;
     if(persistent) s += ' 血压已连续三天高于平常水平，建议继续密切监测，并考虑咨询医护人员。';
     s += ` 本周服药依从性为 ${history.length-missed}/${history.length} 天。`;
     s += dir==='up' ? ' 整体血压呈上升趋势。' : dir==='down' ? ' 整体血压呈下降趋势。' : ' 整体血压保持相对稳定。';
-    s += ` ${t('avgSleepLabel')}: ${sleepAvg}h. ${t('futureRiskScore')}: ${t('futureRisk'+cap(watch.level))}. ${watch.message}`;
+    s += ` ${t('avgSleepLabel')}: ${sleepAvg}h.`;
+    if(latestScore) s += ` 最新官方心理测试记录显示：${t('risk'+cap(latestScoreLevel))}。`;
+    s += ` 今日个人健康审查等级：${riskLabel(review.level)}。${review.message}`;
     return s;
   }
   if(currentLang==='bm'){
@@ -1518,14 +2128,18 @@ function ruleBasedSummary(){
     if(persistent) s += ' Tekanan darah kekal tinggi selama tiga hari berturut-turut — teruskan pemantauan rapi dan pertimbangkan untuk berjumpa profesional kesihatan.';
     s += ` Pematuhan ubat minggu ini ialah ${history.length-missed}/${history.length} hari.`;
     s += dir==='up' ? ' Tekanan darah keseluruhan menunjukkan trend menaik.' : dir==='down' ? ' Tekanan darah keseluruhan menunjukkan trend menurun.' : ' Tekanan darah keseluruhan agak stabil.';
-    s += ` ${t('avgSleepLabel')}: ${sleepAvg}h. ${t('futureRiskScore')}: ${t('futureRisk'+cap(watch.level))}. ${watch.message}`;
+    s += ` ${t('avgSleepLabel')}: ${sleepAvg}h.`;
+    if(latestScore) s += ` Skor ujian mental rasmi terkini: ${t('risk'+cap(latestScoreLevel))}.`;
+    s += ` Tahap semakan kesihatan peribadi hari ini: ${riskLabel(review.level)}. ${review.message}`;
     return s;
   }
   let s = `The patient recorded elevated blood pressure, glucose, or heart rate on ${abnormalDays} of the last 7 days.`;
   if(persistent) s += ' Blood pressure has remained higher than usual for three consecutive days. Please continue monitoring and consider contacting a healthcare professional.';
   s += ` Medication adherence this week was ${history.length-missed}/${history.length} days.`;
   s += dir==='up' ? ' Overall blood pressure shows an upward trend.' : dir==='down' ? ' Overall blood pressure shows a downward trend.' : ' Overall blood pressure has remained fairly stable.';
-  s += ` ${t('avgSleepLabel')}: ${sleepAvg}h. ${t('futureRiskScore')}: ${t('futureRisk'+cap(watch.level))}. ${watch.message}`;
+  s += ` ${t('avgSleepLabel')}: ${sleepAvg}h.`;
+  if(latestScore) s += ` Latest official mental health score watch: ${t('risk'+cap(latestScoreLevel))}.`;
+  s += ` Today's personal health review level is ${riskLabel(review.level)}. ${review.message}`;
   return s;
 }
 
@@ -1534,29 +2148,10 @@ async function generateAISummary(){
   const btn = document.getElementById('genSummaryBtn');
   btn.disabled = true;
   box.innerHTML = `<span class="loader"><span class="spinner"></span>${t('loadingSummary')}</span>`;
-
-  const langName = currentLang==='zh' ? 'Simplified Chinese' : currentLang==='bm' ? 'Bahasa Melayu' : 'English';
-  const dataLines = history.map(e=>`${e.date}: BP ${e.systolic}/${e.diastolic} mmHg, glucose ${e.glucose} mg/dL, heart rate ${e.hr} bpm, sleep ${e.sleep} hours, medication ${e.med?'taken':'missed'}, symptoms: ${e.symptoms.join(', ')}, risk: ${overallRisk(e)}`).join('\n');
-
-  const prompt = `You are a cautious health-monitoring assistant for a rural non-communicable-disease (NCD) tracking app in Sarawak, Malaysia. Write a short (3-5 sentence) plain-language weekly health summary in ${langName} for a patient with hypertension and diabetes, based on this week's home readings:\n\n${dataLines}\n\nRules:\n- Never state a diagnosis.\n- Point out unusual patterns (e.g. persistent high blood pressure, missed medication, short sleep, symptom clusters) factually and calmly.\n- Include a cautious next-7-day watch level only if the pattern suggests it; phrase it as monitoring priority, not prediction certainty.\n- If readings look concerning, recommend contacting a healthcare professional.\n- Keep it warm, clear, and easy for an elderly reader or family caregiver to understand.\n- Respond with only the summary text, no preamble, no markdown.`;
-
   try{
-    const response = await fetch("https://api.anthropic.com/v1/messages", {
-      method:"POST",
-      headers:{"Content-Type":"application/json"},
-      body: JSON.stringify({
-        model:"claude-sonnet-4-6",
-        max_tokens:1000,
-        messages:[{role:"user", content: prompt}]
-      })
-    });
-    const data = await response.json();
-    const text = (data.content||[]).map(b=>b.text||'').join('\n').trim();
-    if(!text) throw new Error('empty');
-    box.textContent = text;
-  } catch(err){
-    box.innerHTML = `<span style="display:block; margin-bottom:8px; color:var(--gold-deep); font-size:12.5px; font-weight:600;">${t('generatingErr')}</span>` + ruleBasedSummary();
-  } finally{
+    await new Promise(resolve=>setTimeout(resolve, 250));
+    box.innerHTML = `<span style="display:block; margin-bottom:8px; color:var(--gold-deep); font-size:12.5px; font-weight:600;">${t('generatingErr')}</span>` + escapeHtml(ruleBasedSummary());
+  } finally {
     btn.disabled = false;
   }
 }
@@ -1589,7 +2184,9 @@ function showTab(name){
   document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
   document.getElementById('view-'+name).classList.add('active');
   document.querySelectorAll('nav.tabs button').forEach(b=>b.classList.toggle('active', b.dataset.tab===name));
+  if(name==='summary') renderHealthReview();
   if(name==='mental') renderMentalHealth();
+  if(name==='trend') renderTrend();
   if(name==='clinics') updateClinicMap();
 }
 document.querySelectorAll('nav.tabs button').forEach(btn=>{
@@ -1609,6 +2206,7 @@ document.querySelectorAll('.lang-switch button').forEach(btn=>{
     renderDashboard();
     renderEntryForm();
     renderMentalHealth();
+    renderHealthReview();
     renderTrend();
     updateClinicMap();
     document.getElementById('summaryText').textContent = t('summaryPlaceholder');
@@ -1650,6 +2248,7 @@ applyStaticI18n();
 renderDashboard();
 renderEntryForm();
 renderMentalHealth();
+renderHealthReview();
 renderTrend();
 updateClinicMap();
 updateSyncBadge();
